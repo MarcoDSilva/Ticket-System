@@ -15,11 +15,6 @@ End Code
                 <label>Descrição</label>
                 @Html.TextBox("descricao")
             </p>
-
-            @If ViewBag.sucesso = "done" Then
-                @<p>Valor a ser enviado : @ViewBag.tentativa</p>
-            End If
-
         </div>
         <input type="submit" name="submit" value="inserir registo" class="btn btn-default" />
     </div>

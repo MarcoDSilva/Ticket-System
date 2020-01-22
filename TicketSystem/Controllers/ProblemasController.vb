@@ -25,8 +25,8 @@ Namespace Controllers
         <ValidateAntiForgeryToken>
         Function CriaProblema(descricao As String) As ActionResult
 
-            'verifica se foi introduzido algum valor na view, se foi tenta actualizar a base de dados, 
-            'caso contrário retorna a view normal
+            'verifica se foi introduzido algum valor na view e se foi tenta actualizar a base de dados e reencaminha para a view da listagem
+            'caso contrário retorna a view actual da inserção de novos problemas
 
             If String.IsNullOrEmpty(descricao).Equals(False) Then
                 ViewBag.sucesso = "done"
