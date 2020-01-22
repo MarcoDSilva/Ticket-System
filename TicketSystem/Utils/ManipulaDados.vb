@@ -31,4 +31,12 @@ Public Class ManipulaDados
         Return dados
     End Function
 
+    ''' <summary>
+    ''' método para inserir dados após proceder à conexão à bd
+    ''' </summary>
+    ''' <param name="query"></param>
+    Public Sub Inserir(query As String)
+
+    End Sub
+
 End Class

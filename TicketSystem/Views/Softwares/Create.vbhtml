@@ -19,14 +19,7 @@ End Code
                 @Html.ValidationMessageFor(Function(model) model.nome, "", New With { .class = "text-danger" })
             </div>
         </div>
-
-        @Code
-            Dim actualTime As String
-            actualTime = DateTime.Now.ToLocalTime.ToString
-        End Code
-
-        <p>AQUI ESTA O TEMPO ACTUAL @actualTime</p>
-
+    
         <div class="form-group">
             @Html.LabelFor(Function(model) model.dat_hor, htmlAttributes:=New With {.class = "control-label col-md-2"})
             <div class="col-md-10">
