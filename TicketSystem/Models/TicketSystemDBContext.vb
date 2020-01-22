@@ -10,6 +10,7 @@ Partial Public Class TicketSystemDBContext
         MyBase.New("name=TicketSystemSC")
     End Sub
 
+    'todas as tabelas da base de dados que estão/vão ser manipuladas
     Public Overridable Property Cliente As DbSet(Of Cliente)
     Public Overridable Property Estado As DbSet(Of Estado)
     Public Overridable Property Evento As DbSet(Of Evento)
@@ -21,6 +22,7 @@ Partial Public Class TicketSystemDBContext
     Public Overridable Property Tecnico As DbSet(Of Tecnico)
     Public Overridable Property Ticket As DbSet(Of Ticket)
     Public Overridable Property Utilizador As DbSet(Of Utilizador)
+
 
     Protected Overrides Sub OnModelCreating(ByVal modelBuilder As DbModelBuilder)
         modelBuilder.Entity(Of Cliente)() _
