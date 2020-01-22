@@ -17,16 +17,6 @@ Namespace Controllers
 
         'GET : Problemas/CriaProblema
         Function CriaProblema() As ActionResult
-
-            'testar se houve input da view
-            'se houve, verificar os dados
-            'se dados estiverem direitos, conecta a bd e atualiza
-            'senao lançar erro
-
-            'redireciona para a listagem de problemas se inserção for completa corretamente,
-            'se não, lança erro e devolve a pagina de inserção
-
-            'Return RedirectToAction("Index")
             Return View()
         End Function
 
@@ -35,28 +25,14 @@ Namespace Controllers
         <ValidateAntiForgeryToken>
         Function CriaProblema(descricao As String) As ActionResult
 
-            Dim teste As String
-            Dim query As String
-
             If (String.IsNullOrEmpty(descricao)) Then
                 ViewBag.tentativa = "empty"
             Else
-                teste = descricao
-                ViewBag.tentativa = teste
-                query = $"Insert into Problemas values ('{descricao}', CURRENT_TIMESTAMP);"
+                ViewBag.sucesso = "done"
+                ViewBag.tentativa = $"{descricao} inserido com sucesso"
 
+                conectaBD.InserirNovoProblema(descricao)
             End If
-
-
-
-            'testar se houve input da view
-            'se houve, verificar os dados
-            'se dados estiverem direitos, conecta a bd e atualiza com o dado enviado e a data actual, com current timestamp ?
-            'senao lançar erro
-
-            'redireciona para a listagem de problemas se inserção for completa corretamente,
-            'se não, lança erro e devolve a pagina de inserção
-
             'Return RedirectToAction("Index")
             Return View()
         End Function
