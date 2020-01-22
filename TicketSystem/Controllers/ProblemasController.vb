@@ -25,16 +25,18 @@ Namespace Controllers
         <ValidateAntiForgeryToken>
         Function CriaProblema(descricao As String) As ActionResult
 
-            If (String.IsNullOrEmpty(descricao)) Then
-                ViewBag.tentativa = "empty"
-            Else
+            'verifica se foi introduzido algum valor na view, se foi tenta actualizar a base de dados, 
+            'caso contrário retorna a view normal
+
+            If String.IsNullOrEmpty(descricao).Equals(False) Then
                 ViewBag.sucesso = "done"
                 ViewBag.tentativa = $"{descricao} inserido com sucesso"
-
                 conectaBD.InserirNovoProblema(descricao)
+            Else
+                Return View()
             End If
-            'Return RedirectToAction("Index")
-            Return View()
+
+            Return RedirectToAction("Index")
         End Function
 
     End Class
