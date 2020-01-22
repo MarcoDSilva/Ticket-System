@@ -7,11 +7,10 @@ Namespace Controllers
         Private db As New TicketSystemDBContext
         Private conectaBD As New ManipulaDados
 
-        ' GET: Problemas
+        ' GET: Listagem da tabela dos problemas
         Function Index() As ActionResult
 
             Dim listagemProblemas = db.Problema.ToList
-
             Return View(listagemProblemas)
         End Function
 
@@ -38,6 +37,27 @@ Namespace Controllers
 
             Return RedirectToAction("Index")
         End Function
+
+        'POST: recebe a nova descrição e o id do problema a actualizar
+        <HttpPost()>
+        <ValidateAntiForgeryToken>
+        Function ActualizaProblema(descricao As String, ID_problema As Integer) As ActionResult
+            Return RedirectToAction("Index")
+        End Function
+
+
+        'POST: recebe o ID do problema que o utilizador pretende apagar
+        Function ApagaProblema() As ActionResult
+            Return View()
+        End Function
+
+        'POST: recebe o ID do problema que o utilizador pretende apagar
+        'algumas verificações extras podem ter de ser efetuadas aqui
+        Function ApagaProblema(ID_problema As Integer) As ActionResult
+            Return RedirectToAction("Index")
+        End Function
+
+
 
     End Class
 End Namespace
