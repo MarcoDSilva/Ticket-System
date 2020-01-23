@@ -10,7 +10,17 @@ Namespace Controllers
         ' GET: Listagem da tabela dos problemas
         Function Index() As ActionResult
 
-            Dim listagemProblemas = db.Problema.ToList
+            Dim tabelaDados As DataTable = conectaBD.LeituraTabela("Select * FROM Problema;")
+            Dim listagemProblemas As List(Of Problema) = New List(Of Problema)
+
+            For Each item In tabelaDados.AsEnumerable
+                Dim p As Problema = New Problema()
+                p.ID_problema = item(0)
+                p.descricao = item(1)
+                p.dat_hor = item(2)
+                listagemProblemas.Add(p)
+            Next
+
             Return View(listagemProblemas)
         End Function
 
@@ -47,19 +57,13 @@ Namespace Controllers
             Return RedirectToAction("Index")
         End Function
 
+        <HttpPost()>
+        <ValidateAntiForgeryToken>
+        Function ActualizaProblema(descricao As String, ID_problema As Integer) As ActionResult
 
-        '<HttpPost()>
-        '<ValidateAntiForgeryToken>
-        'Function ActualizaProblema(descricao As String, ID_problema As Integer) As ActionResult
-
-        '    Return RedirectToAction("Index")
-        'End Function
-
-
-        'POST: recebe o ID do problema que o utilizador pretende apagar
-        Function ApagaProblema() As ActionResult
-            Return View()
+            Return RedirectToAction("Index")
         End Function
+
 
         'POST: recebe o ID do problema que o utilizador pretende apagar
         'algumas verificações extras podem ter de ser efetuadas aqui

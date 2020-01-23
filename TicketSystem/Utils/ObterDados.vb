@@ -1,13 +1,13 @@
 ﻿Imports System.Data.SqlClient
 
-Public Class LerDados
+Public Class ObterDados
 
     ''' <summary>
     ''' 'metodo para conectar À base de dados para conexões em SQL
     ''' </summary>
     ''' <param name="query"></param>
     ''' <returns></returns>
-    Public Function Conectar(query As String) As DataTable
+    Public Function LeituraTabela(query As String) As DataTable
 
         'conexao e comando para termos acesso e podermos enviar a query para a base de dados
         Dim conexao As New SqlConnection(Conector.stringConnection)

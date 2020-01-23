@@ -1,6 +1,7 @@
 ﻿Imports System.Data.SqlClient
 
 Public Class Manipula_TProblema
+    Inherits ObterDados
 
     'inserir a conexao como uma propriedade da classe que só pode ser utilizada como leitura e não alterada
     Private ReadOnly conexao As New SqlConnection(Conector.stringConnection)
