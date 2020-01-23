@@ -5,7 +5,7 @@ Namespace Controllers
         Inherits Controller
 
         Private db As New TicketSystemDBContext
-        Private conectaBD As New ManipulaDados
+        Private conectaBD As New Manipula_TProblema
 
         ' GET: Listagem da tabela dos problemas
         Function Index() As ActionResult
