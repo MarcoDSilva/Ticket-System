@@ -22,7 +22,6 @@ Public Class ObterDados
 
         recetor.Fill(dados)
         conexao.Close()
-
         Return dados
     End Function
 End Class

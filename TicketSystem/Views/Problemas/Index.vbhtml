@@ -20,7 +20,7 @@ End Code
         <td>@Html.DisplayFor(Function(modelproblem) problem.descricao)</td>
         <td>@Html.DisplayFor(Function(modelproblem) problem.dat_hor)</td>
         <td>
-            @Html.ActionLink("Editar", "EditarProblema", New With {.ID_problema = problem.ID_problema}) |
+            @Html.ActionLink("Detalhes", "EditarProblema", New With {.ID_problema = problem.ID_problema})
         </td>
     </tr>
 Next

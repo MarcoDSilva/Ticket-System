@@ -61,17 +61,36 @@ Namespace Controllers
         <ValidateAntiForgeryToken>
         Function ActualizaProblema(descricao As String, ID_problema As Integer) As ActionResult
 
+
             Return RedirectToAction("Index")
         End Function
 
 
         'POST: recebe o ID do problema que o utilizador pretende apagar
         'algumas verificações extras podem ter de ser efetuadas aqui
-        Function ApagaProblema(ID_problema As Integer) As ActionResult
-            Return RedirectToAction("Index")
+        Function ApagaProblema(ID_problema As Integer?) As ActionResult
+
+            If IsNothing(ID_problema) Then
+                Return View()
+            Else
+                Dim problemas As Problema = db.Problema.Find(ID_problema)
+                Return View(problemas)
+            End If
+
         End Function
 
+        <HttpPost()>
+        Function ConfirmaApaga(ByVal ID_problema As Integer?, ByVal apagar As String) As ActionResult
 
+            If String.IsNullOrEmpty(apagar) Then
+                Dim problemas As Problema = db.Problema.Find(ID_problema)
+                Return View(problemas)
+            ElseIf apagar.Equals("sim") Then
+                conectaBD.ApagarProblema(ID_problema)
+                Return RedirectToAction("Index")
+            End If
 
+            Return View()
+        End Function
     End Class
 End Namespace

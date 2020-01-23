@@ -36,6 +36,7 @@ Public Class Manipula_TProblema
                                 WHERE ID_problema = {ID_Problema};"
 
         Dim comando As New SqlCommand(query, conexao)
+        comando.CommandText = query
         comando.Parameters.AddWithValue("@desc", problema) 'substituir ("sanitizing") do problema
 
         conexao.Open()
@@ -49,14 +50,15 @@ Public Class Manipula_TProblema
     ''' eventualmente -poderá- lançar erro caso a execução da query falhe
     ''' </summary>
     ''' <param name="ID_problema"></param>
-    Public Sub ApagarProblema(ID_problema As Integer)
+    Public Sub ApagarProblema(ID_problema As Integer?)
         Dim query As String = $"DELETE FROM Problema
-                                WHERE ID_problema = {ID_problema}"
+                                WHERE ID_problema = {ID_problema};"
 
         Dim comando As New SqlCommand(query, conexao)
+        comando.CommandText = query
+
         conexao.Open()
         comando.ExecuteNonQuery()
-        comando.Parameters.Clear()
         conexao.Close()
 
     End Sub
