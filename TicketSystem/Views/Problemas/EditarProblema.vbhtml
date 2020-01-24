@@ -9,25 +9,21 @@ End Code
 @Using (Html.BeginForm())
     @Html.AntiForgeryToken()
 
+    'form da view fica abaixo desta div
     @<div class="form-horizontal">
-
         <h4>Modo de edição: </h4>
         @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
         @Html.HiddenFor(Function(Modelprob) Modelprob.ID_problema)
 
+        <!-- elemento onde o problema é editado e submissão do mesmo -->
         <div class="form-group">
-
-            <!-- labels titulo -->
             <div class="col-md-12">
                 @Html.LabelFor(Function(Modelprob) Modelprob.descricao)
-
                 @Html.EditorFor(Function(Modelprob) Modelprob.descricao, New With {.class = "class-control"})
                 @Html.ValidationMessageFor(Function(Modelprob) Modelprob.descricao, "", New With {.class = "text-danger"})
                 <input type="submit" value="Guardar" class="btn btn-success" />
-
             </div>
         </div>
-
 
         <!-- butões com as operações respectivas do formulário de edição -->
         <div id="editaProblemas" class="form-group">
@@ -41,10 +37,9 @@ End Code
                 Voltar
             </button>
 
-
-            <!-- Modal -->
+            <!-- Opções do Modal para confirmação do apagamento do registo -->
             <div class="modal fade" id="verificaModal" tabindex="-1" role="dialog" aria-labelledby="modalApagar" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="modalApagar">Confirmação</h5>

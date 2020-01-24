@@ -24,5 +24,7 @@ End Code
             </td>
         </tr>
     Next
-    @Html.ActionLink("Criar Novo Registo", "CriaProblema")
 </table>
+<button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("CriaProblema", "Problemas")'">
+    Novo Registo
+</button>

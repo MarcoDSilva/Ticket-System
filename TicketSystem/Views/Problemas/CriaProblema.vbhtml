@@ -12,8 +12,8 @@ End Code
 
     <div class="form-group">
         <p>
-            <label>Descrição</label>
-            @Html.TextBox("descricao")
+            @Html.LabelFor(Function(ModelProb) ModelProb.descricao)
+            @Html.TextBoxFor(Function(ModelProb) ModelProb.descricao)
         </p>
     </div>
     <input type="submit" name="submit" value="inserir registo" class="btn btn-primary" />
