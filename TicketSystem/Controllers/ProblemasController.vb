@@ -49,7 +49,6 @@ Namespace Controllers
 
         'POST: com a informação que recebe dos dados, actualiza os campos respectivos na bd
         <HttpPost()>
-        <ValidateAntiForgeryToken>
         Function EditarProblema(ID_problema As Integer?, descricao As String) As ActionResult
             Dim problema = LeituraDados($"Select * From Problema WHERE ID_problema = {ID_problema};").First()
 
@@ -66,17 +65,15 @@ Namespace Controllers
 
         'Recebe o ID do elemento a apagar após a confirmação do utilizador , caso haja tentativa de acesso
         'a este controlo sem um ID especifico, a ideia para o futuro é lançar um erro de acesso
-        <ValidateAntiForgeryToken>
         Function ConfirmaApaga(ID_problema As Integer?) As ActionResult
 
             If IsNothing(ID_problema) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             ElseIf ID_problema.HasValue Then
                 conectaBD.ApagarProblema(ID_problema)
-                Return RedirectToAction("Index")
             End If
 
-            Return View()
+            Return RedirectToAction("Index")
         End Function
 
         ''' <summary>
