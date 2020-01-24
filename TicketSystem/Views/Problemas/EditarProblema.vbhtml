@@ -23,18 +23,22 @@ End Code
             <dd>
                 @Html.DisplayFor(Function(Modelprob) Modelprob.descricao)
             </dd>
-            <dt>Edição</dt>
-            <dd>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#verificaModal">
-                    Apagar
-                </button>
-                @*@Html.ActionLink("Novo Registo", "CriaProblema") |*@
-                @Html.ActionLink("Voltar", "Index") |
-
-            </dd>
         </dl>
     </div>
 End Using
+
+
+<div id="editaProblemas">
+    <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#verificaModal">
+        Apagar
+    </button>
+    <button type="button" class="btn btn-success" onclick="location.href='@Url.Action("CriaProblema", "Problemas")'">
+        Novo Registo
+    </button>
+    <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Problemas")'">
+        Voltar
+    </button>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="verificaModal" tabindex="-1" role="dialog" aria-labelledby="modalApagar" aria-hidden="true">
@@ -48,7 +52,7 @@ End Using
             </div>
             <div class="modal-body">Pretende mesmo apagar este problema? Esta operação não é reversivel!</div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" 
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
                         onclick="location.href =
                         '@Url.Action("ConfirmaApaga", "Problemas", New With {.ID_problema = idParaApagar})'">
                     Apagar

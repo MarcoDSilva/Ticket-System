@@ -33,8 +33,8 @@ Namespace Controllers
             Return RedirectToAction("Index")
         End Function
 
-        'POST: recebe a nova descrição e o id do problema a actualizar
-        Function EditarProblema(ID_problema As Integer)
+        'GET: recebe a nova descrição e o id do problema a actualizar
+        Function EditarProblema(ID_problema As Integer) As ActionResult
             If IsNothing(ID_problema) Then
                 Return View()
             Else
@@ -45,10 +45,10 @@ Namespace Controllers
             Return RedirectToAction("Index")
         End Function
 
+        'POST: com a informação que recebe dos dados, actualiza os campos respectivos na bd
         <HttpPost()>
         <ValidateAntiForgeryToken>
-        Function ActualizaProblema(descricao As String, ID_problema As Integer) As ActionResult
-
+        Function EditarProblema(descricao As String, ID_problema As Integer) As ActionResult
 
             Return RedirectToAction("Index")
         End Function
