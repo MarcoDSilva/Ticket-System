@@ -24,13 +24,10 @@ End Code
             </dd>
             <dt>Edição</dt>
             <dd>
-                    @Html.ActionLink("Apagar", $"ApagaProblema/{idParaApagar}", New With {.ID_problema = idParaApagar})
-                    @Html.ActionLink("Novo", "CriaProblema")
-                    @Html.ActionLink("Voltar", "Index")
+                @Html.ActionLink("Apagar", "ApagaProblema", New With {.ID_problema = idParaApagar}) |
+                @Html.ActionLink("Novo Registo", "CriaProblema") |
+                @Html.ActionLink("Voltar para o inicio", "Index")
             </dd>
-
-
         </dl>
-
     </div>
 End Using

@@ -2,7 +2,7 @@
 @Code
     ViewData("Title") = "ApagaProblema"
     Dim idParaApagar = Model.ID_problema
-    Dim apagar As String
+
 End Code
 
 <h2>Confirmação de apagar</h2>
@@ -26,39 +26,13 @@ End Code
             </dd>
             <dt>Confirma que quer apagar este registo?</dt>
             <dd>
-
-                <form action="/" method="post">
-                    <input type="submit" value="apagar" class="btn btn-default" OnClick="verification();" />
-                    @Html.ActionLink("Voltar atrás", "Index")
-                </form>
+                    @Html.ActionLink("Apagar definitivamente", "ConfirmaApaga", New With {.ID_problema = idParaApagar})
+                    @Html.ActionLink("Voltar atrás", "Index")               
             </dd>
         </dl>
     </div>
 
 
 End Using
-
-
-<script type="text/javascript">
-    function verification() {
-
-        var confirmation;
-        if (confirm("Confirma que quer apagar o registo")) {
-            confirmation = "OK";
-        }
-        else {
-            confirmation = "NAO";
-            alert("cancelado");
-        }
-
-        if (confirmation === "OK") {
-            $ajax({
-                type: "POST",
-                url:"www.google.pt"
-                
-            })
-        }
-    };
-</script>
 
 
