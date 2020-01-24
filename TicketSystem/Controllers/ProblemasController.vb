@@ -1,4 +1,5 @@
-﻿Imports System.Web.Mvc
+﻿Imports System.Net
+Imports System.Web.Mvc
 
 Namespace Controllers
     Public Class ProblemasController
@@ -33,10 +34,11 @@ Namespace Controllers
             Return RedirectToAction("Index")
         End Function
 
+
         'GET: recebe a nova descrição e o id do problema a actualizar
         Function EditarProblema(ID_problema As Integer) As ActionResult
             If IsNothing(ID_problema) Then
-                Return View()
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
                 Dim problema = LeituraDados($"Select * From Problema WHERE ID_problema = {ID_problema};").First()
                 Return View(problema)
@@ -48,23 +50,17 @@ Namespace Controllers
         'POST: com a informação que recebe dos dados, actualiza os campos respectivos na bd
         <HttpPost()>
         <ValidateAntiForgeryToken>
-        Function EditarProblema(descricao As String, ID_problema As Integer) As ActionResult
+        Function EditarProblema(ID_problema As Integer?, descricao As String) As ActionResult
+            Dim problema = LeituraDados($"Select * From Problema WHERE ID_problema = {ID_problema};").First()
 
-            Return RedirectToAction("Index")
-        End Function
+            If IsNothing(ID_problema) Or String.IsNullOrEmpty(descricao) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.MethodNotAllowed)
+            Else
+                If problema.ID_problema.Equals(ID_problema) Then
+                    conectaBD.ActualizarProblema(descricao, ID_problema)
+                End If
 
-
-        'POST: recebe o ID do problema que o utilizador pretende apagar
-        'algumas verificações extras podem ter de ser efetuadas aqui
-        Function ApagaProblema(ID_problema As Integer?) As ActionResult
-
-            If IsNothing(ID_problema) Then
-                Return View()
-            ElseIf ID_problema.HasValue Then
-                Dim problema = LeituraDados($"Select * From Problema WHERE ID_problema = {ID_problema};").First()
-                Return View(problema)
             End If
-
             Return RedirectToAction("Index")
         End Function
 
@@ -74,7 +70,7 @@ Namespace Controllers
         Function ConfirmaApaga(ID_problema As Integer?) As ActionResult
 
             If IsNothing(ID_problema) Then
-                Return RedirectToAction("Index")
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             ElseIf ID_problema.HasValue Then
                 conectaBD.ApagarProblema(ID_problema)
                 Return RedirectToAction("Index")
@@ -85,7 +81,7 @@ Namespace Controllers
 
         ''' <summary>
         ''' Método interno à classe, para poder fazer queries de leitura da bd
-        ''' Recebe uma datatable da query feita à bd, e devolve a mesma num formato List(obj Poblema)
+        ''' Recebe uma datatable da query feita à bd, e devolve a mesma num formato List(obj Problema)
         ''' </summary>
         ''' <param name="query"></param>
         ''' <returns></returns>

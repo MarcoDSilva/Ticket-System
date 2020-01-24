@@ -32,12 +32,12 @@ Public Class Manipula_TProblema
     ''' <param name="problema"></param>
     Public Sub ActualizarProblema(problema As String, ID_Problema As Integer)
         Dim query As String = $"UPDATE Problema 
-                                SET descricao = '@desc', dat_hor = CURRENT_TIMESTAMP 
+                                SET descricao = @desc, dat_hor = CURRENT_TIMESTAMP 
                                 WHERE ID_problema = {ID_Problema};"
 
         Dim comando As New SqlCommand(query, conexao)
-        comando.CommandText = query
         comando.Parameters.AddWithValue("@desc", problema) 'substituir ("sanitizing") do problema
+        comando.CommandText = query
 
         conexao.Open()
         comando.ExecuteNonQuery()
