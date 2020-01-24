@@ -68,15 +68,20 @@ Namespace Controllers
 
         'POST: recebe o ID do problema que o utilizador pretende apagar
         'algumas verificações extras podem ter de ser efetuadas aqui
-        Function ApagaProblema(ID_problema As Integer?) As ActionResult
+        Function ApagaProblema(ID_problema As Integer?, confirmaApaga As Boolean?) As ActionResult
 
-            If IsNothing(ID_problema) Then
+
+            If IsNothing(ID_problema) And IsNothing(confirmaApaga) Then
                 Return View()
-            Else
+            ElseIf ID_problema.HasValue And IsNothing(confirmaApaga) Then
                 Dim problemas As Problema = db.Problema.Find(ID_problema)
                 Return View(problemas)
+            ElseIf ID_problema.HasValue And confirmaApaga.Equals(True) Then
+                conectaBD.ApagarProblema(ID_problema)
+                Return RedirectToAction("Index")
             End If
 
+            Return RedirectToAction("Index")
         End Function
 
         <HttpPost()>

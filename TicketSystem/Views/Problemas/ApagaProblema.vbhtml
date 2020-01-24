@@ -25,15 +25,40 @@ End Code
                 @Html.DisplayFor(Function(Modelprob) Modelprob.descricao)
             </dd>
             <dt>Confirma que quer apagar este registo?</dt>
-            <dd> 
+            <dd>
 
                 <form action="/" method="post">
-                    <input type="submit" value="apagar" class="btn btn-default" OnClientClick="alert('Do you want to cancel ?');" />
+                    <input type="submit" value="apagar" class="btn btn-default" OnClick="verification();" />
                     @Html.ActionLink("Voltar atrás", "Index")
                 </form>
             </dd>
         </dl>
     </div>
+
+
 End Using
+
+
+<script type="text/javascript">
+    function verification() {
+
+        var confirmation;
+        if (confirm("Confirma que quer apagar o registo")) {
+            confirmation = "OK";
+        }
+        else {
+            confirmation = "NAO";
+            alert("cancelado");
+        }
+
+        if (confirmation === "OK") {
+            $ajax({
+                type: "POST",
+                url:"www.google.pt"
+                
+            })
+        }
+    };
+</script>
 
 
