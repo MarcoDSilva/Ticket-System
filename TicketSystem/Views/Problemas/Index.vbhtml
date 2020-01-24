@@ -14,15 +14,15 @@ End Code
         <th>@Html.DisplayNameFor(Function(model) model.dat_hor)</th>
     </tr>
 
-@For Each problem In Model
-    @<tr>
-        <td>@Html.DisplayFor(Function(modelproblem) problem.ID_problema)</td>
-        <td>@Html.DisplayFor(Function(modelproblem) problem.descricao)</td>
-        <td>@Html.DisplayFor(Function(modelproblem) problem.dat_hor)</td>
-        <td>
-            @Html.ActionLink("Detalhes", "EditarProblema", New With {.ID_problema = problem.ID_problema})
-        </td>
-    </tr>
-Next
-    
+    @For Each problem In Model
+        @<tr>
+            <td>@Html.DisplayFor(Function(modelproblem) problem.ID_problema)</td>
+            <td>@Html.DisplayFor(Function(modelproblem) problem.descricao)</td>
+            <td>@Html.DisplayFor(Function(modelproblem) problem.dat_hor)</td>
+            <td>
+                @Html.ActionLink("Detalhes", "EditarProblema", New With {.ID_problema = problem.ID_problema})
+            </td>
+        </tr>
+    Next
+    @Html.ActionLink("Criar Novo Registo", "CriaProblema")
 </table>

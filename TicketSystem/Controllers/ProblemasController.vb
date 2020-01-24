@@ -68,6 +68,9 @@ Namespace Controllers
             Return RedirectToAction("Index")
         End Function
 
+        'Recebe o ID do elemento a apagar após a confirmação do utilizador , caso haja tentativa de acesso
+        'a este controlo sem um ID especifico, a ideia para o futuro é lançar um erro de acesso
+        <ValidateAntiForgeryToken>
         Function ConfirmaApaga(ID_problema As Integer?) As ActionResult
 
             If IsNothing(ID_problema) Then
