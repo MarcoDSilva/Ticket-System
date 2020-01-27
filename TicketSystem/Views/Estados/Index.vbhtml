@@ -22,6 +22,6 @@ End Code
     Next
 </table>
 
-<button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("CriaEstado, Estados")'">
+<button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("CriaEstado", "Estados")'">
     Novo Registo
 </button>

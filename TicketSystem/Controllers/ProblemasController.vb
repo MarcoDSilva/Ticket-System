@@ -43,8 +43,6 @@ Namespace Controllers
                 Dim problema = LeituraDados($"Select * From Problema WHERE ID_problema = {ID_problema};").First()
                 Return View(problema)
             End If
-
-            Return RedirectToAction("Index")
         End Function
 
         'POST: com a informação que recebe dos dados, actualiza os campos respectivos na bd
@@ -58,8 +56,8 @@ Namespace Controllers
                 If problema.ID_problema.Equals(ID_problema) Then
                     conectaBD.ActualizarProblema(descricao, ID_problema)
                 End If
-
             End If
+
             Return RedirectToAction("Index")
         End Function
 

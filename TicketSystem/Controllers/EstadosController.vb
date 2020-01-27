@@ -20,18 +20,27 @@ Namespace Controllers
         End Function
 
         'POST: Cria um novo estado consoante a descrição recebida
+        'verifica se foi introduzido algum valor e caso tenha sido, procede à criação desse novo estado e reencaminha para a listagem
+        'caso contrário reencaminha de volta para a view
         <HttpPost()>
         <ValidateAntiForgeryToken>
         Function CriaEstado(descricao As String) As ActionResult
-            Return View()
+
+            If IsNothing(descricao) Then
+                Return View()
+            Else
+                conectaBD.InserirNovoEstado(descricao)
+            End If
+
+            Return RedirectToAction("Index")
         End Function
 
         'GET
-        Function EditaEstado(ID_estado As Integer) As ActionResult
+        Function EditarEstado(ID_estado As Integer) As ActionResult
             Return View()
         End Function
 
-        Function EditaEstado(ID_estado As Integer, descricao As String) As ActionResult
+        Function EditarEstado(ID_estado As Integer, descricao As String) As ActionResult
             Return View()
         End Function
 
