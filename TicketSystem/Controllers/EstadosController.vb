@@ -5,8 +5,7 @@ Namespace Controllers
     Public Class EstadosController
         Inherits Controller
 
-        'acesso à base de dados pelo context e a edição dos dados da mesma pela conectaBD
-        Private db As New TicketSystemDBContext
+        'acesso à base de dados pela conectaBD
         Private conectaBD As New Manipula_TEstado
 
         ' GET: Listagem de Estados

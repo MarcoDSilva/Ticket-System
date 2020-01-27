@@ -11,12 +11,15 @@ Partial Public Class Prioridade
     End Sub
 
     <Key>
+    <Display(Name:="ID")>
     Public Property ID_prioridade As Integer
 
     <Required>
     <StringLength(100)>
+    <Display(Name:="Nível de prioridade")>
     Public Property descricao As String
 
+    <Display(Name:="Ultima actualização")>
     Public Property dat_hor As Date
 
     Public Overridable Property Ticket As ICollection(Of Ticket)

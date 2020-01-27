@@ -5,7 +5,6 @@ Namespace Controllers
     Public Class SoftwaresController
         Inherits Controller
 
-        Private db As New TicketSystemDBContext
         Private conectaBD As New Manipula_TSoftware
 
         ' GET: Softwares

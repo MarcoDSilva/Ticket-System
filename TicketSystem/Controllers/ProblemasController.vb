@@ -5,7 +5,6 @@ Namespace Controllers
     Public Class ProblemasController
         Inherits Controller
 
-        Private db As New TicketSystemDBContext
         Private conectaBD As New Manipula_TProblema
 
         ' GET: Listagem da tabela dos problemas
