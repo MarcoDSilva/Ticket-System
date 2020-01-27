@@ -26,7 +26,7 @@ Namespace Controllers
         <ValidateAntiForgeryToken>
         Function CriaEstado(descricao As String) As ActionResult
 
-            If IsNothing(descricao) Then
+            If String.IsNullOrEmpty(descricao) Then
                 Return View()
             Else
                 conectaBD.InserirNovoEstado(descricao)
@@ -35,19 +35,41 @@ Namespace Controllers
             Return RedirectToAction("Index")
         End Function
 
-        'GET
-        Function EditarEstado(ID_estado As Integer) As ActionResult
-            Return View()
+        'GET - recebe qual é o tipo de estado que vai ser editado
+        Function EditarEstado(ID_estado As Integer?) As ActionResult
+            If IsNothing(ID_estado) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            Else
+                Dim estado = LeituraDados($"SELECT * FROM Estado WHERE ID_estado = {ID_estado};").First()
+                Return View(estado)
+            End If
         End Function
 
-        Function EditarEstado(ID_estado As Integer, descricao As String) As ActionResult
-            Return View()
+        'POST - envia a informação e actualiza o tipo de estado
+        <HttpPost()>
+        Function EditarEstado(ID_estado As Integer?, descricao As String) As ActionResult
+            If IsNothing(ID_estado) And String.IsNullOrEmpty(descricao) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.MethodNotAllowed)
+            Else
+                Dim est = LeituraDados($"SELECT * FROM Estado WHERE ID_estado = {ID_estado};").First()
+                If est.ID_estado.Equals(ID_estado) Then
+                    conectaBD.EditarEstado(descricao, ID_estado)
+                End If
+            End If
+
+            Return RedirectToAction("Index")
         End Function
 
 
-        'POST
-        Function ApagaEstado(ID_estado As Integer) As ActionResult
-            Return View()
+        'Recebe o ID para apagar após a confirmação do user
+        Function ApagarEstado(ID_estado As Integer) As ActionResult
+            If IsNothing(ID_estado) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            Else
+                conectaBD.ApagarEstado(ID_estado)
+            End If
+
+            Return RedirectToAction("Index")
         End Function
 
         ''' <summary>

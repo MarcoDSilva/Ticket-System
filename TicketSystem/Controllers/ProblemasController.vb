@@ -40,7 +40,7 @@ Namespace Controllers
             If IsNothing(ID_problema) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
-                Dim problema = LeituraDados($"Select * From Problema WHERE ID_problema = {ID_problema};").First()
+                Dim problema = LeituraDados($"SELECT * FROM Problema WHERE ID_problema = {ID_problema};").First()
                 Return View(problema)
             End If
         End Function

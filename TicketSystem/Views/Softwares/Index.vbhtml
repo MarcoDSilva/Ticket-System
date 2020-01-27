@@ -1,38 +1,25 @@
 ﻿@ModelType IEnumerable(Of TicketSystem.Software)
 @Code
-ViewData("Title") = "Index"
+    ViewData("Title") = "Index"
 End Code
 
-<h2>Listagem Softwares</h2>
+<h2>Listagem softwares</h2>
 
-<p>
-    @Html.ActionLink("Criar novo", "Create")
-</p>
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(Function(model) model.nome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(Function(model) model.dat_hor)
-        </th>
-        <th></th>
+        <th>@Html.DisplayNameFor(Function(modelSoft) modelSoft.ID_software)</th>
+        <th>@Html.DisplayNameFor(Function(modelSoft) modelSoft.nome)</th>
+        <th>@Html.DisplayNameFor(Function(modelSoft) modelSoft.dat_hor)</th>
     </tr>
 
-@For Each item In Model
-    @<tr>
-        <td>
-            @Html.DisplayFor(Function(modelItem) item.nome)
-        </td>
-        <td>
-            @Html.DisplayFor(Function(modelItem) item.dat_hor)
-        </td>
-        <td>
-            @Html.ActionLink("Editar", "Edit", New With {.id = item.ID_software}) |
-            @Html.ActionLink("Detailhes", "Details", New With {.id = item.ID_software}) |
-            @Html.ActionLink("Apagar", "Delete", New With {.id = item.ID_software})
-        </td>
-    </tr>
-Next
+    @For Each software In Model
+        @<tr>
+            <td>@Html.DisplayFor(Function(modelSoft) software.ID_software)</td>
+            <td>@Html.DisplayFor(Function(modelSoft) software.nome)</td>
+            <td>@Html.DisplayFor(Function(modelSoft) software.dat_hor)</td>
+            <td>@Html.ActionLink("Detalhes", "EditarSoftware", New With {.ID_software = software.ID_software})</td>
+        </tr>
+
+    Next
 
 </table>

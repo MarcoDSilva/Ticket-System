@@ -1,109 +1,71 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Data
-Imports System.Data.Entity
-Imports System.Linq
+﻿Imports System.Web.Mvc
 Imports System.Net
-Imports System.Web
-Imports System.Web.Mvc
-Imports TicketSystem
 
 Namespace Controllers
     Public Class SoftwaresController
-        Inherits System.Web.Mvc.Controller
+        Inherits Controller
 
         Private db As New TicketSystemDBContext
+        Private conectaBD As New Manipula_TSoftware
 
         ' GET: Softwares
         Function Index() As ActionResult
-            Return View(db.Software.ToList())
+            Return View(LeituraDados("SELECT * FROM Software;"))
         End Function
 
-        ' GET: Softwares/Details/5
-        Function Details(ByVal id As Integer?) As ActionResult
-            If IsNothing(id) Then
+        'GET: Softwares/EditarSoftware/ID_Software
+        Function EditarSoftware(ID_software As Integer) As ActionResult
+            If IsNothing(ID_software) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            Else
+                Dim software = LeituraDados($"SELECT * FROM Software WHERE ID_software = {ID_software};")
+                Return View(software)
             End If
-            Dim software As Software = db.Software.Find(id)
-            If IsNothing(software) Then
-                Return HttpNotFound()
-            End If
-            Return View(software)
         End Function
 
-        ' GET: Softwares/Create
-        Function Create() As ActionResult
+        <HttpPost()>
+        Function EditarSoftware(ID_sofware As Integer, nome As String) As ActionResult
             Return View()
         End Function
 
-        ' POST: Softwares/Create
-        'To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        'more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        <HttpPost()>
-        <ValidateAntiForgeryToken()>
-        Function Create(<Bind(Include:="ID_software,nome,dat_hor")> ByVal software As Software) As ActionResult
-            If ModelState.IsValid Then
-                db.Software.Add(software)
-                db.SaveChanges()
+        Function CriaSoftware(nome As String) As ActionResult
+            If String.IsNullOrEmpty(nome) Then
+                Return View()
+            Else
+                conectaBD.AdicionaSoftware(nome)
                 Return RedirectToAction("Index")
             End If
-            Return View(software)
+
         End Function
 
-        ' GET: Softwares/Edit/5
-        Function Edit(ByVal id As Integer?) As ActionResult
-            If IsNothing(id) Then
-                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
-            End If
-            Dim software As Software = db.Software.Find(id)
-            If IsNothing(software) Then
-                Return HttpNotFound()
-            End If
-            Return View(software)
+        Function ApagarSoftware(ID_software As Integer) As ActionResult
+            Return View()
         End Function
 
-        ' POST: Softwares/Edit/5
-        'To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        'more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        <HttpPost()>
-        <ValidateAntiForgeryToken()>
-        Function Edit(<Bind(Include:="ID_software,nome,dat_hor")> ByVal software As Software) As ActionResult
-            If ModelState.IsValid Then
-                db.Entry(software).State = EntityState.Modified
-                db.SaveChanges()
-                Return RedirectToAction("Index")
-            End If
-            Return View(software)
+
+        ''' <summary>
+        ''' Método interno utilizado para ler dados da bd
+        ''' </summary>
+        ''' <param name="query"></param>
+        ''' <returns></returns>
+        Function LeituraDados(query As String) As List(Of Software)
+
+            Dim tabelaDados As DataTable = conectaBD.LeituraTabela(query)
+            Dim listagemSoftware As List(Of Software) = New List(Of Software)
+
+            'fazemos um ciclo, que vai iterar por cada elemento que recebenos da base de dados
+            'criamos um novo objecto do tipo Softwares, onde atribuimos os dados da iteração actual
+            'e no fim após a atribuição desses dados, inserimos numa List(a) de Softwares, o qual usamos para retornar os dados
+            For Each item In tabelaDados.AsEnumerable
+                Dim est As New Software()
+                est.ID_software = item(0)
+                est.nome = item(1)
+                est.dat_hor = item(2)
+                listagemSoftware.Add(est)
+            Next
+
+            Return listagemSoftware
         End Function
 
-        ' GET: Softwares/Delete/5
-        Function Delete(ByVal id As Integer?) As ActionResult
-            If IsNothing(id) Then
-                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
-            End If
-            Dim software As Software = db.Software.Find(id)
-            If IsNothing(software) Then
-                Return HttpNotFound()
-            End If
-            Return View(software)
-        End Function
-
-        ' POST: Softwares/Delete/5
-        <HttpPost()>
-        <ActionName("Delete")>
-        <ValidateAntiForgeryToken()>
-        Function DeleteConfirmed(ByVal id As Integer) As ActionResult
-            Dim software As Software = db.Software.Find(id)
-            db.Software.Remove(software)
-            db.SaveChanges()
-            Return RedirectToAction("Index")
-        End Function
-
-        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
-            If (disposing) Then
-                db.Dispose()
-            End If
-            MyBase.Dispose(disposing)
-        End Sub
     End Class
 End Namespace
