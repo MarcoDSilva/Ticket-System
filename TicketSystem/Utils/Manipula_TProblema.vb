@@ -18,11 +18,7 @@ Public Class Manipula_TProblema
         Dim comando As New SqlCommand(query, conexao)
         comando.Parameters.AddWithValue("@prob", problema)
 
-        conexao.Open()
-        comando.ExecuteNonQuery()
-        comando.Parameters.Clear()
-        conexao.Close()
-
+        ExecutaComandos(comando)
     End Sub
 
     ''' <summary>
@@ -39,10 +35,7 @@ Public Class Manipula_TProblema
         comando.Parameters.AddWithValue("@desc", problema) 'substituir ("sanitizing") do problema
         comando.CommandText = query
 
-        conexao.Open()
-        comando.ExecuteNonQuery()
-        comando.Parameters.Clear()
-        conexao.Close()
+        ExecutaComandos(comando)
     End Sub
 
     ''' <summary>
@@ -57,10 +50,19 @@ Public Class Manipula_TProblema
         Dim comando As New SqlCommand(query, conexao)
         comando.CommandText = query
 
+        ExecutaComandos(comando)
+    End Sub
+
+    ''' <summary>
+    ''' metodo que executa os comandos/queries a serem executadas na base de dados
+    ''' Utilizado apenas para evitar repetição no código
+    ''' </summary>
+    ''' <param name="comando"></param>
+    Private Sub ExecutaComandos(comando As SqlCommand)
         conexao.Open()
         comando.ExecuteNonQuery()
+        comando.Parameters.Clear()
         conexao.Close()
-
     End Sub
 
 End Class

@@ -86,6 +86,9 @@ Namespace Controllers
             Dim tabelaDados As DataTable = conectaBD.LeituraTabela(query)
             Dim listagemProblemas As List(Of Problema) = New List(Of Problema)
 
+            'fazemos um ciclo, que vai iterar por cada elemento que recebenos da base de dados
+            'criamos um novo objecto do tipo Problema, onde atribuimos os dados da iteração actual
+            'e no fim após a atribuição desses dados, inserimos numa List(a) de Problemas, o qual usamos para retornar os dados
             For Each item In tabelaDados.AsEnumerable
                 Dim p As Problema = New Problema()
                 p.ID_problema = item(0)

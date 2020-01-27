@@ -5,11 +5,39 @@ Namespace Controllers
     Public Class EstadosController
         Inherits Controller
 
-        Private db As TicketSystemDBContext
-        Private conectaBD As Manipula_TEstado
+        'acesso à base de dados pelo context e a edição dos dados da mesma pela conectaBD
+        Private db As New TicketSystemDBContext
+        Private conectaBD As New Manipula_TEstado
 
         ' GET: Listagem de Estados
         Function Index() As ActionResult
+            Return View(LeituraDados("SELECT * FROM Estado"))
+        End Function
+
+        'GET: Estados/CriaEstado
+        Function CriaEstado() As ActionResult
+            Return View()
+        End Function
+
+        'POST: Cria um novo estado consoante a descrição recebida
+        <HttpPost()>
+        <ValidateAntiForgeryToken>
+        Function CriaEstado(descricao As String) As ActionResult
+            Return View()
+        End Function
+
+        'GET
+        Function EditaEstado(ID_estado As Integer) As ActionResult
+            Return View()
+        End Function
+
+        Function EditaEstado(ID_estado As Integer, descricao As String) As ActionResult
+            Return View()
+        End Function
+
+
+        'POST
+        Function ApagaEstado(ID_estado As Integer) As ActionResult
             Return View()
         End Function
 
@@ -19,14 +47,22 @@ Namespace Controllers
         ''' <param name="query"></param>
         ''' <returns></returns>
         Function LeituraDados(query As String) As List(Of Estado)
+
             Dim tabelaDados As DataTable = conectaBD.LeituraTabela(query)
             Dim listagemEstados As List(Of Estado) = New List(Of Estado)
 
+            'fazemos um ciclo, que vai iterar por cada elemento que recebenos da base de dados
+            'criamos um novo objecto do tipo Estado, onde atribuimos os dados da iteração actual
+            'e no fim após a atribuição desses dados, inserimos numa List(a) de Estados, o qual usamos para retornar os dados
             For Each item In tabelaDados.AsEnumerable
                 Dim est As New Estado()
-
+                est.ID_estado = item(0)
+                est.descricao = item(1)
+                est.dat_hor = item(2)
+                listagemEstados.Add(est)
             Next
-            ' Return listagemProblemas
+
+            Return listagemEstados
         End Function
 
     End Class
