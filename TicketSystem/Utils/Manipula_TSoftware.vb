@@ -7,7 +7,7 @@ Public Class Manipula_TSoftware
     Private ReadOnly conexao As New SqlConnection(Conector.stringConnection)
 
     Public Sub AdicionaSoftware(software As String)
-        Dim query As String = "INSERT INTO Software VALUES ('@soft', CURRENT_TIMESTAMP);"
+        Dim query As String = "INSERT INTO Software VALUES (@soft, CURRENT_TIMESTAMP);"
         Dim comando As New SqlCommand(query, conexao)
 
         comando.Parameters.AddWithValue("@soft", software)
@@ -15,7 +15,7 @@ Public Class Manipula_TSoftware
     End Sub
 
     Public Sub EditarSoftware(software As String, ID_software As Integer)
-        Dim query As String = $"UPDATE Software SET nome = @soft, dat_time = CURRENT_TIMESTAMP WHERE ID_software = {ID_software};"
+        Dim query As String = $"UPDATE Software SET nome = @soft, dat_hor = CURRENT_TIMESTAMP WHERE ID_software = {ID_software};"
         Dim comando As New SqlCommand(query, conexao)
 
         comando.Parameters.AddWithValue("@soft", software)

@@ -158,10 +158,24 @@
     <Compile Include="App_Start\BundleConfig.vb" />
     <Compile Include="App_Start\FilterConfig.vb" />
     <Compile Include="App_Start\RouteConfig.vb" />
+    <Compile Include="Controllers\EstadosController.vb" />
+    <Compile Include="Controllers\ProblemasController.vb" />
+    <Compile Include="Controllers\SoftwaresController.vb" />
     <Compile Include="Global.asax.vb">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Cliente.vb" />
+    <Compile Include="Models\Estado.vb" />
+    <Compile Include="Models\Evento.vb" />
+    <Compile Include="Models\Origem.vb" />
+    <Compile Include="Models\Prioridade.vb" />
+    <Compile Include="Models\Problema.vb" />
+    <Compile Include="Models\Software.vb" />
+    <Compile Include="Models\sysdiagrams.vb" />
+    <Compile Include="Models\Tecnico.vb" />
+    <Compile Include="Models\Ticket.vb" />
     <Compile Include="Models\TicketSystemDBContext.vb" />
+    <Compile Include="Models\Utilizador.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -178,6 +192,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Controllers\HomeController.vb" />
+    <Compile Include="Utils\Manipula_TEstado.vb" />
+    <Compile Include="Utils\ObterDados.vb" />
+    <Compile Include="Utils\Manipula_TProblema.vb" />
+    <Compile Include="Utils\Conector.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -218,6 +236,16 @@
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+    <Content Include="Views\Problemas\Index.vbhtml" />
+    <Content Include="Views\Problemas\CriaProblema.vbhtml" />
+    <Content Include="Views\Problemas\EditarProblema.vbhtml" />
+    <Content Include="Views\Estados\Index.vbhtml" />
+    <Content Include="Views\Estados\CriaEstado.vbhtml" />
+    <Content Include="Views\Estados\EditarEstado.vbhtml" />
+    <Compile Include="Utils\Manipula_TSoftware.vb" />
+    <Content Include="Views\Softwares\Index.vbhtml" />
+    <Content Include="Views\Softwares\EditarSoftware.vbhtml" />
+    <Content Include="Views\Softwares\CriaSoftware.vbhtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
@@ -248,7 +276,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Utils\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

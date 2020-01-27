@@ -14,20 +14,47 @@ Namespace Controllers
         End Function
 
         'GET: Softwares/EditarSoftware/ID_Software
+        ''' <summary>
+        ''' Recebe como input o software para procurar, e devolve-o com campos de edição
+        ''' </summary>
+        ''' <param name="ID_software"></param>
+        ''' <returns></returns>
         Function EditarSoftware(ID_software As Integer) As ActionResult
             If IsNothing(ID_software) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
-                Dim software = LeituraDados($"SELECT * FROM Software WHERE ID_software = {ID_software};")
+                Dim software = LeituraDados($"SELECT * FROM Software WHERE ID_software = {ID_software};").First()
                 Return View(software)
             End If
         End Function
 
+        'POST: Actualizar o software se os parametros estiverem corretos
+        ''' <summary>
+        ''' Após o software ter sido enviado no campo de edição, faz as validações correspondentes
+        ''' para actualizar o mesmo
+        ''' </summary>
+        ''' <param name="ID_software"></param>
+        ''' <param name="nome"></param>
+        ''' <returns></returns>
         <HttpPost()>
-        Function EditarSoftware(ID_sofware As Integer, nome As String) As ActionResult
-            Return View()
+        Function EditarSoftware(ID_software As Integer, nome As String) As ActionResult
+            If IsNothing(ID_software) Or String.IsNullOrEmpty(nome) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            Else
+                Dim software = LeituraDados($"SELECT * FROM Software WHERE ID_software = {ID_software};").First()
+                If software.ID_software.Equals(ID_software) Then
+                    conectaBD.EditarSoftware(nome, ID_software)
+                End If
+            End If
+
+            Return RedirectToAction("Index")
         End Function
 
+        ''' <summary>
+        ''' Cria um novo software
+        ''' </summary>
+        ''' <param name="nome"></param>
+        ''' <returns></returns>
         Function CriaSoftware(nome As String) As ActionResult
             If String.IsNullOrEmpty(nome) Then
                 Return View()
@@ -38,8 +65,18 @@ Namespace Controllers
 
         End Function
 
+        ''' <summary>
+        ''' Apaga o software escolhido pelo utilizador
+        ''' </summary>
+        ''' <param name="ID_software"></param>
+        ''' <returns></returns>
         Function ApagarSoftware(ID_software As Integer) As ActionResult
-            Return View()
+            If IsNothing(ID_software) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            Else
+                conectaBD.ApagarSoftware(ID_software)
+            End If
+            Return RedirectToAction("Index")
         End Function
 
 

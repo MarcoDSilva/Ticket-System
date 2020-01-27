@@ -21,5 +21,8 @@ End Code
         </tr>
 
     Next
-
 </table>
+
+<button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("CriaSoftware", "Softwares")'">
+    Novo Registo
+</button>
