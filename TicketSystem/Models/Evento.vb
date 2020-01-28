@@ -16,7 +16,7 @@ Partial Public Class Evento
     <Required>
     Public Property descricao As String
 
-    <Display(Name:="ID")>
+    <Display(Name:="Técnico")>
     Public Property ID_tecnico As Integer
 
     <Display(Name:="Data de abertura")>
