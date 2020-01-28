@@ -20,6 +20,7 @@ Partial Public Class Tecnico
     <StringLength(100)>
     Public Property nome As String
 
+    <Display(Name:="Email")>
     <Required>
     <StringLength(255)>
     Public Property email As String

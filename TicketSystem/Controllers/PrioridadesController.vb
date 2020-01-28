@@ -8,12 +8,31 @@ Namespace Controllers
         'utilizada para fazer a conexão com o SQL e a Tabela na bd
         Private conectaBD As New Manipula_TPrioridade
 
-
         ' GET: Prioridades
         Function Index() As ActionResult
             Return View(LeituraDados("SELECT * FROM Prioridade;"))
         End Function
 
+        'GET : Prioridade/CriaPrioridade
+        Function CriaPrioridade() As ActionResult
+            Return View()
+        End Function
+
+        'POST: criar um novo registo na tabela das prioridades
+        'verifica se foi introduzido algum valor na view e se foi tenta actualizar a base de dados e reencaminha para a view da listagem
+        'caso contrário retorna a view actual da inserção de novos problemas
+        <HttpPost()>
+        <ValidateAntiForgeryToken>
+        Function CriaPrioridade(descricao As String) As ActionResult
+
+            If String.IsNullOrEmpty(descricao).Equals(False) Then
+                conectaBD.InserirNovaPrioridade(descricao)
+            Else
+                Return View()
+            End If
+
+            Return RedirectToAction("Index")
+        End Function
 
         'GET: prioridades/EditarPrioridade/ID_prioridade
         ''' <summary>
@@ -53,21 +72,6 @@ Namespace Controllers
         End Function
 
         ''' <summary>
-        ''' Cria uma nova prioridade
-        ''' </summary>
-        ''' <param name="descricao"></param>
-        ''' <returns></returns>
-        Function CriaPrioridade(descricao As String) As ActionResult
-            If String.IsNullOrEmpty(descricao) Then
-                Return View()
-            Else
-                conectaBD.ApagarPrioridade(descricao)
-                Return RedirectToAction("Index")
-            End If
-
-        End Function
-
-        ''' <summary>
         ''' Apaga a prioridade escolhido pelo utilizador
         ''' </summary>
         ''' <param name="ID_prioridade"></param>
@@ -80,7 +84,6 @@ Namespace Controllers
             End If
             Return RedirectToAction("Index")
         End Function
-
 
         ''' <summary>
         ''' Método interno utilizado para ler dados da bd
