@@ -15,7 +15,7 @@ Public Class Manipula_TOrigem
     End Sub
 
     Public Sub EditarOrigem(descricao As String, ID_origem As Integer)
-        Dim query As String = $"UPDATE Origem SET origem = @org , dat_hor = CURRENT_TIMESTAMP WHERE ID_origem = {ID_origem};"
+        Dim query As String = $"UPDATE Origem SET descricao = @org , dat_hor = CURRENT_TIMESTAMP WHERE ID_origem = {ID_origem};"
         Dim comando As New SqlCommand(query, conexao)
 
         comando.Parameters.AddWithValue("@org", descricao)

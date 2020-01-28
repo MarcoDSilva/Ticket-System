@@ -30,21 +30,47 @@ Namespace Controllers
             Return RedirectToAction("Index")
         End Function
 
-        'GET
-        Function EditaOrigem(ID_origem As Integer)
+        'GET - obtem a view para editar os dados correspondentes
+        Function EditarOrigem(ID_origem As Integer)
             If IsNothing(ID_origem) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.Forbidden)
             Else
-                Return View()
+                Return View(LeituraDados($"Select * from Origem WHERE ID_origem = {ID_origem}").First())
             End If
         End Function
 
         'POST
         <HttpPost()>
         <ValidateAntiForgeryToken>
-        Function EditaOrigem(ID_origem As Integer, descricao As String)
-
+        Function EditarOrigem(ID_origem As Integer, descricao As String)
+            If IsNothing(ID_origem) Or String.IsNullOrEmpty(descricao) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadGateway)
+            Else
+                Dim origem = LeituraDados($"SELECT * FROM Origem where ID_origem = {ID_origem}").First()
+                If origem.ID_origem.Equals(ID_origem) Then
+                    conectaBD.EditarOrigem(descricao, ID_origem)
+                End If
+                Return RedirectToAction("Index")
+            End If
         End Function
+
+        ''' <summary>
+        ''' Apaga a origem consoante o id ser válido
+        ''' </summary>
+        ''' <param name="ID_origem"></param>
+        ''' <returns></returns>
+        Function ApagarOrigem(ID_origem As Integer)
+            If IsNothing(ID_origem) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.Forbidden)
+            Else
+                Dim origem = LeituraDados($"SELECT * FROM Origem WHERE ID_origem = {ID_origem}").First()
+                If origem.ID_origem.Equals(ID_origem) Then
+                    conectaBD.ApagarOrigem(ID_origem)
+                End If
+            End If
+            Return RedirectToAction("Index")
+        End Function
+
 
         ''' <summary>
         ''' Método interno utilizado para ler dados da bd
