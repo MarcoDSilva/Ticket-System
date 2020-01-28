@@ -49,6 +49,21 @@ Namespace Controllers
             Return RedirectToAction("Index")
         End Function
 
+        '
+        Function ApagarTecnico(ID_tecnico As Integer?) As ActionResult
+            If IsNothing(ID_tecnico) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.Forbidden)
+            Else
+                Dim tecnico = LeituraDados($"SELECT * FROM Tecnico WHERE ID_tecnico = {ID_tecnico};").First()
+
+                If tecnico.ID_tecnico.Equals(ID_tecnico) Then
+                    conectaBD.ApagaTecnico(ID_tecnico)
+                End If
+                Return RedirectToAction("Index")
+            End If
+        End Function
+
+
         ''' <summary>
         ''' Método interno utilizado para ler dados da bd
         ''' </summary>

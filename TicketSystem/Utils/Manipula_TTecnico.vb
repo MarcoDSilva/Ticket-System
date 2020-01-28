@@ -27,7 +27,7 @@ Public Class Manipula_TTecnico
     End Sub
 
     Public Sub ApagaTecnico(ID_tecnico As Integer)
-        Dim query As String = "DELETE FROM Tecnico WHERE ID_tecnico = {ID_tecnico}"
+        Dim query As String = $"DELETE FROM Tecnico WHERE ID_tecnico = {ID_tecnico}"
         Dim comando As New SqlCommand(query, conexao)
         ExecutaComandos(comando)
     End Sub

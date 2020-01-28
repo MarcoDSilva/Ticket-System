@@ -11,15 +11,19 @@ End Code
         @Html.AntiForgeryToken()
 
         @<div class="form-group">
-            <p>
-                @Html.LabelFor(Function(modelTec) modelTec.nome)
-                @Html.TextBoxFor(Function(modelTec) modelTec.nome)
-            </p>
-            <p>
-                @Html.LabelFor(Function(modelTec) modelTec.email)
-                @Html.TextBoxFor(Function(modelTec) modelTec.email)
-            </p>
-            <input type="submit" class="btn btn-primary" value="Inserir Registo" />
-        </div>
+    <p>
+        @Html.LabelFor(Function(modelTec) modelTec.nome)
+        @Html.TextBoxFor(Function(modelTec) modelTec.nome)
+    </p>
+    <p>
+        @Html.LabelFor(Function(modelTec) modelTec.email)
+        @Html.TextBoxFor(Function(modelTec) modelTec.email)
+    </p>
+    <input type="submit" class="btn btn-primary" value="Inserir Registo" />
+    <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index", "Tecnicos")'">
+        Voltar
+    </button>
+</div>
     End Using
 </div>
+
