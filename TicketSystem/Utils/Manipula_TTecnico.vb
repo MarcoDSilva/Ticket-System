@@ -17,7 +17,7 @@ Public Class Manipula_TTecnico
     End Sub
 
     Public Sub EditaTecnico(nome As String, email As String, ID_tecnico As Integer)
-        Dim query As String = "UPDATE Tecnico SET nome = @tecn, email = @malito, dat_hor = CURRENT_TIMESTAMP;"
+        Dim query As String = $"UPDATE Tecnico SET nome = @tecn, email = @malito, dat_hor = CURRENT_TIMESTAMP WHERE ID_tecnico = {ID_tecnico};"
         Dim comando As New SqlCommand(query, conexao)
 
         comando.Parameters.AddWithValue("@tecn", nome)

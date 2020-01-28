@@ -19,6 +19,7 @@ End Code
             <td>@Html.DisplayFor(Function(modelTec) tecnico.nome)</td>
             <td>@Html.DisplayFor(Function(modelTec) tecnico.email)</td>
             <td>@Html.DisplayFor(Function(modelTec) tecnico.dat_hor)</td>
+            <td>@Html.ActionLink("Detalhes", "EditarTecnico", New With {.ID_tecnico = tecnico.ID_tecnico})</td>
         </tr>
     Next
 </table>

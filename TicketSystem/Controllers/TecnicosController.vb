@@ -30,13 +30,23 @@ Namespace Controllers
         End Function
 
         'GET:
-        Function EditarTecnico(ID_tecnico As Integer) As ActionResult
-
+        Function EditarTecnico(ID_tecnico As Integer?) As ActionResult
+            Return View(LeituraDados($"SELECT * FROM Tecnico WHERE ID_tecnico = {ID_tecnico}").First())
         End Function
 
         'POST:
-        Function EditarTecnico() As ActionResult
-
+        <HttpPost()>
+        <ValidateAntiForgeryToken()>
+        Function EditarTecnico(nome As String, email As String, ID_tecnico As Integer?) As ActionResult
+            If String.IsNullOrEmpty(nome) Or String.IsNullOrEmpty(email) Or ID_tecnico.HasValue.Equals(False) Then
+                Return View()
+            Else
+                Dim tecnico = LeituraDados($"SELECT * FROM Tecnico WHERE ID_tecnico = {ID_tecnico}").First()
+                If tecnico.ID_tecnico.Equals(ID_tecnico) Then
+                    conectaBD.EditaTecnico(nome, email, ID_tecnico)
+                End If
+            End If
+            Return RedirectToAction("Index")
         End Function
 
         ''' <summary>
