@@ -36,23 +36,10 @@ Partial Public Class TicketSystemDBContext
             .HasForeignKey(Function(e) e.ID_cliente) _
             .WillCascadeOnDelete(False)
 
-        modelBuilder.Entity(Of Estado)() _
-            .HasOptional(Function(e) e.Ticket) _
-            .WithRequired(Function(e) e.Estado)
 
         modelBuilder.Entity(Of Evento)() _
             .Property(Function(e) e.descricao) _
             .IsUnicode(False)
-
-        modelBuilder.Entity(Of Evento)() _
-            .HasMany(Function(e) e.Ticket1) _
-            .WithRequired(Function(e) e.Evento1) _
-            .HasForeignKey(Function(e) e.ID_evento) _
-            .WillCascadeOnDelete(False)
-
-        modelBuilder.Entity(Of Origem)() _
-            .HasOptional(Function(e) e.Ticket) _
-            .WithRequired(Function(e) e.Origem)
 
         modelBuilder.Entity(Of Prioridade)() _
             .HasMany(Function(e) e.Ticket) _
@@ -94,9 +81,5 @@ Partial Public Class TicketSystemDBContext
             .WithRequired(Function(e) e.Utilizador) _
             .HasForeignKey(Function(e) e.ID_utilizador) _
             .WillCascadeOnDelete(False)
-
-        modelBuilder.Entity(Of Utilizador)() _
-            .HasOptional(Function(e) e.Ticket) _
-            .WithRequired(Function(e) e.Utilizador)
     End Sub
 End Class

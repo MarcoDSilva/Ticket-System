@@ -46,9 +46,6 @@ Partial Public Class Ticket
     <Display(Name:="Estado")>
     Public Property ID_estado As Integer
 
-    <Display(Name:="Evento")>
-    Public Property ID_evento As Integer
-
     <Display(Name:="Prioridade")>
     Public Property ID_prioridade As Integer
 
@@ -67,8 +64,6 @@ Partial Public Class Ticket
     Public Overridable Property Estado As Estado
 
     Public Overridable Property Evento As ICollection(Of Evento)
-
-    Public Overridable Property Evento1 As Evento
 
     Public Overridable Property Origem As Origem
 

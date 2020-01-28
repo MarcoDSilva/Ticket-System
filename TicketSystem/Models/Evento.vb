@@ -6,9 +6,6 @@ Imports System.Data.Entity.Spatial
 
 <Table("Evento")>
 Partial Public Class Evento
-    Public Sub New()
-        Ticket1 = New HashSet(Of Ticket)()
-    End Sub
 
     <Key>
     <Display(Name:="ID")>
@@ -39,5 +36,4 @@ Partial Public Class Evento
 
     Public Overridable Property Ticket As Ticket
 
-    Public Overridable Property Ticket1 As ICollection(Of Ticket)
 End Class

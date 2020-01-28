@@ -18,5 +18,5 @@ Partial Public Class Estado
     <Display(Name:="Ultima actualização")>
     Public Property dat_hor As Date
 
-    Public Overridable Property Ticket As Ticket
+    Public Overridable Property Ticket As ICollection(Of Ticket)
 End Class

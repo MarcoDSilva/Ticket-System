@@ -6,6 +6,10 @@ Imports System.Data.Entity.Spatial
 
 <Table("Origem")>
 Partial Public Class Origem
+    Public Sub New()
+        Ticket = New HashSet(Of Ticket)()
+    End Sub
+
     <Key>
     <Display(Name:="ID")>
     Public Property ID_origem As Integer
@@ -18,5 +22,5 @@ Partial Public Class Origem
     <Display(Name:="Ultima actualização")>
     Public Property dat_hor As Date
 
-    Public Overridable Property Ticket As Ticket
+    Public Overridable Property Ticket As ICollection(Of Ticket)
 End Class

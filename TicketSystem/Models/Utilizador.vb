@@ -8,6 +8,7 @@ Imports System.Data.Entity.Spatial
 Partial Public Class Utilizador
     Public Sub New()
         Cliente = New HashSet(Of Cliente)()
+        Ticket = New HashSet(Of Ticket)()
     End Sub
 
     <Key>
@@ -40,5 +41,5 @@ Partial Public Class Utilizador
 
     Public Overridable Property Cliente1 As Cliente
 
-    Public Overridable Property Ticket As Ticket
+    Public Overridable Property Ticket As ICollection(Of Ticket)
 End Class
