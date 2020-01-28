@@ -53,7 +53,7 @@ Partial Public Class Ticket
     Public Property ID_prioridade As Integer
 
     <Display(Name:="Utilizador")>
-    Public Property ID_utilizador As Integer
+    Public Property ID_utilizador As Integer?
 
     <Display(Name:="Origem")>
     Public Property ID_origem As Integer

@@ -30,7 +30,7 @@ Partial Public Class Utilizador
     Public Property email As String
 
     <Display(Name:="Cliente")>
-    Public Property ID_cliente As Integer
+    Public Property ID_cliente As Integer?
 
     <Display(Name:="Ultima actualização")>
     Public Property dat_hor As Date

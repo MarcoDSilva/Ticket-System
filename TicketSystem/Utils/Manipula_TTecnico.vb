@@ -4,7 +4,7 @@ Public Class Manipula_TTecnico
     Inherits ObterDados
 
     'conecta SC
-    Dim conexao As New SqlConnection(Conector.stringConnection)
+    Private ReadOnly conexao As New SqlConnection(Conector.stringConnection)
 
     Public Sub AdicionaTecnico(nome As String, email As String)
         Dim query As String = "INSERT INTO Tecnico Values (@tecn, @malito, CURRENT_TIMESTAMP)"
