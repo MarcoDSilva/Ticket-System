@@ -1,5 +1,5 @@
 ﻿Imports System.Web.Mvc
-
+Imports System.Net
 Namespace Controllers
     Public Class OrigensController
         Inherits Controller
@@ -10,6 +10,40 @@ Namespace Controllers
         ' GET: Origens
         Function Index() As ActionResult
             Return View(LeituraDados("SELECT * FROM Origem;"))
+        End Function
+
+        'GET: 
+        Function CriaOrigem() As ActionResult
+            Return View()
+        End Function
+
+        'POST
+        'Recebe o input e cria nova descrição, ou mantém a página na view pré-definida
+        <HttpPost()>
+        <ValidateAntiForgeryToken>
+        Function CriaOrigem(descricao As String) As ActionResult
+            If String.IsNullOrEmpty(descricao) Then
+                Return View()
+            Else
+                conectaBD.AdicionarOrigem(descricao)
+            End If
+            Return RedirectToAction("Index")
+        End Function
+
+        'GET
+        Function EditaOrigem(ID_origem As Integer)
+            If IsNothing(ID_origem) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.Forbidden)
+            Else
+                Return View()
+            End If
+        End Function
+
+        'POST
+        <HttpPost()>
+        <ValidateAntiForgeryToken>
+        Function EditaOrigem(ID_origem As Integer, descricao As String)
+
         End Function
 
         ''' <summary>
