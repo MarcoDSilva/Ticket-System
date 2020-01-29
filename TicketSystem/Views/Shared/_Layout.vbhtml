@@ -29,6 +29,8 @@
                     <li>@Html.ActionLink("Prioridades", "Index", "Prioridades")</li>
                     <li>@Html.ActionLink("Origens", "Index", "Origens")</li>
                     <li>@Html.ActionLink("Tecnicos", "Index", "Tecnicos")</li>
+                    <li>@Html.ActionLink("Eventos", "Index", "Eventos")</li>
+
                 </ul>
 
             </div>

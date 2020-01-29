@@ -6,8 +6,10 @@ Public Class Manipula_TEvento
     'conexao ja feita com a sc
     Private ReadOnly conexao As New SqlConnection(Conector.stringConnection)
 
-    Public Sub AdicionaEvento(descricao As String, ID_tecnico As Integer, dataAbertura As DateTime, dataFecho As DateTime, ID_ticket As Integer)
-        Dim query As String = $"Insert into Evento Values(@desc, {ID_tecnico},'{dataAbertura}','{dataFecho}',{ID_ticket},CURRENT_TIMESTAMP);"
+    Public Sub AdicionaEvento(descricao As String, ID_tecnico As Integer, dataFecho As String, ID_ticket As Integer)
+        Dim query As String = $"Insert into Evento Values(@desc, {ID_tecnico}, 
+                                CURRENT_TIMESTAMP, CAST({dataFecho} AS DATETIME), 
+                                {ID_ticket} , CURRENT_TIMESTAMP);"
         Dim comando As New SqlCommand(query, conexao)
         comando.Parameters.AddWithValue("@desc", descricao)
         ExecutaComandos(comando)

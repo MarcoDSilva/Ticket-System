@@ -1,4 +1,6 @@
-﻿Imports System.Web.Mvc
+﻿Imports System.Globalization
+Imports System.Net
+Imports System.Web.Mvc
 
 Namespace Controllers
     Public Class EventosController
@@ -18,29 +20,32 @@ Namespace Controllers
         End Function
 
         'GET: View para criação do evento
+        'Neste momento os elementos que vão fazer parte de uma dropbox estão a ser enviados por ticket
+        'ticket é só placeholder, pois não faz sentido ser escolhida, mais vale ser automatica
         Function CriaEvento() As ActionResult
-            Dim leituraTecnicos = conectaBD.LeituraTabela("SELECT * FROM Tecnico").AsEnumerable
-            Dim listaTecnicos As New List(Of Tecnico)
-            For Each tec In leituraTecnicos
-                Dim novo As New Tecnico
-                novo.ID_tecnico = tec(0)
-                novo.nome = tec(1)
-                listaTecnicos.Add(novo)
-            Next
-
-
-            ViewBag.tecnico = New SelectList(listaTecnicos, "ID_tecnico", "nome")
+            ViewBag.tickets = New SelectList(ListaTickets(), "ID_ticket", "ID_ticket")
+            ViewBag.tecnico = New SelectList(ListaFuncionarios(), "ID_tecnico", "nome")
             Return View()
         End Function
 
         'POST: envia a informação que vem da view para a bd
+        'provavelmente a dataAbertura vai ser automatica, logo não contar nos tickets
+        'a de fecho pode ser quando o produto aparecer como fechado
+        'o ticket pode ser automatico , vindo do ID do ticket principal do qual o mesmo surgiu
         <HttpPost()>
         <ValidateAntiForgeryToken>
-        Function CriaEvento(descricao As String, ID_tecnico As Integer, dataAbertura As DateTime,
+        Function CriaEvento(descricao As String, ID_tecnico As Integer,
                             dataFecho As DateTime, ID_ticket As Integer) As ActionResult
 
             If IsNothing(ID_tecnico) Or IsNothing(ID_ticket) Then
-
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            Else
+                If IsNothing(dataFecho) Then
+                    conectaBD.AdicionaEvento(descricao, ID_tecnico, "CURRENT_TIMESTAMP", ID_ticket)
+                Else
+                    conectaBD.AdicionaEvento(descricao, ID_tecnico, dataFecho.ToString("G"), ID_ticket)
+                End If
+                Return RedirectToAction("Index")
             End If
 
             Return RedirectToAction("Index")
@@ -74,6 +79,33 @@ Namespace Controllers
             Next
 
             Return listagemEventos
+        End Function
+
+        Function ListaFuncionarios() As List(Of Tecnico)
+            Dim leituraTecnicos = conectaBD.LeituraTabela("SELECT * FROM Tecnico").AsEnumerable
+            Dim listaTecnicos As New List(Of Tecnico)
+
+            For Each tec In leituraTecnicos
+                Dim novo As New Tecnico
+                novo.ID_tecnico = tec(0)
+                novo.nome = tec(1)
+                listaTecnicos.Add(novo)
+            Next
+
+            Return listaTecnicos
+        End Function
+
+        Function ListaTickets() As List(Of Ticket)
+            Dim leituraTickets = conectaBD.LeituraTabela("SELECT * FROM Ticket").AsEnumerable
+            Dim lista As New List(Of Ticket)
+
+            For Each ticket In leituraTickets
+                Dim novo As New Ticket
+                novo.ID_ticket = ticket(0)
+                lista.Add(novo)
+            Next
+
+            Return lista
         End Function
 
     End Class
