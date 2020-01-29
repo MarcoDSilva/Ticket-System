@@ -2,6 +2,10 @@
 Imports System.ComponentModel.DataAnnotations.Schema
 Public Class VM_EventoTecnico
 
+    'Esta view model foi criada especificamente para poder utilizar o ID do utilizador
+    'como uma string, para receber o nome do mesmo e atribuir na view, invés do ID
+    '=== pode também ser utilizada para trocar o id do ticket ===
+
     <Display(Name:="ID")>
     Public Property ID_evento As Integer
 

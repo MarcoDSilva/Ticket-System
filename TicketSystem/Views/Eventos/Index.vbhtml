@@ -30,3 +30,8 @@ End Code
     Next
  </table>
 
+<button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("CriaEvento", "Eventos")'">
+    Novo Registo
+</button>
+
+

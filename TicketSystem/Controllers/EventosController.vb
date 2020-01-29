@@ -11,10 +11,39 @@ Namespace Controllers
 
         ' GET: Eventos
         Function Index() As ActionResult
-            Return View(LeituraDados($"SELECT e.ID_evento, e.descricao,t.nome Funcionário, 
+            Return View(LeituraDados($"SELECT e.ID_evento, e.descricao,t.nome, 
                         e.dataAbertura, e.dataFecho, e.ID_ticket, e.dat_hor 
                         FROM Evento e, Tecnico t
                         WHERE e.ID_tecnico = t.ID_tecnico;"))
+        End Function
+
+        'GET: View para criação do evento
+        Function CriaEvento() As ActionResult
+            Dim leituraTecnicos = conectaBD.LeituraTabela("SELECT * FROM Tecnico").AsEnumerable
+            Dim listaTecnicos As New List(Of Tecnico)
+            For Each tec In leituraTecnicos
+                Dim novo As New Tecnico
+                novo.ID_tecnico = tec(0)
+                novo.nome = tec(1)
+                listaTecnicos.Add(novo)
+            Next
+
+
+            ViewBag.tecnico = New SelectList(listaTecnicos, "ID_tecnico", "nome")
+            Return View()
+        End Function
+
+        'POST: envia a informação que vem da view para a bd
+        <HttpPost()>
+        <ValidateAntiForgeryToken>
+        Function CriaEvento(descricao As String, ID_tecnico As Integer, dataAbertura As DateTime,
+                            dataFecho As DateTime, ID_ticket As Integer) As ActionResult
+
+            If IsNothing(ID_tecnico) Or IsNothing(ID_ticket) Then
+
+            End If
+
+            Return RedirectToAction("Index")
         End Function
 
         ''' <summary>
@@ -25,7 +54,7 @@ Namespace Controllers
         Function LeituraDados(query As String) As List(Of VM_EventoTecnico)
 
             Dim tabelaDados As DataTable = conectaBD.LeituraTabela(query)
-            Dim listagemEventos As List(Of VM_EventoTecnico) = New List(Of VM_EventoTecnico)
+            Dim listagemEventos As New List(Of VM_EventoTecnico)
 
             'fazemos um ciclo, que vai iterar por cada elemento que recebenos da base de dados
             'criamos um novo objecto do tipo Tecnico, onde atribuimos os dados da iteração actual
