@@ -35,7 +35,7 @@ Partial Public Class Ticket
     Public Property dataAbertura As Date
 
     <Display(Name:="Data de fecho")>
-    Public Property dataFecho As Date
+    Public Property dataFecho As Date?
 
     <Display(Name:="Tempo previsto")>
     Public Property tempoPrevisto As Integer
