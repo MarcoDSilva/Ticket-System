@@ -4,11 +4,17 @@ Namespace Controllers
     Public Class EventosController
         Inherits Controller
 
+        'esta instanciação é utilizada para edição sql, apesar de o modelo ser o da view model
         Private ReadOnly conectaBD As New Manipula_TEvento
+
+        'O EDITAR PODE SER PRECISO A TABELA EVENTO NORMAL(?)
 
         ' GET: Eventos
         Function Index() As ActionResult
-            Return View(LeituraDados("SELECT * FROM Evento;"))
+            Return View(LeituraDados($"SELECT e.ID_evento, e.descricao,t.nome Funcionário, 
+                        e.dataAbertura, e.dataFecho, e.ID_ticket, e.dat_hor 
+                        FROM Evento e, Tecnico t
+                        WHERE e.ID_tecnico = t.ID_tecnico;"))
         End Function
 
         ''' <summary>
@@ -16,16 +22,16 @@ Namespace Controllers
         ''' </summary>
         ''' <param name="query"></param>
         ''' <returns></returns>
-        Function LeituraDados(query As String) As List(Of Evento)
+        Function LeituraDados(query As String) As List(Of VM_EventoTecnico)
 
             Dim tabelaDados As DataTable = conectaBD.LeituraTabela(query)
-            Dim listagemEventos As List(Of Evento) = New List(Of Evento)
+            Dim listagemEventos As List(Of VM_EventoTecnico) = New List(Of VM_EventoTecnico)
 
             'fazemos um ciclo, que vai iterar por cada elemento que recebenos da base de dados
             'criamos um novo objecto do tipo Tecnico, onde atribuimos os dados da iteração actual
             'e no fim após a atribuição desses dados, inserimos numa List(a) de Tecnicos, o qual usamos para retornar os dados
             For Each item In tabelaDados.AsEnumerable
-                Dim ev As New Evento()
+                Dim ev As New VM_EventoTecnico()
 
                 ev.ID_evento = item(0)
                 ev.descricao = item(1)

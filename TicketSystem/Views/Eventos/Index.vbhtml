@@ -1,4 +1,5 @@
-﻿@ModelType IEnumerable(Of TicketSystem.Evento)
+﻿@ModelType IEnumerable(Of TicketSystem.VM_EventoTecnico)
+
 @Code
     ViewData("Title") = "Index"
 End Code
