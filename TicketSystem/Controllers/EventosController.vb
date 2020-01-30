@@ -29,13 +29,11 @@ Namespace Controllers
         End Function
 
         'POST: envia a informação que vem da view para a bd
-        'provavelmente a dataAbertura vai ser automatica, logo não contar nos tickets
-        'a de fecho pode ser quando o produto aparecer como fechado
         'o ticket pode ser automatico , vindo do ID do ticket principal do qual o mesmo surgiu
         <HttpPost()>
         <ValidateAntiForgeryToken>
         Function CriaEvento(descricao As String, ID_tecnico As Integer,
-                            dataFecho As DateTime, ID_ticket As Integer) As ActionResult
+                            dataFecho As String, ID_ticket As Integer) As ActionResult
 
             If IsNothing(ID_tecnico) Or IsNothing(ID_ticket) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
@@ -43,7 +41,11 @@ Namespace Controllers
                 If IsNothing(dataFecho) Then
                     conectaBD.AdicionaEvento(descricao, ID_tecnico, "CURRENT_TIMESTAMP", ID_ticket)
                 Else
-                    conectaBD.AdicionaEvento(descricao, ID_tecnico, dataFecho.ToString("G"), ID_ticket)
+
+                    'converter a string para tipo data, parse para o tipo datetime, e cultura nula
+                    'depois voltamos a converter a data para o formato em que a mesma está a sair da view
+                    Dim novaData As DateTime = DateTime.ParseExact(dataFecho, "yyyy-MM-dd", Nothing)
+                    conectaBD.AdicionaEvento(descricao, ID_tecnico, novaData.ToString("MM-dd-yyyy"), ID_ticket)
                 End If
                 Return RedirectToAction("Index")
             End If

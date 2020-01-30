@@ -6,9 +6,10 @@ Public Class Manipula_TEvento
     'conexao ja feita com a sc
     Private ReadOnly conexao As New SqlConnection(Conector.stringConnection)
 
+
     Public Sub AdicionaEvento(descricao As String, ID_tecnico As Integer, dataFecho As String, ID_ticket As Integer)
         Dim query As String = $"Insert into Evento Values(@desc, {ID_tecnico}, 
-                                CURRENT_TIMESTAMP, CAST({dataFecho} AS DATETIME), 
+                                CURRENT_TIMESTAMP, '{dataFecho}', 
                                 {ID_ticket} , CURRENT_TIMESTAMP);"
         Dim comando As New SqlCommand(query, conexao)
         comando.Parameters.AddWithValue("@desc", descricao)
@@ -16,6 +17,15 @@ Public Class Manipula_TEvento
 
     End Sub
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="descricao"></param>
+    ''' <param name="ID_tecnico"></param>
+    ''' <param name="dataAbertura"></param>
+    ''' <param name="dataFecho"></param>
+    ''' <param name="ID_ticket"></param>
+    ''' <param name="ID_evento"></param>
     Public Sub EditaEvento(descricao As String, ID_tecnico As Integer, dataAbertura As DateTime, dataFecho As DateTime, ID_ticket As Integer, ID_evento As Integer)
         Dim query As String = $"UPDATE Evento SET descricao = @desc, ID_tecnico = {ID_tecnico}, dataAbertura = {dataAbertura}, 
                                 dataFecho = {dataFecho}, ID_ticket = {ID_ticket} WHERE ID_evento = {ID_evento};"
@@ -26,6 +36,10 @@ Public Class Manipula_TEvento
 
     End Sub
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="ID_evento"></param>
     Public Sub ApagaEvento(ID_evento As Integer)
         Dim query As String = $"DELETE FROM Evento WHERE ID_evento = {ID_evento}"
         Dim comando As New SqlCommand(query, conexao)

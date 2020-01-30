@@ -21,8 +21,8 @@ End Code
                 </p>
                 <p>
                     @Html.LabelFor(Function(modelEve) modelEve.dataFecho)
-                    <input type="date" name="dataFecho" value="dataFecho" id="dataFecho"/>
-                    @*@Html.TextBoxFor(Function(modelEve) modelEve.dataFecho, New With {.type = "date"}, New With {.pattern = "\d{4}-\d{2}-\d{2}"})*@
+                    <input type="date" name="dataFecho" value="dataFecho" id="dataFecho"/>  
+                    @*@Html.TextBoxFor(Function(modelEve) modelEve.dataFecho, New With {.type = "date"})*@
                     
                 </p>
                 <p>
