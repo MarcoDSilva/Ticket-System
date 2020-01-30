@@ -33,7 +33,7 @@ End Code
                 </p>
             </div>
 
-            <input type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("CriaEvento", "Eventos")'" />
+            <input type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("CriaEvento", "Eventos")'" value="Inserir Registo" />
         </div>
     End Using
 

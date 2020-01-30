@@ -56,6 +56,7 @@ Namespace Controllers
                     dataFechoConvertida = ""
                 End If
 
+                'adiciona os dados na bd
                 conectaBD.AdicionaEvento(descricao, ID_tecnico, dataAberturaConvertida,
                                          dataFechoConvertida, ID_ticket)
             End If
@@ -68,10 +69,13 @@ Namespace Controllers
             If IsNothing(ID_evento) Then
                 Return View()
             Else
+                ViewBag.tecnico = New SelectList(ListaFuncionarios(), "ID_tecnico", "nome")
+
                 Return View(LeituraDados($"SELECT e.ID_evento, e.descricao,t.nome, 
                         e.dataAbertura, e.dataFecho, e.ID_ticket, e.dat_hor 
                         FROM Evento e, Tecnico t
-                        WHERE e.ID_tecnico = t.ID_tecnico;"))
+                        WHERE e.ID_tecnico = t.ID_tecnico 
+                        AND ID_EVENTO = {ID_evento};").First())
             End If
         End Function
 
@@ -104,7 +108,7 @@ Namespace Controllers
                 ev.dataAbertura = item(3)
 
                 If item(4).Equals(DBNull.Value) Then
-                    ev.dataFecho = Nothing
+                    ev.dataFecho = New DateTime(Nothing)
                 Else
                     ev.dataFecho = item(4)
                 End If

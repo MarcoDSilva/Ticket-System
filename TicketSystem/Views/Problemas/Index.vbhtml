@@ -7,7 +7,7 @@ End Code
 <h2>Listagem de problemas</h2>
 
 
-<table class="table">
+<table class="table table-hover">
     <tr>
         <th>@Html.DisplayNameFor(Function(model) model.ID_problema)</th>
         <th>@Html.DisplayNameFor(Function(model) model.descricao)</th>

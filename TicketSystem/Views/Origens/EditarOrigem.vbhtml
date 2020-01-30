@@ -10,7 +10,7 @@ End Code
     @Html.AntiForgeryToken()
 
     'form da view
-    @<div class="form-horizontal">
+    @<div class="col-form-label">
     @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
     @Html.HiddenFor(Function(modelOrig) modelOrig.ID_origem)
 
@@ -26,7 +26,7 @@ End Code
 
     <!-- butões com as operações respectivas do formulário de edição -->
     <div id="editaOrigens" class="form-group">
-        <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#verificaModal">
+        <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#verificaModal" id="apagarino">
             Apagar
         </button>
         <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaOrigem", "Origens")'">
@@ -58,7 +58,11 @@ End Code
             </div>
         </div>
     </div>
-
+ 
 </div>
 
+
+
+
 End Using
+

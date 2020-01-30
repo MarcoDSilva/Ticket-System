@@ -6,7 +6,7 @@ End Code
 
 <h2>Listar eventos</h2>
 
-<table class="table">
+<table class="table table-hover">
     <tr>
         <th>@Html.DisplayNameFor(Function(modelEv) modelEv.ID_evento)</th>
         <th>@Html.DisplayNameFor(Function(modelEv) modelEv.descricao)</th>
@@ -26,7 +26,7 @@ End Code
             <td>@Html.DisplayFor(Function(modelEv) evento.dataFecho)</td>
             <td>@Html.DisplayFor(Function(modelEv) evento.ID_ticket)</td>
             <td>@Html.DisplayFor(Function(modelEv) evento.dat_hor)</td>
-            <td>@Html.ActionLink("EditarEvento", "Eventos", New With {.ID_evento = evento.ID_evento})</td>
+            <td>@Html.ActionLink("Detalhes", "EditarEvento", New With {.ID_evento = evento.ID_evento})</td>
         </tr>
     Next
  </table>

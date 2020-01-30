@@ -5,7 +5,7 @@ End Code
 
 <h2>Listagem Origem</h2>
 
-<table class="table">
+<table class="table table-hover">
     <tr>
         <th>@Html.DisplayNameFor(Function(modelOrig) modelOrig.ID_origem)</th>
         <th>@Html.DisplayNameFor(Function(modelOrig) modelOrig.descricao)</th>
