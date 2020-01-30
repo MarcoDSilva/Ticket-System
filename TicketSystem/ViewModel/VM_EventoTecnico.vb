@@ -21,7 +21,7 @@ Public Class VM_EventoTecnico
     Public Property dataAbertura As Date
 
     <Display(Name:="Data de fecho")>
-    Public Property dataFecho As Date
+    Public Property dataFecho As Date?
 
     <Display(Name:="Ticket")>
     Public Property ID_ticket As Integer

@@ -7,10 +7,48 @@ Public Class Manipula_TEvento
     Private ReadOnly conexao As New SqlConnection(Conector.stringConnection)
 
 
-    Public Sub AdicionaEvento(descricao As String, ID_tecnico As Integer, dataFecho As String, ID_ticket As Integer)
-        Dim query As String = $"Insert into Evento Values(@desc, {ID_tecnico}, 
-                                CURRENT_TIMESTAMP, '{dataFecho}', 
-                                {ID_ticket} , CURRENT_TIMESTAMP);"
+    ''' <summary>
+    ''' Adiciona um evento na base de dados.
+    ''' Caso o valor da dataFecho não ter sido escolhida, é enviado o valor NULL para a bd.
+    ''' </summary>
+    ''' <param name="descricao"></param>
+    ''' <param name="ID_tecnico"></param>
+    ''' <param name="dataAbertura"></param>
+    ''' <param name="dataFecho"></param>
+    ''' <param name="ID_ticket"></param>
+    Public Sub AdicionaEvento(descricao As String, ID_tecnico As Integer,
+                              dataAbertura As String, dataFecho As String, ID_ticket As Integer)
+        Dim query As String
+
+        'se o dataFecho estiver vazio, enviamos NULL como parametro para a bd
+        'caso contrário passamos a data recebida
+        'no caso da data de abertura, passamos current_timestamp caso não haja data escolhida
+        If String.IsNullOrEmpty(dataFecho) Then
+
+            'retiramos ou adicionamos pelicas dependendo da abertura
+            If dataAbertura.Equals("CURRENT_TIMESTAMP") Then
+                query = $"Insert into Evento Values(@desc, {ID_tecnico}, 
+                        {dataAbertura}, NULL, 
+                        {ID_ticket} , CURRENT_TIMESTAMP);"
+            Else
+                query = $"Insert into Evento Values(@desc, {ID_tecnico}, 
+                        '{dataAbertura}', NULL, 
+                         {ID_ticket} , CURRENT_TIMESTAMP);"
+            End If
+        Else
+            'retiramos ou adicionamos pelicas dependendo do resultado da abertura
+            If dataAbertura.Equals("CURRENT_TIMESTAMP") Then
+                query = $"Insert into Evento Values(@desc, {ID_tecnico}, 
+                        {dataAbertura}, '{dataFecho}', 
+                        {ID_ticket} , CURRENT_TIMESTAMP);"
+            Else
+                query = $"Insert into Evento Values(@desc, {ID_tecnico}, 
+                        '{dataAbertura}', '{dataFecho}', 
+                         {ID_ticket} , CURRENT_TIMESTAMP);"
+            End If
+
+        End If
+
         Dim comando As New SqlCommand(query, conexao)
         comando.Parameters.AddWithValue("@desc", descricao)
         ExecutaComandos(comando)

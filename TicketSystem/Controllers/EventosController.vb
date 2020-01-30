@@ -20,8 +20,8 @@ Namespace Controllers
         End Function
 
         'GET: View para criação do evento
-        'Neste momento os elementos que vão fazer parte de uma dropbox estão a ser enviados por ticket
-        'ticket é só placeholder, pois não faz sentido ser escolhida, mais vale ser automatica
+        'Neste momento os elementos que vão fazer parte de uma dropbox estão a ser enviados por viewbags
+        'ticket é só placeholder, pois irá ser automático
         Function CriaEvento() As ActionResult
             ViewBag.tickets = New SelectList(ListaTickets(), "ID_ticket", "ID_ticket")
             ViewBag.tecnico = New SelectList(ListaFuncionarios(), "ID_tecnico", "nome")
@@ -29,25 +29,37 @@ Namespace Controllers
         End Function
 
         'POST: envia a informação que vem da view para a bd
-        'o ticket pode ser automatico , vindo do ID do ticket principal do qual o mesmo surgiu
+        'Comparamos as datas , e atribuimos ou valor actual ou nulo , para enviar a informação para a bd
+        'verificações que vão ficar na view, estão aqui temporariamente, como id_tecnico ou ticket
         <HttpPost()>
         <ValidateAntiForgeryToken>
-        Function CriaEvento(descricao As String, ID_tecnico As Integer,
+        Function CriaEvento(descricao As String, ID_tecnico As Integer, dataAbertura As String,
                             dataFecho As String, ID_ticket As Integer) As ActionResult
 
+            'se o tecnico ou o ticket estiverem vazio da erro -isto é um placeholder, essa verificação
+            'vai ser efectuada na view
             If IsNothing(ID_tecnico) Or IsNothing(ID_ticket) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
-                If IsNothing(dataFecho) Then
-                    conectaBD.AdicionaEvento(descricao, ID_tecnico, "CURRENT_TIMESTAMP", ID_ticket)
-                Else
+                Dim dataAberturaConvertida As String
+                Dim dataFechoConvertida As String
 
-                    'converter a string para tipo data, parse para o tipo datetime, e cultura nula
-                    'depois voltamos a converter a data para o formato em que a mesma está a sair da view
-                    Dim novaData As DateTime = DateTime.ParseExact(dataFecho, "yyyy-MM-dd", Nothing)
-                    conectaBD.AdicionaEvento(descricao, ID_tecnico, novaData.ToString("MM-dd-yyyy"), ID_ticket)
+                'verificar os valores da dataabertura
+                If (String.IsNullOrEmpty(dataAbertura)) Then
+                    dataAberturaConvertida = "CURRENT_TIMESTAMP"
+                Else
+                    dataAberturaConvertida = DateTime.ParseExact(dataAbertura, "yyyy-MM-dd", Nothing).ToString("MM-dd-yyyy")
                 End If
-                Return RedirectToAction("Index")
+
+                'verificar os valores da datafecho
+                If (String.IsNullOrEmpty(dataFecho).Equals(False)) Then
+                    dataFechoConvertida = DateTime.ParseExact(dataFecho, "yyyy-MM-dd", Nothing).ToString("MM-dd-yyyy")
+                Else
+                    dataFechoConvertida = ""
+                End If
+
+                conectaBD.AdicionaEvento(descricao, ID_tecnico, dataAberturaConvertida,
+                                         dataFechoConvertida, ID_ticket)
             End If
 
             Return RedirectToAction("Index")
@@ -73,7 +85,13 @@ Namespace Controllers
                 ev.descricao = item(1)
                 ev.ID_tecnico = item(2)
                 ev.dataAbertura = item(3)
-                ev.dataFecho = item(4)
+
+                If item(4).Equals(DBNull.Value) Then
+                    ev.dataFecho = Nothing
+                Else
+                    ev.dataFecho = item(4)
+                End If
+
                 ev.ID_ticket = item(5)
                 ev.dat_hor = item(6)
 
