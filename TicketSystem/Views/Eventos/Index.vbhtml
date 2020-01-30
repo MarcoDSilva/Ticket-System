@@ -26,6 +26,7 @@ End Code
             <td>@Html.DisplayFor(Function(modelEv) evento.dataFecho)</td>
             <td>@Html.DisplayFor(Function(modelEv) evento.ID_ticket)</td>
             <td>@Html.DisplayFor(Function(modelEv) evento.dat_hor)</td>
+            <td>@Html.ActionLink("EditarEvento", "Eventos", New With {.ID_evento = evento.ID_evento})</td>
         </tr>
     Next
  </table>
