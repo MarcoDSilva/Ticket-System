@@ -52,9 +52,7 @@ Namespace Controllers
             If IsNothing(ID_problema) Or String.IsNullOrEmpty(descricao) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.MethodNotAllowed)
             Else
-                If problema.ID_problema.Equals(ID_problema) Then
-                    conectaBD.ActualizarProblema(descricao, ID_problema)
-                End If
+                conectaBD.ActualizarProblema(descricao, ID_problema)
             End If
 
             Return RedirectToAction("Index")

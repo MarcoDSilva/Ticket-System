@@ -62,10 +62,7 @@ Namespace Controllers
             If IsNothing(ID_prioridade) Or String.IsNullOrEmpty(descricao) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
-                Dim prioridade = LeituraDados($"SELECT * FROM Prioridade WHERE ID_prioridade = {ID_prioridade};").First()
-                If prioridade.ID_prioridade.Equals(ID_prioridade) Then
-                    conectaBD.EditarPrioridade(descricao, ID_prioridade)
-                End If
+                conectaBD.EditarPrioridade(descricao, ID_prioridade)
             End If
 
             Return RedirectToAction("Index")

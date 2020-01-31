@@ -41,26 +41,19 @@ Namespace Controllers
             If String.IsNullOrEmpty(nome) Or String.IsNullOrEmpty(email) Or ID_tecnico.HasValue.Equals(False) Then
                 Return View()
             Else
-                Dim tecnico = LeituraDados($"SELECT * FROM Tecnico WHERE ID_tecnico = {ID_tecnico}").First()
-                If tecnico.ID_tecnico.Equals(ID_tecnico) Then
-                    conectaBD.EditaTecnico(nome, email, ID_tecnico)
-                End If
+                conectaBD.EditaTecnico(nome, email, ID_tecnico)
             End If
             Return RedirectToAction("Index")
         End Function
 
-        '
+        'Apaga o tecnico que corresponde ao ID enviado
         Function ApagarTecnico(ID_tecnico As Integer?) As ActionResult
             If IsNothing(ID_tecnico) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.Forbidden)
             Else
-                Dim tecnico = LeituraDados($"SELECT * FROM Tecnico WHERE ID_tecnico = {ID_tecnico};").First()
-
-                If tecnico.ID_tecnico.Equals(ID_tecnico) Then
-                    conectaBD.ApagaTecnico(ID_tecnico)
-                End If
-                Return RedirectToAction("Index")
+                conectaBD.ApagaTecnico(ID_tecnico)
             End If
+            Return RedirectToAction("Index")
         End Function
 
 

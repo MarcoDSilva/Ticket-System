@@ -46,10 +46,7 @@ Namespace Controllers
             If IsNothing(ID_origem) Or String.IsNullOrEmpty(descricao) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadGateway)
             Else
-                Dim origem = LeituraDados($"SELECT * FROM Origem where ID_origem = {ID_origem}").First()
-                If origem.ID_origem.Equals(ID_origem) Then
-                    conectaBD.EditarOrigem(descricao, ID_origem)
-                End If
+                conectaBD.EditarOrigem(descricao, ID_origem)
                 Return RedirectToAction("Index")
             End If
         End Function
@@ -63,14 +60,10 @@ Namespace Controllers
             If IsNothing(ID_origem) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.Forbidden)
             Else
-                Dim origem = LeituraDados($"SELECT * FROM Origem WHERE ID_origem = {ID_origem}").First()
-                If origem.ID_origem.Equals(ID_origem) Then
-                    conectaBD.ApagarOrigem(ID_origem)
-                End If
+                conectaBD.ApagarOrigem(ID_origem)
             End If
             Return RedirectToAction("Index")
         End Function
-
 
         ''' <summary>
         ''' Método interno utilizado para ler dados da bd

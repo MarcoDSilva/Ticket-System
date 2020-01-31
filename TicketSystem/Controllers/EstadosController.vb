@@ -50,10 +50,7 @@ Namespace Controllers
             If IsNothing(ID_estado) And String.IsNullOrEmpty(descricao) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.MethodNotAllowed)
             Else
-                Dim est = LeituraDados($"SELECT * FROM Estado WHERE ID_estado = {ID_estado};").First()
-                If est.ID_estado.Equals(ID_estado) Then
-                    conectaBD.EditarEstado(descricao, ID_estado)
-                End If
+                conectaBD.EditarEstado(descricao, ID_estado)
             End If
 
             Return RedirectToAction("Index")

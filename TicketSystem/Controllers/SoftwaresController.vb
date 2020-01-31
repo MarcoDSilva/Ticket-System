@@ -40,10 +40,7 @@ Namespace Controllers
             If IsNothing(ID_software) Or String.IsNullOrEmpty(nome) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
-                Dim software = LeituraDados($"SELECT * FROM Software WHERE ID_software = {ID_software};").First()
-                If software.ID_software.Equals(ID_software) Then
-                    conectaBD.EditarSoftware(nome, ID_software)
-                End If
+                conectaBD.EditarSoftware(nome, ID_software)
             End If
 
             Return RedirectToAction("Index")

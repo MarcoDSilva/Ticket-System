@@ -14,7 +14,7 @@ Namespace Controllers
         End Function
 
         'GET : Formulário
-        Function CriaCliente()
+        Function CriaCliente() As ActionResult
             Return View()
         End Function
 
@@ -22,7 +22,7 @@ Namespace Controllers
         <HttpPost>
         <ValidateAntiForgeryToken>
         Function CriaCliente(nome As String, contacto As String, email As String, empresa As String,
-                             ID_utilizador As String)
+                             ID_utilizador As String) As ActionResult
             If String.IsNullOrEmpty(nome) Then
                 Return View()
             Else
@@ -37,7 +37,7 @@ Namespace Controllers
         End Function
 
         'GET: 
-        Function EditarCliente(ID_cliente As Integer)
+        Function EditarCliente(ID_cliente As Integer) As ActionResult
             If IsNothing(ID_cliente) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadGateway)
             Else
@@ -53,6 +53,16 @@ Namespace Controllers
                              ID_utilizador As Integer?, ID_cliente As Integer)
             Return View()
         End Function
+
+        Function ApagarCliente(ID_cliente As String) As ActionResult
+            If IsNothing(ID_cliente) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            Else
+                conectaBD.ApagarCliente(ID_cliente)
+            End If
+            Return RedirectToAction("Index")
+        End Function
+
 
         ''' <summary>
         ''' Método interno utilizado para ler dados da bd

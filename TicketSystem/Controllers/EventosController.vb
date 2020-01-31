@@ -123,10 +123,7 @@ Namespace Controllers
             If IsNothing(ID_evento) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
-                Dim evento = LeituraDados($"SELECT * From Evento WHERE ID_evento = {ID_evento}").First()
-                If ID_evento.Equals(evento.ID_evento) Then
-                    conectaBD.ApagaEvento(ID_evento)
-                End If
+                conectaBD.ApagaEvento(ID_evento)
             End If
             Return RedirectToAction("Index")
         End Function
