@@ -51,6 +51,15 @@ Namespace Controllers
         <ValidateAntiForgeryToken>
         Function EditarCliente(nome As String, contacto As String, email As String, empresa As String,
                              ID_utilizador As Integer?, ID_cliente As Integer)
+            If IsNothing(ID_cliente) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadGateway)
+            Else
+                If ID_utilizador.ToString().Equals("") Then
+
+                End If
+                conectaBD.EditarCliente(nome, contacto, email, empresa, ID_utilizador, ID_cliente)
+
+            End If
             Return View()
         End Function
 
