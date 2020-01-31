@@ -28,7 +28,7 @@ End Code
         <div class="col-md-12">
             <p>
                 @Html.LabelFor(Function(modelEv) modelEv.descricao)
-                @Html.EditorFor(Function(modelEv) modelEv.descricao, New With {.class = "form-control"})
+                @Html.EditorFor(Function(modelEv) modelEv.descricao, New With {.class = "form-control", .required = "required"})
                 @Html.ValidationMessageFor(Function(modelEv) modelEv.descricao, "", New With {.class = "text-danger"})
             </p>
             <p>

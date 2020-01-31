@@ -10,7 +10,7 @@ Namespace Controllers
 
         ' GET: Listagem de Estados
         Function Index() As ActionResult
-            Return View(LeituraDados("SELECT * FROM Estado"))
+            Return View(LeituraDados("SELECT * FROM Estado;"))
         End Function
 
         'GET: Estados/CriaEstado
