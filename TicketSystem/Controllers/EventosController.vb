@@ -80,6 +80,8 @@ Namespace Controllers
         End Function
 
         'POST: edita consoante os dados recebidos
+        'Antes da edição ser enviada, verificamos as datas enviadas para podermos "limpar" os potenciais
+        'erros que podem surgir com as mesmas
         <HttpPost>
         <ValidateAntiForgeryToken>
         Function EditarEvento(ID_evento As Integer, descricao As String, ID_tecnico As Integer, dataAbertura As String,
@@ -94,18 +96,19 @@ Namespace Controllers
                     Dim dataAberturaConvertida As String
                     Dim dataFechoConvertida As String
 
-                    'verificar os valores da dataabertura
-                    If (String.IsNullOrEmpty(dataAbertura)) Then
-                        dataAberturaConvertida = "CURRENT_TIMESTAMP"
+                    'se a data de abertura vier vazia, atribuimos o valor que estava anteriormente
+                    If (dataAbertura.Equals("")) Then
+                        dataAberturaConvertida = evento.dataAbertura.ToString("MM-dd-yyyy")
                     Else
                         dataAberturaConvertida = DateTime.ParseExact(dataAbertura, "yyyy-MM-dd", Nothing).ToString("MM-dd-yyyy")
                     End If
 
-                    'verificar os valores da datafecho
+                    'se a data de fecho trazer valor, convertemos e enviamos, caso contrário
+                    'enviamos a string a null, para manipularmos a query para a bd
                     If (String.IsNullOrEmpty(dataFecho).Equals(False)) Then
                         dataFechoConvertida = DateTime.ParseExact(dataFecho, "yyyy-MM-dd", Nothing).ToString("MM-dd-yyyy")
                     Else
-                        dataFechoConvertida = ""
+                        dataFechoConvertida = "NULL"
                     End If
 
                     conectaBD.EditaEvento(ID_evento, descricao, ID_tecnico, dataAberturaConvertida, dataFechoConvertida)

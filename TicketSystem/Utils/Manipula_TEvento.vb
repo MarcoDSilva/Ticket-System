@@ -54,8 +54,9 @@ Public Class Manipula_TEvento
         ExecutaComandos(comando)
 
     End Sub
+
     ''' <summary>
-    ''' 
+    ''' Actualiza a tabela do evento consoante os registos passados. 
     ''' </summary>
     ''' <param name="ID_evento"></param>
     ''' <param name="descricao"></param>
@@ -63,8 +64,18 @@ Public Class Manipula_TEvento
     ''' <param name="dataAbertura"></param>
     ''' <param name="dataFecho"></param>
     Public Sub EditaEvento(ID_evento As Integer, descricao As String, ID_tecnico As Integer, dataAbertura As String, dataFecho As String)
-        Dim query As String = $"UPDATE Evento SET descricao = @desc, ID_tecnico = {ID_tecnico}, dataAbertura = '{dataAbertura}', 
+        Dim query As String
+
+        'Se a string enviada pela data fecho for null, a query envia o valor como null
+        'caso contrário, enviamos a data que recebemos 
+        If dataFecho.Equals("NULL") Then
+            query = $"UPDATE Evento SET descricao = @desc, ID_tecnico = {ID_tecnico}, dataAbertura = '{dataAbertura}', 
+                                dataFecho = NULL, dat_hor = CURRENT_TIMESTAMP WHERE ID_evento = {ID_evento};"
+        Else
+            query = $"UPDATE Evento SET descricao = @desc, ID_tecnico = {ID_tecnico}, dataAbertura = '{dataAbertura}', 
                                 dataFecho = '{dataFecho}', dat_hor = CURRENT_TIMESTAMP WHERE ID_evento = {ID_evento};"
+        End If
+
         Dim comando As New SqlCommand(query, conexao)
         comando.Parameters.AddWithValue("@desc", descricao)
 
@@ -73,7 +84,7 @@ Public Class Manipula_TEvento
     End Sub
 
     ''' <summary>
-    ''' 
+    ''' Apaga o evento correspondente ao ID enviado
     ''' </summary>
     ''' <param name="ID_evento"></param>
     Public Sub ApagaEvento(ID_evento As Integer)
