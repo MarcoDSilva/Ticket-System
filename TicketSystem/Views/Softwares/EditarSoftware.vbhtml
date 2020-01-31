@@ -34,7 +34,7 @@ End Code
             <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaSoftware", "Softwares")'">
                 Novo
             </button>
-            <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index", "Softwares")'">
+            <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Softwares")'">
                 Voltar
             </button>
 

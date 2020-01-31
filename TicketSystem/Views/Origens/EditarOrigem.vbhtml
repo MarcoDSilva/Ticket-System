@@ -32,7 +32,7 @@ End Code
         <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaOrigem", "Origens")'">
             Novo
         </button>
-        <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index", "Origens")'">
+        <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Origens")'">
             Voltar
         </button>
 

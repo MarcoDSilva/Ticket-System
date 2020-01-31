@@ -16,7 +16,7 @@ End Code
             </p>
         </div>
         <input type="submit" name="submit" value="inserir registo" class="btn btn-primary" />
-        <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index", "Estados")'">
+        <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Estados")'">
             Voltar
         </button>
     </div>

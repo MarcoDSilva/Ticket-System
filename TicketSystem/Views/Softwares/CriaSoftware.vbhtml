@@ -15,7 +15,7 @@ End Code
              </p>
          </div>
         <input type="submit" name="submit" value="Inserir" class="btn btn-primary" />
-        <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index", "Softwares")'">
+        <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Softwares")'">
             Voltar
         </button>
     </div>

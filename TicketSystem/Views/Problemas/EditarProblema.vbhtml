@@ -33,7 +33,7 @@ End Code
             <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaProblema", "Problemas")'">
                 Novo
             </button>
-            <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index", "Problemas")'">
+            <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Problemas")'">
                 Voltar
             </button>
 

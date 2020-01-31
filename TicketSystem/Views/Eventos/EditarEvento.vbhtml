@@ -27,23 +27,23 @@ End Code
     <div class="form-group">
         <div class="col-md-12">
             <p>
-                @Html.LabelFor(Function(modelEv) modelEv.descricao)
-                @Html.EditorFor(Function(modelEv) modelEv.descricao, New With {.class = "form-control", .required = "required"})
+                @Html.LabelFor(Function(modelEv) modelEv.descricao, New With {.class = "form-check-label"})
+                @Html.EditorFor(Function(modelEv) modelEv.descricao, New With {.class = "form-control"})
                 @Html.ValidationMessageFor(Function(modelEv) modelEv.descricao, "", New With {.class = "text-danger"})
             </p>
             <p>
-                @Html.LabelFor(Function(modelEv) modelEv.ID_tecnico)
-                @Html.DropDownList("ID_tecnico", DirectCast(ViewBag.tecnico, SelectList))
+                @Html.LabelFor(Function(modelEv) modelEv.ID_tecnico, New With {.class = "form-check-label"})
+                @Html.DropDownList("ID_tecnico", DirectCast(ViewBag.tecnico, SelectList), New With {.class = "form-control"})
                 @Html.ValidationMessageFor(Function(modelEv) modelEv.ID_tecnico, "", New With {.class = "text-danger"})
             </p>
             <p>
-                @Html.LabelFor(Function(modelEv) modelEv.dataAbertura)
-                <input type="date" name="dataAbertura" value="@dataInicial" id="dataAbertura" />
+                @Html.LabelFor(Function(modelEv) modelEv.dataAbertura, New With {.class = "form-check-label"})
+                <input type="date" name="dataAbertura" value="@dataInicial" id="dataAbertura" class="form-control" />
                 @Html.ValidationMessageFor(Function(modelEv) modelEv.dataAbertura, "", New With {.class = "text-danger"})
             </p>
             <p>
-                @Html.LabelFor(Function(modelEv) modelEv.dataFecho)
-                <input type="date" name="dataFecho" value="@dataFinal" id="dataFecho" />
+                @Html.LabelFor(Function(modelEv) modelEv.dataFecho, New With {.class = "form-check-label"})
+                <input type="date" name="dataFecho" value="@dataFinal" id="dataFecho" class="form-control" />
                 @Html.ValidationMessageFor(Function(modelEv) modelEv.dataFecho, "", New With {.class = "text-danger"})
             </p>
             <input type="submit" class="btn btn-success" value="Guardar" name="Enviar" />
@@ -59,7 +59,7 @@ End Code
         <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaEvento", "Eventos")'">
             Novo
         </button>
-        <button type="button" class="btn btn-default" onclick="location.href='@Url.Action("Index", "Eventos")'">
+        <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Eventos")'">
             Voltar
         </button>
 

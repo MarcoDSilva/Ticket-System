@@ -1,4 +1,5 @@
 ﻿Imports System.Web.Mvc
+Imports System.Net
 
 Namespace Controllers
     Public Class ClientesController
@@ -10,6 +11,38 @@ Namespace Controllers
         ' GET: Clientes
         Function Index() As ActionResult
             Return View(LeituraDados($"SELECT * FROM Cliente;").AsEnumerable)
+        End Function
+
+        'GET : Formulário
+        Function CriaCliente()
+            Return View()
+        End Function
+
+        'POST
+        <HttpPost>
+        <ValidateAntiForgeryToken>
+        Function CriaCliente(nome As String, contacto As String, email As String, empresa As String,
+                             ID_utilizador As Integer?)
+            If String.IsNullOrEmpty(nome) Then
+                Return View()
+            End If
+            Return RedirectToAction("Index")
+        End Function
+
+        'GET: 
+        Function EditarCliente(ID_cliente As Integer)
+            If IsNothing(ID_cliente) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadGateway)
+            Else
+                Return View(LeituraDados($"SELECT * FROM Cliente WHERE ID_cliente = {ID_cliente}").First())
+            End If
+            Return RedirectToAction("Index")
+        End Function
+
+        'POST
+        Function EditarCliente(nome As String, contacto As String, email As String, empresa As String,
+                             ID_utilizador As Integer?, ID_cliente As Integer)
+            Return View()
         End Function
 
         ''' <summary>
@@ -42,12 +75,10 @@ Namespace Controllers
                 End If
 
                 cli.dat_hor = item(6)
-
                 listagemClientes.Add(cli)
             Next
 
             Return listagemClientes
         End Function
-
     End Class
 End Namespace
