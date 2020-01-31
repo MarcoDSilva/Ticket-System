@@ -14,6 +14,7 @@ End Code
                 <p>
                     @Html.LabelFor(Function(modelEve) modelEve.descricao)
                     @Html.TextBoxFor(Function(modelEve) modelEve.descricao)
+                    @Html.ValidationMessageFor(Function(modelEve) modelEve.descricao)
                 </p>
                 <p>
                     @Html.LabelFor(Function(modelEve) modelEve.ID_tecnico)
@@ -34,8 +35,11 @@ End Code
             </div>
 
             <input type="submit" class="btn btn-primary" onclick="location.href='@Url.Action("CriaEvento", "Eventos")'" value="Inserir Registo" />
+            <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Eventos")'">
+                Voltar
+            </button>
+
         </div>
     End Using
-
 
 </div>

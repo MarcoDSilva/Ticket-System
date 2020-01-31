@@ -1,17 +1,15 @@
 ﻿@ModelType TicketSystem.VM_EventoTecnico
 @Code
     ViewData("Title") = "EditarEvento"
-    Dim idParaApagar = Model.ID_evento
-
-    Dim dataInicial = Model.dataAbertura.ToString("yyyy-MM-dd")
 
     Dim dataFinal As String
+    Dim dataInicial = Model.dataAbertura.ToString("yyyy-MM-dd")
+
     If IsNothing(Model.dataFecho) Then
-        dataFinal = "2020-02-12"
+        dataFinal = ""
     Else
         dataFinal = Model.dataFecho.Value.ToString("yyyy-MM-dd")
     End If
-
 
 End Code
 
@@ -78,7 +76,7 @@ End Code
                     <div class="modal-body">Pretende mesmo apagar este problema? Esta operação não é reversivel!</div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                onclick="location.href ='@Url.Action("ApagarOrigem", "Origens", New With {.ID_Origem = idParaApagar})'">
+                                onclick="location.href ='@Url.Action("ApagarEvento", "Eventos", New With {.ID_evento = Model.ID_evento})'">
                             Apagar
                         </button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>

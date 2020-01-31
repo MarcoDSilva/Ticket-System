@@ -54,19 +54,17 @@ Public Class Manipula_TEvento
         ExecutaComandos(comando)
 
     End Sub
-
     ''' <summary>
     ''' 
     ''' </summary>
+    ''' <param name="ID_evento"></param>
     ''' <param name="descricao"></param>
     ''' <param name="ID_tecnico"></param>
     ''' <param name="dataAbertura"></param>
     ''' <param name="dataFecho"></param>
-    ''' <param name="ID_ticket"></param>
-    ''' <param name="ID_evento"></param>
-    Public Sub EditaEvento(descricao As String, ID_tecnico As Integer, dataAbertura As DateTime, dataFecho As DateTime, ID_ticket As Integer, ID_evento As Integer)
-        Dim query As String = $"UPDATE Evento SET descricao = @desc, ID_tecnico = {ID_tecnico}, dataAbertura = {dataAbertura}, 
-                                dataFecho = {dataFecho}, ID_ticket = {ID_ticket} WHERE ID_evento = {ID_evento};"
+    Public Sub EditaEvento(ID_evento As Integer, descricao As String, ID_tecnico As Integer, dataAbertura As String, dataFecho As String)
+        Dim query As String = $"UPDATE Evento SET descricao = @desc, ID_tecnico = {ID_tecnico}, dataAbertura = '{dataAbertura}', 
+                                dataFecho = '{dataFecho}', dat_hor = CURRENT_TIMESTAMP WHERE ID_evento = {ID_evento};"
         Dim comando As New SqlCommand(query, conexao)
         comando.Parameters.AddWithValue("@desc", descricao)
 

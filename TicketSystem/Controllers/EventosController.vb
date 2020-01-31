@@ -36,8 +36,8 @@ Namespace Controllers
 
             'se o tecnico ou o ticket estiverem vazio da erro -isto é um placeholder, essa verificação
             'vai ser efectuada na view
-            If IsNothing(ID_tecnico) Or IsNothing(ID_ticket) Then
-                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            If IsNothing(ID_tecnico) Or IsNothing(ID_ticket) Or String.IsNullOrEmpty(descricao) Then
+
             Else
                 Dim dataAberturaConvertida As String
                 Dim dataFechoConvertida As String
@@ -67,7 +67,7 @@ Namespace Controllers
         'GET: obter campos para edição dos dados do evento
         Function EditarEvento(ID_evento As Integer) As ActionResult
             If IsNothing(ID_evento) Then
-                Return View()
+                Return New HttpStatusCodeResult(HttpStatusCode.BadGateway)
             Else
                 ViewBag.tecnico = New SelectList(ListaFuncionarios(), "ID_tecnico", "nome")
 
@@ -82,8 +82,50 @@ Namespace Controllers
         'POST: edita consoante os dados recebidos
         <HttpPost>
         <ValidateAntiForgeryToken>
-        Function EditarEvento() As ActionResult
-            Return View()
+        Function EditarEvento(ID_evento As Integer, descricao As String, ID_tecnico As Integer, dataAbertura As String,
+                              dataFecho As String) As ActionResult
+
+            If IsNothing(ID_evento) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            Else
+                Dim evento = LeituraDados($"SELECT * FROM Evento WHERE ID_evento = {ID_evento}").First()
+
+                If evento.ID_evento.Equals(ID_evento) Then
+                    Dim dataAberturaConvertida As String
+                    Dim dataFechoConvertida As String
+
+                    'verificar os valores da dataabertura
+                    If (String.IsNullOrEmpty(dataAbertura)) Then
+                        dataAberturaConvertida = "CURRENT_TIMESTAMP"
+                    Else
+                        dataAberturaConvertida = DateTime.ParseExact(dataAbertura, "yyyy-MM-dd", Nothing).ToString("MM-dd-yyyy")
+                    End If
+
+                    'verificar os valores da datafecho
+                    If (String.IsNullOrEmpty(dataFecho).Equals(False)) Then
+                        dataFechoConvertida = DateTime.ParseExact(dataFecho, "yyyy-MM-dd", Nothing).ToString("MM-dd-yyyy")
+                    Else
+                        dataFechoConvertida = ""
+                    End If
+
+                    conectaBD.EditaEvento(ID_evento, descricao, ID_tecnico, dataAberturaConvertida, dataFechoConvertida)
+                End If
+
+            End If
+            Return RedirectToAction("Index")
+        End Function
+
+        'Recebe o ID do evento a apagar. Apaga o evento se o encontrar. Redireciona para o index após o mesmo.
+        Function ApagarEvento(ID_evento As Integer) As ActionResult
+            If IsNothing(ID_evento) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            Else
+                Dim evento = LeituraDados($"SELECT * From Evento WHERE ID_evento = {ID_evento}").First()
+                If ID_evento.Equals(evento.ID_evento) Then
+                    conectaBD.ApagaEvento(ID_evento)
+                End If
+            End If
+            Return RedirectToAction("Index")
         End Function
 
         ''' <summary>
@@ -108,7 +150,7 @@ Namespace Controllers
                 ev.dataAbertura = item(3)
 
                 If item(4).Equals(DBNull.Value) Then
-                    ev.dataFecho = New DateTime(Nothing)
+                    ev.dataFecho = Nothing
                 Else
                     ev.dataFecho = item(4)
                 End If
