@@ -22,9 +22,16 @@ Namespace Controllers
         <HttpPost>
         <ValidateAntiForgeryToken>
         Function CriaCliente(nome As String, contacto As String, email As String, empresa As String,
-                             ID_utilizador As Integer?)
+                             ID_utilizador As String)
             If String.IsNullOrEmpty(nome) Then
                 Return View()
+            Else
+                'valores temporarios até redesenhar a viewmodel
+                If ID_utilizador.ToString().Equals("") Then
+                    conectaBD.AdicionarCliente(nome, contacto, email, empresa, "null")
+                Else
+                    conectaBD.AdicionarCliente(nome, contacto, email, empresa, Convert.ToInt32(ID_utilizador))
+                End If
             End If
             Return RedirectToAction("Index")
         End Function
@@ -40,6 +47,8 @@ Namespace Controllers
         End Function
 
         'POST
+        <HttpPost()>
+        <ValidateAntiForgeryToken>
         Function EditarCliente(nome As String, contacto As String, email As String, empresa As String,
                              ID_utilizador As Integer?, ID_cliente As Integer)
             Return View()

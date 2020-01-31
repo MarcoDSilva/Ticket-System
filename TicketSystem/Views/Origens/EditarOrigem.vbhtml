@@ -18,7 +18,7 @@ End Code
     <div class="form-group">
         <div class="col-md-12">
             @Html.LabelFor(Function(modelOrig) modelOrig.descricao)
-            @Html.EditorFor(Function(modelOrig) modelOrig.descricao, New With {.class = "form-control"})
+            @Html.EditorFor(Function(modelOrig) modelOrig.descricao, New With {.HtmlAttributes = New With {.class = "form-control"}})
             @Html.ValidationMessageFor(Function(modelOrig) modelOrig.descricao, "", New With {.class = "text-danger"})
             <input type="submit" class="btn btn-success" value="Guardar" />
         </div>

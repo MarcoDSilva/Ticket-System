@@ -14,10 +14,17 @@ Public Class Manipula_TCliente
     ''' <param name="email"></param>
     ''' <param name="empresa"></param>
     ''' <param name="ID_utilizador"></param>
-    Private Sub AdicionarCliente(nome As String, contacto As String, email As String, empresa As String,
-                                 ID_utilizador As Integer?)
+    Public Sub AdicionarCliente(nome As String, contacto As String, email As String, empresa As String,
+                                 ID_utilizador As String)
 
-        Dim query As String = $"INSERT INTO Cliente VALUES (@user, @contact, @malito, @company, {ID_utilizador})"
+        Dim query As String
+
+        If ID_utilizador.Equals("null") Then
+            query = $"INSERT INTO Cliente VALUES (@user, @contact, @malito, @company, NULL,CURRENT_TIMESTAMP);"
+        Else
+            query = $"INSERT INTO Cliente VALUES (@user, @contact, @malito, @company, {ID_utilizador}, CURRENT_TIMESTAMP);"
+        End If
+
         Dim comando As New SqlCommand(query, conexao)
 
         comando.Parameters.AddWithValue("@user", nome)
@@ -37,7 +44,7 @@ Public Class Manipula_TCliente
     ''' <param name="empresa"></param>
     ''' <param name="ID_utilizador"></param>
     ''' <param name="ID_cliente"></param>
-    Private Sub EditarCliente(nome As String, contacto As String, email As String, empresa As String,
+    Public Sub EditarCliente(nome As String, contacto As String, email As String, empresa As String,
                               ID_utilizador As Integer?, ID_cliente As Integer)
         Dim query As String = $"UPDATE Cliente SET nome = @name, contacto = @contact, email = @malito, 
                                empresa = @company, ID_utilizador = {ID_utilizador}
@@ -56,7 +63,7 @@ Public Class Manipula_TCliente
     ''' Apaga o cliente correspondente ao ID passado
     ''' </summary>
     ''' <param name="ID_cliente"></param>
-    Private Sub ApagarCliente(ID_cliente As Integer)
+    Public Sub ApagarCliente(ID_cliente As Integer)
 
         Dim query As String = $"DELETE FROM Cliente WHERE ID_cliente = {ID_cliente}"
         Dim comando As New SqlCommand(query, conexao)

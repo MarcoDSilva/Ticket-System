@@ -18,19 +18,19 @@ End Code
                 </p>
                 <p>
                     @Html.LabelFor(Function(modelEve) modelEve.ID_tecnico)
-                    @Html.DropDownList("ID_tecnico", DirectCast(ViewBag.tecnico, SelectList))
+                    @Html.DropDownList("ID_tecnico", DirectCast(ViewBag.tecnico, SelectList), New With {.class = "form-control"})
                 </p>
                 <p>
                     @Html.LabelFor(Function(modelEve) modelEve.dataAbertura)
-                    <input type="date" name="dataAbertura" value="dataAbertura" id="dataAbertura" />
+                    <input type="date" name="dataAbertura" value="dataAbertura" id="dataAbertura" class="form-control" />
                 </p>
                 <p>
                     @Html.LabelFor(Function(modelEve) modelEve.dataFecho)
-                    <input type="date" name="dataFecho" value="dataFecho" id="dataFecho" />
+                    <input type="date" name="dataFecho" value="dataFecho" id="dataFecho" class="form-control" />
                 </p>
                 <p>
                     @Html.LabelFor(Function(modelEve) modelEve.ID_ticket)
-                    @Html.DropDownList("ID_ticket", DirectCast(ViewBag.tickets, SelectList))
+                    @Html.DropDownList("ID_ticket", DirectCast(ViewBag.tickets, SelectList), New With {.class = "form-control"})
                 </p>
             </div>
 

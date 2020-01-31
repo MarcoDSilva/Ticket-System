@@ -12,7 +12,7 @@ End Code
         <div class="form-group">
             <p>
                 @Html.LabelFor(Function(ModelProb) ModelProb.descricao)
-                @Html.TextBoxFor(Function(ModelProb) ModelProb.descricao)
+                @Html.TextBoxFor(Function(ModelProb) ModelProb.descricao, New With {.class = "form-control"})
             </p>
         </div>
         <input type="submit" name="submit" value="inserir registo" class="btn btn-primary" />

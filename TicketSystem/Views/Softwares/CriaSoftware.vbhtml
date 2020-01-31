@@ -11,7 +11,7 @@ End Code
          <div class="form-group">
              <p>
                  @Html.LabelFor(Function(modelSoft) modelSoft.nome)
-                 @Html.TextBoxFor(Function(modelSoft) modelSoft.nome)
+                 @Html.TextBoxFor(Function(modelSoft) modelSoft.nome, New With {.class = "form-control"})
              </p>
          </div>
         <input type="submit" name="submit" value="Inserir" class="btn btn-primary" />

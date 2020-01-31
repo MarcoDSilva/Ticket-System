@@ -29,10 +29,10 @@ End Code
                 @Html.LabelFor(Function(modelCli) modelCli.ID_utilizador, New With {.class = "form-check-label"})
                 @Html.TextBoxFor(Function(modelCli) modelCli.ID_utilizador, New With {.class = "form-control"})
             </p>
-    <input type="submit" class="btn btn-primary" value="Enviar"/>
-    <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Clientes")'">
-        Voltar
-    </button>
+            <input type="submit" class="btn btn-primary" value="Enviar" />
+            <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Clientes")'">
+                Voltar
+            </button>
         </div>
 
     End Using
