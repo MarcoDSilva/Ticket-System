@@ -62,7 +62,7 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken>
         Function EditarCliente(nome As String, contacto As String, email As String, empresa As String,
-                             ID_utilizador As Integer?, ID_cliente As Integer) As ActionResult
+                             ID_cliente As Integer?, ID_utilizador As Integer) As ActionResult
             If IsNothing(ID_cliente) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadGateway)
             Else
@@ -77,7 +77,7 @@ Namespace Controllers
         End Function
 
         'Apaga o cliente corrrespondente ao id recebido
-        Function ApagarCliente(ID_cliente As String) As ActionResult
+        Function ApagarCliente(ID_cliente As Integer) As ActionResult
             If IsNothing(ID_cliente) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else

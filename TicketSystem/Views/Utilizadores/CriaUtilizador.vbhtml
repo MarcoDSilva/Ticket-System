@@ -24,7 +24,6 @@ End Code
             </p>
             <p>
                 @Html.LabelFor(Function(modelUtil) modelUtil.ID_cliente, New With {.Class = "form-check-label"})
-                @*@Html.TextBoxFor(Function(modelUtil) modelUtil.ID_cliente, New With {.class = "form-control"})*@
                 @Html.DropDownList("ID_cliente", DirectCast(ViewBag.clientes, SelectList), New With {.class = "form-control"})
 
                 <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='#'">Criar utilizador</button>

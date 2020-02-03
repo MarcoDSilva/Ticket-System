@@ -38,7 +38,7 @@ Public Class Manipula_TUtilizador
     ''' <param name="contacto"></param>
     ''' <param name="email"></param>
     ''' <param name="ID_cliente"></param>
-    Public Sub EditaUtilizador(ID_utilizador As Integer, nome As String, contacto As String, email As String, ID_cliente As String)
+    Public Sub EditarUtilizador(ID_utilizador As Integer, nome As String, contacto As String, email As String, ID_cliente As String)
         Dim query As String
 
         If ID_cliente.Equals("null") Then
@@ -64,7 +64,7 @@ Public Class Manipula_TUtilizador
     ''' </summary>
     ''' <param name="ID_utilizador"></param>
     Public Sub ApagaUtilizador(ID_utilizador As Integer)
-        Dim query = $"DELETE FROM Utilizador WHERE ID_utilizador = {ID_utilizador}"
+        Dim query = $"DELETE FROM Utilizador WHERE ID_utilizador = {ID_utilizador};"
         Dim comando As New SqlCommand(query, conexao)
 
         ExecutaComandos(comando)

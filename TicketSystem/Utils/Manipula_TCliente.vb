@@ -79,7 +79,7 @@ Namespace Controllers
         ''' <param name="ID_cliente"></param>
         Public Sub ApagarCliente(ID_cliente As Integer)
 
-            Dim query As String = $"DELETE FROM Cliente WHERE ID_cliente = {ID_cliente}"
+            Dim query As String = $"DELETE FROM Cliente WHERE ID_cliente = {ID_cliente};"
             Dim comando As New SqlCommand(query, conexao)
 
             ExecutaComandos(comando)

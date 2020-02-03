@@ -23,6 +23,8 @@ Namespace Controllers
         End Function
 
         'POST: enviar informação de novo utilizador para a bd
+        'Envia null caso não seja selecionado nenhum utilizador (por pré-definição, adicionei como id 0 um elemento "Sem utilizador")
+        'Caso contrário, envia a informação como ela vem
         <HttpPost()>
         <ValidateAntiForgeryToken()>
         Function CriaUtilizador(nome As String, contacto As String, email As String, ID_cliente As Integer) As ActionResult
@@ -40,24 +42,45 @@ Namespace Controllers
             Return RedirectToAction("Index")
         End Function
 
+        'GET: Informação para editar o utilizador
+        Function EditarUtilizador(ID_utilizador As Integer) As ActionResult
+            If IsNothing(ID_utilizador) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            Else
+                ViewBag.clientes = New SelectList(ListaClientes(), "ID_cliente", "nome")
+                Return View(LeituraDados($"SELECT * FROM Utilizador WHERE ID_utilizador = {ID_utilizador}").First())
+            End If
 
-
-        'GET: 
-        Function EditaUtilizador(ID_utilizador As Integer) As ActionResult
-
+            Return RedirectToAction("Index")
         End Function
 
-        'POST:
+        'POST: Edita o utilizador com as informações passadas
+        ' Se o ID do cliente for 0 (valor pré-definição que demonstra que não existe um cliente associado aquele utilizador)
+        'envia null para a db (ou a classe que a controla)
         <HttpPost()>
         <ValidateAntiForgeryToken()>
-        Function EditarUtilizador(ID_utilizador As Integer, nome As String, contacto As String, email As String, cliente As String) As ActionResult
-
+        Function EditarUtilizador(ID_utilizador As Integer, nome As String, contacto As String, email As String, ID_cliente As Integer?) As ActionResult
+            If IsNothing(ID_utilizador) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
+            Else
+                If ID_cliente.Equals(0) Then
+                    conectaBD.EditarUtilizador(ID_utilizador, nome, contacto, email, "null")
+                Else
+                    conectaBD.EditarUtilizador(ID_utilizador, nome, contacto, email, ID_cliente.ToString())
+                End If
+            End If
+            Return RedirectToAction("Index")
         End Function
 
 
-        'Apagar u
-        Function ApagarUtilizador(ID_utilizador) As ActionResult
-
+        'Apagar utilizador consoante o ID
+        Function ApagarUtilizador(ID_utilizador As Integer) As ActionResult
+            If IsNothing(ID_utilizador) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.Forbidden)
+            Else
+                conectaBD.ApagaUtilizador(ID_utilizador)
+            End If
+            Return RedirectToAction("Index")
         End Function
 
         ''' <summary>
