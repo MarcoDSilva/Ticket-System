@@ -9,9 +9,10 @@ Namespace Controllers
         Dim conectaBD As New Manipula_TCliente
 
         ' GET: Clientes
-        'A Query está com um left join pois queremos incluir os valores nulos que provém do utilizador(caso o cliente não tenha nenhum)
+        'A Query está com um left join pois queremos incluir os valores nulos 
+        'que provém do utilizador(caso o cliente não tenha nenhum utilizador associado)
         Function Index() As ActionResult
-            Return View(LeituraDados($"select c.ID_cliente, c.nome, c.contacto, c.email, c.empresa, u.nome, c.dat_hor 
+            Return View(LeituraDados($"SELECT c.ID_cliente, c.nome, c.contacto, c.email, c.empresa, u.nome, c.dat_hor 
                                       FROM Cliente c
                                       LEFT JOIN Utilizador u
                                       ON c.ID_utilizador = u.ID_utilizador").AsEnumerable)
@@ -19,6 +20,7 @@ Namespace Controllers
 
         'GET : Formulário
         Function CriaCliente() As ActionResult
+            ViewBag.utilizadores = New SelectList(ListaUtilizadores(), "ID_utilizador", "nome")
             Return View()
         End Function
 
@@ -109,7 +111,7 @@ Namespace Controllers
                 'verifica se o ID do utilizador é nulo, e caso o seja, passa um nulo para o cli
                 'caso contrário, atribui-lhe o ID 
                 If item(5).Equals(DBNull.Value) Then
-                    cli.ID_utilizador = Nothing
+                    cli.ID_utilizador = "Sem utilizador"
                 Else
                     cli.ID_utilizador = item(5)
                 End If

@@ -55,11 +55,11 @@ Namespace Controllers
             'caso contrário, utilizamos esse id como valor para o utilizador
             If ID_utilizador.Equals("null") Then
                 query = $"UPDATE Cliente SET nome = @name, contacto = @contact, email = @malito, 
-                               empresa = @company, ID_utilizador = NULL
+                               empresa = @company, ID_utilizador = NULL, dat_hor = CURRENT_TIMESTAMP
                                WHERE ID_cliente = {ID_cliente};"
             Else
                 query = $"UPDATE Cliente SET nome = @name, contacto = @contact, email = @malito, 
-                               empresa = @company, ID_utilizador = {ID_utilizador}
+                               empresa = @company, ID_utilizador = {ID_utilizador}, dat_hor = CURRENT_TIMESTAMP
                                WHERE ID_cliente = {ID_cliente};"
             End If
 

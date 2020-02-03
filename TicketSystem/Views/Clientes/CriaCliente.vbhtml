@@ -27,7 +27,9 @@ End Code
             </p>
             <p>
                 @Html.LabelFor(Function(modelCli) modelCli.ID_utilizador, New With {.class = "form-check-label"})
-                @Html.TextBoxFor(Function(modelCli) modelCli.ID_utilizador, New With {.class = "form-control"})
+                @Html.DropDownList("ID_utilizador", DirectCast(ViewBag.utilizadores, SelectList), New With {.class = "form-control"})
+                <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='#'">Criar utilizador</button>
+
             </p>
             <input type="submit" class="btn btn-primary" value="Enviar" />
             <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Clientes")'">
