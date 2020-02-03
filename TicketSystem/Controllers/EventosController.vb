@@ -31,38 +31,71 @@ Namespace Controllers
         'verificações que vão ficar na view, estão aqui temporariamente, como id_tecnico ou ticket
         <HttpPost()>
         <ValidateAntiForgeryToken>
-        Function CriaEvento(descricao As String, ID_tecnico As Integer, dataAbertura As String,
-                            dataFecho As String, ID_ticket As Integer) As ActionResult
+        Function CriaEvento(evento As Evento) As ActionResult
 
             'se o tecnico ou o ticket estiverem vazio da erro -isto é um placeholder, essa verificação
             'vai ser efectuada na view
-            If IsNothing(ID_tecnico) Or IsNothing(ID_ticket) Or String.IsNullOrEmpty(descricao) Then
+            If IsNothing(evento.ID_tecnico) Or IsNothing(evento.ID_ticket) Or String.IsNullOrEmpty(evento.descricao) Then
 
             Else
                 Dim dataAberturaConvertida As String
                 Dim dataFechoConvertida As String
 
                 'verificar os valores da dataabertura
-                If (String.IsNullOrEmpty(dataAbertura)) Then
+                If (String.IsNullOrEmpty(evento.dataAbertura)) Then
                     dataAberturaConvertida = "CURRENT_TIMESTAMP"
                 Else
-                    dataAberturaConvertida = DateTime.ParseExact(dataAbertura, "yyyy-MM-dd", Nothing).ToString("MM-dd-yyyy")
+                    dataAberturaConvertida = DateTime.Parse(evento.dataAbertura).ToString("MM-dd-yyyy")
                 End If
 
                 'verificar os valores da datafecho
-                If (String.IsNullOrEmpty(dataFecho).Equals(False)) Then
-                    dataFechoConvertida = DateTime.ParseExact(dataFecho, "yyyy-MM-dd", Nothing).ToString("MM-dd-yyyy")
+                If IsNothing(evento.dataFecho).Equals(False) Then
+                    dataFechoConvertida = DateTime.Parse(evento.dataFecho.Value).ToString("MM-dd-yyyy")
                 Else
                     dataFechoConvertida = ""
                 End If
 
                 'adiciona os dados na bd
-                conectaBD.AdicionaEvento(descricao, ID_tecnico, dataAberturaConvertida,
-                                         dataFechoConvertida, ID_ticket)
+                conectaBD.AdicionaEvento(evento.descricao, evento.ID_tecnico, dataAberturaConvertida,
+                                         dataFechoConvertida, evento.ID_ticket)
             End If
 
             Return RedirectToAction("Index")
         End Function
+
+
+        'Function CriaEvento(descricao As String, ID_tecnico As Integer, dataAbertura As String,
+        '                    dataFecho As String, ID_ticket As Integer) As ActionResult
+
+        '    'se o tecnico ou o ticket estiverem vazio da erro -isto é um placeholder, essa verificação
+        '    'vai ser efectuada na view
+        '    If IsNothing(ID_tecnico) Or IsNothing(ID_ticket) Or String.IsNullOrEmpty(descricao) Then
+
+        '    Else
+        '        Dim dataAberturaConvertida As String
+        '        Dim dataFechoConvertida As String
+
+        '        'verificar os valores da dataabertura
+        '        If (String.IsNullOrEmpty(dataAbertura)) Then
+        '            dataAberturaConvertida = "CURRENT_TIMESTAMP"
+        '        Else
+        '            dataAberturaConvertida = DateTime.ParseExact(dataAbertura, "yyyy-MM-dd", Nothing).ToString("MM-dd-yyyy")
+        '        End If
+
+        '        'verificar os valores da datafecho
+        '        If (String.IsNullOrEmpty(dataFecho).Equals(False)) Then
+        '            dataFechoConvertida = DateTime.ParseExact(dataFecho, "yyyy-MM-dd", Nothing).ToString("MM-dd-yyyy")
+        '        Else
+        '            dataFechoConvertida = ""
+        '        End If
+
+        '        'adiciona os dados na bd
+        '        conectaBD.AdicionaEvento(descricao, ID_tecnico, dataAberturaConvertida,
+        '                                 dataFechoConvertida, ID_ticket)
+        '    End If
+
+        '    Return RedirectToAction("Index")
+        'End Function
 
         'GET: obter campos para edição dos dados do evento
         Function EditarEvento(ID_evento As Integer) As ActionResult

@@ -2,7 +2,8 @@
 Imports System.ComponentModel.DataAnnotations.Schema
 
 Public Class VM_UtilizadorCliente
-    <Key>
+
+
     <Display(Name:="ID")>
     Public Property ID_utilizador As Integer
 
