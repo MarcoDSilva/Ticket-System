@@ -37,6 +37,8 @@
                         <a class="dropdown-item">@Html.ActionLink("Tecnicos", "Index", "Tecnicos", New With {.area = ""}, New With {.class = "nav-link"})</a>
                         <a class="dropdown-item">@Html.ActionLink("Eventos", "Index", "Eventos", New With {.area = ""}, New With {.class = "nav-link"})</a>
                         <a class="dropdown-item">@Html.ActionLink("Clientes", "Index", "Clientes", New With {.area = ""}, New With {.class = "nav-link"})</a>
+                        <a class="dropdown-item">@Html.ActionLink("Utilizadores", "Index", "Utilizadores", New With {.area = ""}, New With {.class = "nav-link"})</a>
+                        <a class="dropdown-item">@Html.ActionLink("Tickets", "Index", "Tickets", New With {.area = ""}, New With {.class = "nav-link"})</a>
                     </div>
                 </div>
             </div>

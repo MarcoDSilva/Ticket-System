@@ -1,4 +1,4 @@
-﻿@ModelType TicketSystem.Cliente
+﻿@ModelType TicketSystem.VM_ClienteUtilizador
 @Code
     ViewData("Title") = "EditarCliente"
 End Code
@@ -11,7 +11,6 @@ End Code
 
         @<div class="col-form-label">
             @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
-
             @Html.HiddenFor(Function(cli) cli.ID_cliente)
 
             <!-- form edição -->
@@ -39,25 +38,31 @@ End Code
                     </p>
                     <p>
                         @Html.LabelFor(Function(cli) cli.ID_utilizador, New With {.class = "form-check-label"})
-                        @Html.EditorFor(Function(cli) cli.ID_utilizador, New With {.HtmlAttributes = New With {.class = "form-control"}})
+                        @*@Html.EditorFor(Function(cli) cli.ID_utilizador, New With {.HtmlAttributes = New With {.class = "form-control"}})*@
+                        @Html.DropDownList("ID_utilizador", DirectCast(ViewBag.utilizador, SelectList), New With {.class = "form-control"})
                         @Html.ValidationMessageFor(Function(cli) cli.ID_utilizador, "", New With {.class = "text-danger"})
+
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='#'">Criar utilizador</button>
                     </p>
+
+                    <!-- butões de operações -->
+                    <input type="submit" value="Guardar" class="btn btn-success" />
+
+                    <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#verificaModal">
+                        Apagar
+                    </button>
+                    <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaCliente", "Clientes")'">
+                        Novo
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Clientes")'">
+                        Voltar
+                    </button>
                 </div>
-                <input type="button" value="Guardar" class="btn btn-success" />
             </div>
 
             <!-- butões com as operações respectivas do formulário de edição -->
             <div id="editaEvento" class="form-group">
-                <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#verificaModal">
-                    Apagar
-                </button>
-                <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaCliente", "Clientes")'">
-                    Novo
-                </button>
-                <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Clientes")'">
-                    Voltar
-                </button>
-
+               
                 <!-- Opções do Modal para confirmação do apagamento do registo -->
                 <div class="modal fade" id="verificaModal" tabindex="-1" role="dialog" aria-labelledby="modalApagar" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -82,7 +87,6 @@ End Code
             </div>
 
         </div>
-
     End Using
 
 </div>
