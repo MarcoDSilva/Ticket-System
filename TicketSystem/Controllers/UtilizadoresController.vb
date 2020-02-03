@@ -1,11 +1,12 @@
-﻿Imports System.Web.Mvc
+﻿Imports System.Net
+Imports System.Web.Mvc
 
 Namespace Controllers
     Public Class UtilizadoresController
         Inherits Controller
 
-        'tabela conexao á bd
-        Dim conectaBD = New Manipula_TCliente
+        'tabela com conexao á bd
+        Dim conectaBD As New Manipula_TUtilizador
 
         ' GET: Utilizadores
         Function Index() As ActionResult
@@ -13,6 +14,50 @@ Namespace Controllers
                                       FROM Utilizador u
                                       LEFT JOIN Cliente c	
                                       ON u.ID_utilizador = c.ID_utilizador;"))
+        End Function
+
+        'GET: Criação de utilizadores
+        Function CriaUtilizador() As ActionResult
+            ViewBag.clientes = New SelectList(ListaClientes(), "ID_cliente", "nome")
+            Return View()
+        End Function
+
+        'POST: enviar informação de novo utilizador para a bd
+        <HttpPost()>
+        <ValidateAntiForgeryToken()>
+        Function CriaUtilizador(nome As String, contacto As String, email As String, ID_cliente As Integer) As ActionResult
+
+            If String.IsNullOrEmpty(nome) Or String.IsNullOrEmpty(contacto) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.BadGateway)
+            Else
+                If ID_cliente.Equals(0) Then
+                    conectaBD.AdicionaUtilizador(nome, contacto, email, "null")
+                Else
+                    conectaBD.AdicionaUtilizador(nome, contacto, email, ID_cliente)
+                End If
+            End If
+
+            Return RedirectToAction("Index")
+        End Function
+
+
+
+        'GET: 
+        Function EditaUtilizador(ID_utilizador As Integer) As ActionResult
+
+        End Function
+
+        'POST:
+        <HttpPost()>
+        <ValidateAntiForgeryToken()>
+        Function EditarUtilizador(ID_utilizador As Integer, nome As String, contacto As String, email As String, cliente As String) As ActionResult
+
+        End Function
+
+
+        'Apagar u
+        Function ApagarUtilizador(ID_utilizador) As ActionResult
+
         End Function
 
         ''' <summary>
@@ -48,6 +93,31 @@ Namespace Controllers
             Next
             Return listagemUtilizadores
         End Function
+
+        'Listagem para trocar o ID dos clientes por uma dropdown com o respectivo nome
+        'adicionado um extra para aparecer "Sem clientes" para podermos enviar NULL para a bd
+        Function ListaClientes() As List(Of Cliente)
+            Dim tabelaClientes As DataTable = conectaBD.LeituraTabela("SELECT * FROM Cliente;")
+            Dim listagemClientes As List(Of Cliente) = New List(Of Cliente)
+
+            'adicionar o "sem utilizador" na lista
+            Dim extra As New Cliente
+            extra.ID_utilizador = 0
+            extra.nome = "Sem Utilizador"
+            listagemClientes.Add(extra)
+
+            'ir buscar a informação da bd e adicionar na listagem
+            For Each item In tabelaClientes.AsEnumerable
+                Dim c As New Cliente
+                c.ID_cliente = item(0)
+                c.nome = item(1)
+
+                listagemClientes.Add(c)
+            Next
+
+            Return listagemClientes
+        End Function
+
 
     End Class
 End Namespace

@@ -23,7 +23,7 @@ End Code
             <td>@Html.DisplayFor(Function(modelutilizador) utilizador.email)</td>
             <td>@Html.DisplayFor(Function(modelutilizador) utilizador.ID_cliente)</td>
             <td>@Html.DisplayFor(Function(modelutilizador) utilizador.dat_hor)</td>
-            <td>@Html.ActionLink("Detalhes", "EditarCliente", New With {.ID_utilizador = utilizador.ID_utilizador})</td>
+            <td>@Html.ActionLink("Detalhes", "EditarUtilizador", New With {.ID_utilizador = utilizador.ID_utilizador})</td>
         </tr>
     Next
 </table>
