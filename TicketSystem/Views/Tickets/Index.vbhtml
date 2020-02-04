@@ -29,20 +29,20 @@ End Code
     @For Each ticket In Model
         @<tr>
             <td>@Html.DisplayFor(Function(modelT) ticket.ID_ticket)</td>
-            <th>@Html.DisplayFor(Function(modelT) ticket.ID_tecnico)</th>
-            <th>@Html.DisplayFor(Function(modelT) ticket.ID_software)</th>
-            <th>@Html.DisplayFor(Function(modelT) ticket.ID_cliente)</th>
-            <th>@Html.DisplayFor(Function(modelT) ticket.ID_problema)</th>
-            <th>@Html.DisplayFor(Function(modelT) ticket.descricao)</th>
-            <th>@Html.DisplayFor(Function(modelT) ticket.dataAbertura)</th>
-            <th>@Html.DisplayFor(Function(modelT) ticket.dataFecho)</th>
-            <th>@Html.DisplayFor(Function(modelT) ticket.tempoPrevisto)</th>
-            <th>@Html.DisplayFor(Function(modelT) ticket.tempoTotal)</th>
-            <th>@Html.DisplayFor(Function(modelT) ticket.ID_estado)</th>
-            <th>@Html.DisplayFor(Function(modelT) ticket.ID_prioridade)</th>
-            <th>@Html.DisplayFor(Function(modelT) ticket.ID_utilizador)</th>
-            <th>@Html.DisplayFor(Function(modelT) ticket.ID_origem)</th>
-            <th>@Html.DisplayFor(Function(modelT) ticket.dat_hor)</th>
+            <td>@Html.DisplayFor(Function(modelT) ticket.ID_tecnico)</td>
+            <td>@Html.DisplayFor(Function(modelT) ticket.ID_software)</td>
+            <td>@Html.DisplayFor(Function(modelT) ticket.ID_cliente)</td>
+            <td>@Html.DisplayFor(Function(modelT) ticket.ID_problema)</td>
+            <td>@Html.DisplayFor(Function(modelT) ticket.descricao)</td>
+            <td>@Html.DisplayFor(Function(modelT) ticket.dataAbertura)</td>
+            <td>@Html.DisplayFor(Function(modelT) ticket.dataFecho)</td>
+            <td>@Html.DisplayFor(Function(modelT) ticket.tempoPrevisto)</td>
+            <td>@Html.DisplayFor(Function(modelT) ticket.tempoTotal)</td>
+            <td>@Html.DisplayFor(Function(modelT) ticket.ID_estado)</td>
+            <td>@Html.DisplayFor(Function(modelT) ticket.ID_prioridade)</td>
+            <td>@Html.DisplayFor(Function(modelT) ticket.ID_utilizador)</td>
+            <td>@Html.DisplayFor(Function(modelT) ticket.ID_origem)</td>
+            <td>@Html.DisplayFor(Function(modelT) ticket.dat_hor)</td>
 
             <td>@Html.ActionLink("Detalhes", "EditarEvento", New With {.ID_ticket = ticket.ID_ticket})</td>
         </tr>

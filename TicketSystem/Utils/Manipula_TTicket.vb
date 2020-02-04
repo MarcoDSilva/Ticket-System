@@ -5,24 +5,33 @@ Public Class Manipula_TTicket
     'conexao ja feita com a sc
     Private ReadOnly conexao As New SqlConnection(Conector.stringConnection)
 
+    ''' <summary>
+    ''' Criação de um novo ticket
+    ''' </summary>
+    ''' <param name="ticket"></param>
     Public Sub CriaTicket(ticket As Ticket)
         Dim query As String
 
         query = $"INSERT INTO Ticket VALUES({ticket.ID_tecnico},{ticket.ID_software}, {ticket.ID_cliente},
-                 {ticket.ID_problema}, {ticket.descricao}, {ticket.dataAbertura}, {ticket.dataFecho}, 
+                 {ticket.ID_problema}, @desc, {ticket.dataAbertura}, {ticket.dataFecho}, 
                  {ticket.tempoPrevisto}, {ticket.tempoTotal}, {ticket.ID_estado}, {ticket.ID_prioridade},
                  {ticket.ID_origem}, CURRENT_TIMESTAMP)"
 
-        query = "INSERT INTO Ticket VALUES(3,2,9,15,
-                'vamos testar objetos na oficima', '2020-02-03', 
-                 NULL,100,200,2,4,NULL,3,CURRENT_TIMESTAMP);"
+        Dim comando As New SqlCommand(query, conexao)
+        comando.Parameters.AddWithValue("@desc", {ticket.descricao})
+
+        ExecutaComandos(comando)
+
     End Sub
 
     Public Sub EditaTicket()
         Dim query As String
     End Sub
 
-    Public Sub ApagaTicket()
+    Public Sub ApagaTicket(ID_ticket As Integer)
+        Dim query As String = $"DELETE FROM Ticket WHERE ID_ticket = {ID_ticket}"
+        Dim comando As New SqlCommand(query, conexao)
+        ExecutaComandos(comando)
 
     End Sub
 
