@@ -154,7 +154,7 @@ Public Class ObterDados
     End Function
 
     ''' <summary>
-    ''' Retorna uma lista de Utilizadores, só com o campo ID e descrição. 
+    ''' Retorna uma lista de Utilizadores, só com o campo ID e nome. 
     ''' Retorna também um "Sem utilizador" na posição 0, visto que o valor pode ser nulo.
     ''' </summary>
     ''' <returns></returns>

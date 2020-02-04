@@ -10,24 +10,32 @@ Namespace Controllers
         Function Index() As ActionResult
 
             Return View(LeituraDados("SELECT t.ID_ticket, tec.nome, sft.nome, cli.nome, prob.descricao, t.descricao, 
-                                    t.dataAbertura, t.dataFecho, t.tempoPrevisto, t.tempoTotal, est.descricao,
-                                    prio.descricao, t.ID_utilizador, ori.descricao,t.dat_hor
+                                      t.dataAbertura, t.dataFecho, t.tempoPrevisto, t.tempoTotal, est.descricao,
+                                      prio.descricao, t.ID_utilizador, ori.descricao,t.dat_hor
 
-                                    FROM Ticket t,Tecnico tec, Software sft, Cliente cli, 
-                                    Problema prob, Estado est, Prioridade prio,Origem ori
+                                      FROM Ticket t,Tecnico tec, Software sft, Cliente cli, 
+                                      Problema prob, Estado est, Prioridade prio,Origem ori
 
-                                    WHERE t.ID_tecnico = tec.ID_tecnico
-                                        AND sft.ID_software = t.ID_software
-                                        AND cli.ID_cliente = t.ID_cliente
-                                        AND prob.ID_problema = t.ID_problema
-                                        AND est.ID_estado = t.ID_estado
-                                        AND prio.ID_prioridade = t.ID_prioridade
-                                        AND ori.ID_origem = t.ID_origem
+                                      WHERE t.ID_tecnico = tec.ID_tecnico
+                                          AND sft.ID_software = t.ID_software
+                                          AND cli.ID_cliente = t.ID_cliente
+                                          AND prob.ID_problema = t.ID_problema
+                                          AND est.ID_estado = t.ID_estado
+                                          AND prio.ID_prioridade = t.ID_prioridade
+                                          AND ori.ID_origem = t.ID_origem
                                     "))
         End Function
 
         'GET:
         Function CriaTicket() As ActionResult
+            ViewBag.tecnico = New SelectList(conectaBD.ListaTecnicos(), "ID_tecnico", "nome")
+            ViewBag.software = New SelectList(conectaBD.ListaSoftwares(), "ID_software", "nome")
+            ViewBag.cliente = New SelectList(conectaBD.ListaClientes(), "ID_cliente", "nome")
+            ViewBag.problema = New SelectList(conectaBD.ListaProblemas(), "ID_problema", "descricao")
+            ViewBag.estado = New SelectList(conectaBD.ListaEstados(), "ID_estado", "descricao")
+            ViewBag.prioridade = New SelectList(conectaBD.ListaPrioridades(), "ID_prioridade", "descricao")
+            ViewBag.utilizador = New SelectList(conectaBD.ListaUtilizadores(), "ID_utilizador", "nome")
+            ViewBag.origem = New SelectList(conectaBD.ListaOrigens(), "ID_origem", "descricao")
             Return View()
         End Function
 
