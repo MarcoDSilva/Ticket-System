@@ -66,7 +66,7 @@ Namespace Controllers
 
             'verificar os valores da datafecho
             If IsNothing(ticketParams.dataFecho).Equals(False) Then
-                dataFechoConvertida = ""
+                dataFechoConvertida = "null"
             Else
                 dataFechoConvertida = ConverteDataHora(ticketParams.dataFecho.Value)
             End If

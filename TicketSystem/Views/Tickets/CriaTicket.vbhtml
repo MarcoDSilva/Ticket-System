@@ -24,11 +24,11 @@ End Code
                 </p>
                 <p>
                     @Html.LabelFor(Function(ticket) ticket.Cliente, New With {.class = "form-check-label"})
-                    @Html.DropDownList("Cliente", DirectCast(ViewBag.cliente, SelectList), New With {.class = "form-control"})
+                    @Html.DropDownList("ID_cliente", DirectCast(ViewBag.cliente, SelectList), New With {.class = "form-control"})
                 </p>
                 <p>
                     @Html.LabelFor(Function(ticket) ticket.Problema, New With {.class = "form-check-label"})
-                    @Html.DropDownList("Problema", DirectCast(ViewBag.problema, SelectList), New With {.class = "form-control"})
+                    @Html.DropDownList("ID_problema", DirectCast(ViewBag.problema, SelectList), New With {.class = "form-control"})
                 </p>
                 <p>
                     @Html.LabelFor(Function(ticket) ticket.descricao, New With {.class = "form-check-label"})

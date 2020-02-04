@@ -15,15 +15,19 @@ Partial Public Class Ticket
     Public Property ID_ticket As Integer
 
     <Display(Name:="Tecnico")>
+    <Required>
     Public Property ID_tecnico As Integer
 
     <Display(Name:="Software")>
+    <Required>
     Public Property ID_software As Integer
 
     <Display(Name:="Cliente")>
+    <Required>
     Public Property ID_cliente As Integer
 
     <Display(Name:="Problema")>
+    <Required>
     Public Property ID_problema As Integer
 
     <Display(Name:="Descrição")>
@@ -32,6 +36,7 @@ Partial Public Class Ticket
     Public Property descricao As String
 
     <Display(Name:="Data de abertura")>
+    <Required>
     Public Property dataAbertura As Date
 
     <Display(Name:="Data de fecho")>
@@ -44,15 +49,18 @@ Partial Public Class Ticket
     Public Property tempoTotal As Integer
 
     <Display(Name:="Estado")>
+    <Required>
     Public Property ID_estado As Integer
 
     <Display(Name:="Prioridade")>
+    <Required>
     Public Property ID_prioridade As Integer
 
     <Display(Name:="Utilizador")>
     Public Property ID_utilizador As Integer?
 
     <Display(Name:="Origem")>
+    <Required>
     Public Property ID_origem As Integer
 
     <Display(Name:="Ultima actualização")>
