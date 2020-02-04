@@ -9,16 +9,18 @@ Public Class Manipula_TTicket
     ''' Criação de um novo ticket
     ''' </summary>
     ''' <param name="ticket"></param>
-    Public Sub CriaTicket(ticket As Ticket)
+    Public Sub CriaTicket(ID_tecnico As Integer, ID_software As Integer, ID_cliente As Integer, ID_problema As Integer, descricao As String,
+                          dataAbertura As String, dataFecho As String, tempoPrevisto As Integer, tempoTotal As Integer, ID_estado As Integer,
+                          ID_prioridade As Integer, ID_utilizador As Integer, ID_origem As Integer)
         Dim query As String
 
-        query = $"INSERT INTO Ticket VALUES({ticket.ID_tecnico},{ticket.ID_software}, {ticket.ID_cliente},
-                 {ticket.ID_problema}, @desc, {ticket.dataAbertura}, {ticket.dataFecho}, 
-                 {ticket.tempoPrevisto}, {ticket.tempoTotal}, {ticket.ID_estado}, {ticket.ID_prioridade},
-                 {ticket.ID_origem}, CURRENT_TIMESTAMP)"
+        query = $"INSERT INTO Ticket VALUES({ID_tecnico},{ID_software}, {ID_cliente},
+                 {ID_problema}, @desc, {dataAbertura}, {dataFecho}, 
+                 {tempoPrevisto}, {tempoTotal}, {ID_estado}, {ID_prioridade},
+                 {ID_utilizador},{ID_origem}, CURRENT_TIMESTAMP)"
 
         Dim comando As New SqlCommand(query, conexao)
-        comando.Parameters.AddWithValue("@desc", {ticket.descricao})
+        comando.Parameters.AddWithValue("@desc", {descricao})
 
         ExecutaComandos(comando)
 

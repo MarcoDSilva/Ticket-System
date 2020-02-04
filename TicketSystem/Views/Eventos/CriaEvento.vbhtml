@@ -14,7 +14,7 @@ End Code
                 <p>
                     @Html.LabelFor(Function(modelEve) modelEve.descricao)
                     @Html.TextBoxFor(Function(modelEve) modelEve.descricao, New With {.class = "form-control"})
-                    @Html.ValidationMessageFor(Function(modelEve) modelEve.descricao)
+                    @Html.ValidationMessageFor(Function(modelEve) modelEve.descricao)              
                 </p>
                 <p>
                     @Html.LabelFor(Function(modelEve) modelEve.ID_tecnico)

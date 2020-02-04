@@ -1,4 +1,5 @@
-﻿Imports System.Web.Mvc
+﻿Imports System.Net
+Imports System.Web.Mvc
 
 Namespace Controllers
     Public Class TicketsController
@@ -26,7 +27,7 @@ Namespace Controllers
                                     "))
         End Function
 
-        'GET:
+        'GET: Cria a view para criação de tickets. A mesma contém várias dropdownlists que estão a ser alimentadas por viewbags
         Function CriaTicket() As ActionResult
             ViewBag.tecnico = New SelectList(conectaBD.ListaTecnicos(), "ID_tecnico", "nome")
             ViewBag.software = New SelectList(conectaBD.ListaSoftwares(), "ID_software", "nome")
@@ -44,16 +45,51 @@ Namespace Controllers
         <ValidateAntiForgeryToken()>
         Function CriaTicket(ticketParams As Ticket) As ActionResult
 
-            Return View()
+            Dim dataAberturaConvertida As String
+            Dim dataFechoConvertida As String
+
+            'verificar os tempos
+            If (ticketParams.tempoPrevisto.Equals("")) Then
+                ticketParams.tempoPrevisto = 0
+            End If
+
+            If (ticketParams.tempoTotal.Equals("")) Then
+                ticketParams.tempoTotal = 0
+            End If
+
+            'verificar os valores da dataabertura
+            If (IsNothing(ticketParams.dataAbertura)) Then
+                dataAberturaConvertida = "CURRENT_TIMESTAMP"
+            Else
+                dataAberturaConvertida = ConverteDataHora(ticketParams.dataAbertura)
+            End If
+
+            'verificar os valores da datafecho
+            If IsNothing(ticketParams.dataFecho).Equals(False) Then
+                dataFechoConvertida = ""
+            Else
+                dataFechoConvertida = ConverteDataHora(ticketParams.dataFecho.Value)
+            End If
+
+            'verificar utilizador
+            If IsNothing(ticketParams.ID_utilizador) Then
+                ticketParams.ID_utilizador = Nothing
+            End If
+
+            conectaBD.CriaTicket(ticketParams.ID_tecnico, ticketParams.ID_software, ticketParams.ID_cliente, ticketParams.ID_problema,
+                                  ticketParams.descricao, dataAberturaConvertida, dataFechoConvertida, ticketParams.tempoPrevisto,
+                                    ticketParams.tempoTotal, ticketParams.ID_estado, ticketParams.ID_prioridade, ticketParams.ID_utilizador, ticketParams.ID_origem)
+
+            Return RedirectToAction("Index")
         End Function
 
-        'GET:
+        'GET: Recebe a informação do ticket para o mesmo ser editado
         Function EditarTicket(ID_ticket As Integer) As ActionResult
             Return View()
 
         End Function
 
-        'POST:
+        'POST: utiliza a informação recebida do ticket, e actualiza a bd com os mesmos
         <HttpPost()>
         <ValidateAntiForgeryToken()>
         Function EditarTicket(ticketParams As Ticket) As ActionResult
@@ -61,8 +97,13 @@ Namespace Controllers
 
         End Function
 
-        'POST
+        'POST - Apagar o ticket 
         Function ApagarTicket(ID_ticket As Integer) As ActionResult
+            If IsNothing(ID_ticket) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.Forbidden)
+            Else
+                conectaBD.ApagaTicket(ID_ticket)
+            End If
             Return View()
 
         End Function
@@ -118,5 +159,20 @@ Namespace Controllers
 
             Return listagemTickets
         End Function
+
+        ''' <summary>
+        ''' Método para converter o datetime, adicionar horas/mins/segs e retornar a string já preparada
+        ''' para ser adicionada na base de dados (formato MM-dd-yyyy H:mm:ss)
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        Function ConverteDataHora(data As DateTime) As String
+            Dim tempoAConverter = data.AddHours(DateTime.Now.Hour).
+                       AddSeconds(DateTime.Now.Second).AddMinutes(DateTime.Now.Minute)
+
+            Return DateTime.Parse(tempoAConverter).ToString("MM-dd-yyyy H:mm:ss")
+
+        End Function
+
     End Class
 End Namespace

@@ -36,7 +36,7 @@ Namespace Controllers
             'se o tecnico ou o ticket estiverem vazio da erro -isto é um placeholder, essa verificação
             'vai ser efectuada na view
             If IsNothing(evento.ID_tecnico) Or IsNothing(evento.ID_ticket) Or String.IsNullOrEmpty(evento.descricao) Then
-
+                Return View()
             Else
                 Dim dataAberturaConvertida As String
                 Dim dataFechoConvertida As String
@@ -45,12 +45,12 @@ Namespace Controllers
                 If (String.IsNullOrEmpty(evento.dataAbertura)) Then
                     dataAberturaConvertida = "CURRENT_TIMESTAMP"
                 Else
-                    dataAberturaConvertida = DateTime.Parse(evento.dataAbertura).ToString("MM-dd-yyyy")
+                    dataAberturaConvertida = ConverteDataHora(evento.dataAbertura)
                 End If
 
                 'verificar os valores da datafecho
                 If IsNothing(evento.dataFecho).Equals(False) Then
-                    dataFechoConvertida = DateTime.Parse(evento.dataFecho.Value).ToString("MM-dd-yyyy")
+                    dataFechoConvertida = ConverteDataHora(evento.dataFecho)
                 Else
                     dataFechoConvertida = ""
                 End If
@@ -83,34 +83,33 @@ Namespace Controllers
         'erros que podem surgir com as mesmas
         <HttpPost>
         <ValidateAntiForgeryToken>
-        Function EditarEvento(ID_evento As Integer, descricao As String, ID_tecnico As Integer, dataAbertura As String,
-                              dataFecho As String) As ActionResult
+        Function EditarEvento(evento As Evento) As ActionResult
 
-            If IsNothing(ID_evento) Then
+            If IsNothing(evento.ID_evento) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
-                Dim evento = LeituraDados($"SELECT * FROM Evento WHERE ID_evento = {ID_evento}").First()
+                Dim queryEvento = LeituraDados($"SELECT * FROM Evento WHERE ID_evento = {evento.ID_evento}").First()
 
-                If evento.ID_evento.Equals(ID_evento) Then
+                If evento.ID_evento.Equals(queryEvento.ID_evento) Then
                     Dim dataAberturaConvertida As String
                     Dim dataFechoConvertida As String
 
                     'se a data de abertura vier vazia, atribuimos o valor que estava anteriormente
-                    If (dataAbertura.Equals("")) Then
-                        dataAberturaConvertida = evento.dataAbertura.ToString("MM-dd-yyyy")
+                    If (evento.dataAbertura.Equals("")) Then
+                        dataAberturaConvertida = queryEvento.dataAbertura.ToString("MM-dd-yyyy")
                     Else
-                        dataAberturaConvertida = DateTime.ParseExact(dataAbertura, "yyyy-MM-dd", Nothing).ToString("MM-dd-yyyy")
+                        dataAberturaConvertida = ConverteDataHora(evento.dataAbertura)
                     End If
 
                     'se a data de fecho trazer valor, convertemos e enviamos, caso contrário
                     'enviamos a string a null, para manipularmos a query para a bd
-                    If (String.IsNullOrEmpty(dataFecho).Equals(False)) Then
-                        dataFechoConvertida = DateTime.ParseExact(dataFecho, "yyyy-MM-dd", Nothing).ToString("MM-dd-yyyy")
+                    If (String.IsNullOrEmpty(evento.dataFecho).Equals(False)) Then
+                        dataFechoConvertida = ConverteDataHora(evento.dataFecho)
                     Else
                         dataFechoConvertida = "NULL"
                     End If
 
-                    conectaBD.EditaEvento(ID_evento, descricao, ID_tecnico, dataAberturaConvertida, dataFechoConvertida)
+                    conectaBD.EditaEvento(evento.ID_evento, evento.descricao, evento.ID_tecnico, dataAberturaConvertida, dataFechoConvertida)
                 End If
 
             End If
@@ -161,6 +160,20 @@ Namespace Controllers
             Next
 
             Return listagemEventos
+        End Function
+
+        ''' <summary>
+        ''' Método para converter o datetime, adicionar horas/mins/segs e retornar a string já preparada
+        ''' para ser adicionada na base de dados (formato MM-dd-yyyy H:mm:ss)
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        Function ConverteDataHora(data As DateTime) As String
+            Dim tempoAConverter = data.AddHours(DateTime.Now.Hour).
+                           AddSeconds(DateTime.Now.Second).AddMinutes(DateTime.Now.Minute)
+
+            Return DateTime.Parse(tempoAConverter).ToString("MM-dd-yyyy H:mm:ss")
+
         End Function
 
         'listagem temporaria para preview de tickets
