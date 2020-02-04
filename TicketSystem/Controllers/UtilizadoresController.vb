@@ -18,7 +18,7 @@ Namespace Controllers
 
         'GET: Criação de utilizadores
         Function CriaUtilizador() As ActionResult
-            ViewBag.clientes = New SelectList(ListaClientes(), "ID_cliente", "nome")
+            ViewBag.clientes = New SelectList(conectaBD.ListaClientes(), "ID_cliente", "nome")
             Return View()
         End Function
 
@@ -47,7 +47,7 @@ Namespace Controllers
             If IsNothing(ID_utilizador) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
-                ViewBag.clientes = New SelectList(ListaClientes(), "ID_cliente", "nome")
+                ViewBag.clientes = New SelectList(conectaBD.ListaClientes(), "ID_cliente", "nome")
                 Return View(LeituraDados($"SELECT * FROM Utilizador WHERE ID_utilizador = {ID_utilizador}").First())
             End If
 
@@ -116,31 +116,6 @@ Namespace Controllers
             Next
             Return listagemUtilizadores
         End Function
-
-        'Listagem para trocar o ID dos clientes por uma dropdown com o respectivo nome
-        'adicionado um extra para aparecer "Sem clientes" para podermos enviar NULL para a bd
-        Function ListaClientes() As List(Of Cliente)
-            Dim tabelaClientes As DataTable = conectaBD.LeituraTabela("SELECT * FROM Cliente;")
-            Dim listagemClientes As List(Of Cliente) = New List(Of Cliente)
-
-            'adicionar o "sem utilizador" na lista
-            Dim extra As New Cliente
-            extra.ID_utilizador = 0
-            extra.nome = "Sem Utilizador"
-            listagemClientes.Add(extra)
-
-            'ir buscar a informação da bd e adicionar na listagem
-            For Each item In tabelaClientes.AsEnumerable
-                Dim c As New Cliente
-                c.ID_cliente = item(0)
-                c.nome = item(1)
-
-                listagemClientes.Add(c)
-            Next
-
-            Return listagemClientes
-        End Function
-
 
     End Class
 End Namespace

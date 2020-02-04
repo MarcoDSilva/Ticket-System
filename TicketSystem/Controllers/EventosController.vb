@@ -22,7 +22,7 @@ Namespace Controllers
         'ticket é só placeholder, pois irá ser automático
         Function CriaEvento() As ActionResult
             ViewBag.tickets = New SelectList(ListaTickets(), "ID_ticket", "ID_ticket")
-            ViewBag.tecnico = New SelectList(ListaFuncionarios(), "ID_tecnico", "nome")
+            ViewBag.tecnico = New SelectList(conectaBD.ListaTecnicos(), "ID_tecnico", "nome")
             Return View()
         End Function
 
@@ -63,46 +63,12 @@ Namespace Controllers
             Return RedirectToAction("Index")
         End Function
 
-
-        'Function CriaEvento(descricao As String, ID_tecnico As Integer, dataAbertura As String,
-        '                    dataFecho As String, ID_ticket As Integer) As ActionResult
-
-        '    'se o tecnico ou o ticket estiverem vazio da erro -isto é um placeholder, essa verificação
-        '    'vai ser efectuada na view
-        '    If IsNothing(ID_tecnico) Or IsNothing(ID_ticket) Or String.IsNullOrEmpty(descricao) Then
-
-        '    Else
-        '        Dim dataAberturaConvertida As String
-        '        Dim dataFechoConvertida As String
-
-        '        'verificar os valores da dataabertura
-        '        If (String.IsNullOrEmpty(dataAbertura)) Then
-        '            dataAberturaConvertida = "CURRENT_TIMESTAMP"
-        '        Else
-        '            dataAberturaConvertida = DateTime.ParseExact(dataAbertura, "yyyy-MM-dd", Nothing).ToString("MM-dd-yyyy")
-        '        End If
-
-        '        'verificar os valores da datafecho
-        '        If (String.IsNullOrEmpty(dataFecho).Equals(False)) Then
-        '            dataFechoConvertida = DateTime.ParseExact(dataFecho, "yyyy-MM-dd", Nothing).ToString("MM-dd-yyyy")
-        '        Else
-        '            dataFechoConvertida = ""
-        '        End If
-
-        '        'adiciona os dados na bd
-        '        conectaBD.AdicionaEvento(descricao, ID_tecnico, dataAberturaConvertida,
-        '                                 dataFechoConvertida, ID_ticket)
-        '    End If
-
-        '    Return RedirectToAction("Index")
-        'End Function
-
         'GET: obter campos para edição dos dados do evento
         Function EditarEvento(ID_evento As Integer) As ActionResult
             If IsNothing(ID_evento) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadGateway)
             Else
-                ViewBag.tecnico = New SelectList(ListaFuncionarios(), "ID_tecnico", "nome")
+                ViewBag.tecnico = New SelectList(conectaBD.ListaTecnicos(), "ID_tecnico", "nome")
 
                 Return View(LeituraDados($"SELECT e.ID_evento, e.descricao,t.nome, 
                         e.dataAbertura, e.dataFecho, e.ID_ticket, e.dat_hor 
@@ -195,21 +161,6 @@ Namespace Controllers
             Next
 
             Return listagemEventos
-        End Function
-
-        'listagem de funcionários para a dropbox
-        Function ListaFuncionarios() As List(Of Tecnico)
-            Dim leituraTecnicos = conectaBD.LeituraTabela("SELECT * FROM Tecnico").AsEnumerable
-            Dim listaTecnicos As New List(Of Tecnico)
-
-            For Each tec In leituraTecnicos
-                Dim novo As New Tecnico
-                novo.ID_tecnico = tec(0)
-                novo.nome = tec(1)
-                listaTecnicos.Add(novo)
-            Next
-
-            Return listaTecnicos
         End Function
 
         'listagem temporaria para preview de tickets
