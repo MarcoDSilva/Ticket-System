@@ -47,12 +47,8 @@ Namespace Controllers
             tempoPrevisto = VerificaTempos(ticketParams.tempoPrevisto)
             tempoTotal = VerificaTempos(ticketParams.tempoTotal)
 
-            'verificar os valores da dataabertura
-            If (IsNothing(ticketParams.dataAbertura)) Then
-                dataAberturaConvertida = "CURRENT_TIMESTAMP"
-            Else
-                dataAberturaConvertida = ConverteDataHora(ticketParams.dataAbertura)
-            End If
+            dataAberturaConvertida = IIf(ticketParams.dataAbertura.Equals(""),
+                                             "CURRENT_TIMESTAMP", ConverteDataHora(ticketParams.dataAbertura))
 
             dataFechoConvertida = VerificaDataFechoTicket(ticketParams.dataFecho)
 
@@ -92,12 +88,8 @@ Namespace Controllers
                 tempoPrevisto = VerificaTempos(ticketParams.tempoPrevisto)
                 tempoTotal = VerificaTempos(ticketParams.tempoTotal)
 
-                'se a data de abertura vier vazia, atribuimos o valor que estava anteriormente
-                If (ticketParams.dataAbertura.Equals("")) Then
-                    dataAberturaConvertida = queryTicket.dataAbertura.ToString("MM-dd-yyyy")
-                Else
-                    dataAberturaConvertida = ConverteDataHora(ticketParams.dataAbertura)
-                End If
+                dataAberturaConvertida = IIf(ticketParams.dataAbertura.Equals(""),
+                                             queryTicket.dataAbertura.ToString("MM-dd-yyyy"), ConverteDataHora(ticketParams.dataAbertura))
 
                 dataFechoConvertida = VerificaDataFechoTicket(ticketParams.dataFecho)
 

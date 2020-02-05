@@ -90,27 +90,25 @@ Namespace Controllers
             Else
                 Dim queryEvento = LeituraDados($"SELECT * FROM Evento WHERE ID_evento = {evento.ID_evento}").First()
 
-                If evento.ID_evento.Equals(queryEvento.ID_evento) Then
-                    Dim dataAberturaConvertida As String
-                    Dim dataFechoConvertida As String
+                Dim dataAberturaConvertida As String
+                Dim dataFechoConvertida As String
 
-                    'se a data de abertura vier vazia, atribuimos o valor que estava anteriormente
-                    If (evento.dataAbertura.Equals("")) Then
-                        dataAberturaConvertida = queryEvento.dataAbertura.ToString("MM-dd-yyyy")
-                    Else
-                        dataAberturaConvertida = ConverteDataHora(evento.dataAbertura)
-                    End If
-
-                    'se a data de fecho trazer valor, convertemos e enviamos, caso contrário
-                    'enviamos a string a null, para manipularmos a query para a bd
-                    If (String.IsNullOrEmpty(evento.dataFecho).Equals(False)) Then
-                        dataFechoConvertida = ConverteDataHora(evento.dataFecho)
-                    Else
-                        dataFechoConvertida = "NULL"
-                    End If
-
-                    conectaBD.EditaEvento(evento.ID_evento, evento.descricao, evento.ID_tecnico, dataAberturaConvertida, dataFechoConvertida)
+                'se a data de abertura vier vazia, atribuimos o valor que estava anteriormente
+                If (evento.dataAbertura.Equals("")) Then
+                    dataAberturaConvertida = queryEvento.dataAbertura.ToString("MM-dd-yyyy")
+                Else
+                    dataAberturaConvertida = ConverteDataHora(evento.dataAbertura)
                 End If
+
+                'se a data de fecho trazer valor, convertemos e enviamos, caso contrário
+                'enviamos a string a null, para manipularmos a query para a bd
+                If (IsNothing(evento.dataFecho).Equals(False)) Then
+                    dataFechoConvertida = ConverteDataHora(evento.dataFecho)
+                Else
+                    dataFechoConvertida = "NULL"
+                End If
+
+                conectaBD.EditaEvento(evento.ID_evento, evento.descricao, evento.ID_tecnico, dataAberturaConvertida, dataFechoConvertida)
 
             End If
             Return RedirectToAction("Index")

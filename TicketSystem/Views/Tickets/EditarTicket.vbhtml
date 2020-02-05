@@ -47,7 +47,7 @@ End Code
                     </p>
                     <p>
                         @Html.LabelFor(Function(ticket) ticket.dataAbertura, New With {.class = "form-check-label"})
-                        <input type="date" name="dataAbertura" value="@dataInicial" id="dataAbertura" class="form-control" />
+                        <input type="date" name="dataAbertura" value="@dataInicial" id="@Model.dataAbertura" class="form-control" />
                     </p>
                     <p>
                         @Html.LabelFor(Function(ticket) ticket.dataFecho, New With {.class = "form-check-label"})

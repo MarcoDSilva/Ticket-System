@@ -83,6 +83,7 @@ Public Class Manipula_TEvento
     ''' <param name="comando"></param>
     Private Sub ExecutaComandos(comando As SqlCommand)
         conexao.Open()
+        comando.ExecuteNonQuery()
         comando.Parameters.Clear()
         conexao.Close()
     End Sub
