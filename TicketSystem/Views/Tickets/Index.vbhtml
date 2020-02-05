@@ -44,7 +44,7 @@ End Code
             <td>@Html.DisplayFor(Function(modelT) ticket.ID_origem)</td>
             <td>@Html.DisplayFor(Function(modelT) ticket.dat_hor)</td>
 
-            <td>@Html.ActionLink("Detalhes", "EditarEvento", New With {.ID_ticket = ticket.ID_ticket})</td>
+            <td>@Html.ActionLink("Detalhes", "EditarTicket", New With {.ID_ticket = ticket.ID_ticket})</td>
         </tr>
     Next
 </table>

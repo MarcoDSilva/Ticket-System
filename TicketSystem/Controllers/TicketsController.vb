@@ -44,17 +44,8 @@ Namespace Controllers
             Dim utilizador As Integer
 
             'verificar os tempos
-            If (ticketParams.tempoPrevisto.Equals("")) Then
-                tempoPrevisto = 0
-            Else
-                tempoPrevisto = ticketParams.tempoPrevisto
-            End If
-
-            If (ticketParams.tempoTotal.Equals("")) Then
-                tempoTotal = 0
-            Else
-                tempoTotal = ticketParams.tempoTotal
-            End If
+            tempoPrevisto = VerificaTempos(ticketParams.tempoPrevisto)
+            tempoTotal = VerificaTempos(ticketParams.tempoTotal)
 
             'verificar os valores da dataabertura
             If (IsNothing(ticketParams.dataAbertura)) Then
@@ -63,12 +54,7 @@ Namespace Controllers
                 dataAberturaConvertida = ConverteDataHora(ticketParams.dataAbertura)
             End If
 
-            'verificar os valores da datafecho
-            If IsNothing(ticketParams.dataFecho).Equals(False) Then
-                dataFechoConvertida = ConverteDataHora(ticketParams.dataFecho.Value)
-            Else
-                dataFechoConvertida = "null"
-            End If
+            dataFechoConvertida = VerificaDataFechoTicket(ticketParams.dataFecho)
 
             conectaBD.CriaTicket(ticketParams.ID_tecnico, ticketParams.ID_software, ticketParams.ID_cliente, ticketParams.ID_problema,
                                   ticketParams.descricao, dataAberturaConvertida, dataFechoConvertida, tempoPrevisto,
@@ -107,6 +93,37 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken()>
         Function EditarTicket(ticketParams As Ticket) As ActionResult
+
+            If IsNothing(ticketParams.ID_ticket) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.Forbidden)
+            Else
+                Dim queryEvento = LeituraDados($"SELECT * FROM Evento WHERE ID_evento = {ticketParams.ID_ticket}").First()
+
+                'verificações
+                'variaveis para serem atribuidos valores para a query
+                Dim tempoPrevisto, tempoTotal As Integer
+                Dim dataAberturaConvertida, dataFechoConvertida As String
+                Dim utilizador As Integer
+
+
+                tempoPrevisto = VerificaTempos(ticketParams.tempoPrevisto)
+                tempoTotal = VerificaTempos(ticketParams.tempoTotal)
+
+                'se a data de abertura vier vazia, atribuimos o valor que estava anteriormente
+                If (ticketParams.dataAbertura.Equals("")) Then
+                    dataAberturaConvertida = queryEvento.dataAbertura.ToString("MM-dd-yyyy")
+                Else
+                    dataAberturaConvertida = ConverteDataHora(ticketParams.dataAbertura)
+                End If
+
+                dataFechoConvertida = VerificaDataFechoTicket(ticketParams.dataFecho)
+
+                conectaBD.EditaTicket(ticketParams.ID_tecnico, ticketParams.ID_software, ticketParams.ID_cliente,
+                                      ticketParams.ID_problema, ticketParams.descricao, dataAberturaConvertida, dataFechoConvertida,
+                                      tempoPrevisto, tempoTotal, ticketParams.ID_estado, ticketParams.ID_prioridade, utilizador,
+                                      ticketParams.ID_origem, ticketParams.ID_ticket)
+            End If
+
             Return View()
 
         End Function
@@ -118,7 +135,7 @@ Namespace Controllers
             Else
                 conectaBD.ApagaTicket(ID_ticket)
             End If
-            Return View()
+            Return RedirectToAction("Index")
 
         End Function
 
@@ -188,6 +205,15 @@ Namespace Controllers
 
         End Function
 
+
+        Function VerificaDataFechoTicket(data As String) As String
+            If IsNothing(data).Equals(False) Then
+                Return ConverteDataHora(data)
+            Else
+                Return "null"
+            End If
+        End Function
+
         ''' <summary>
         ''' Método que cria as viewBags necessárias para a edição dos campos chave.
         ''' Para evitar repetição de código
@@ -202,6 +228,21 @@ Namespace Controllers
             ViewBag.utilizador = New SelectList(conectaBD.ListaUtilizadores(), "ID_utilizador", "nome")
             ViewBag.origem = New SelectList(conectaBD.ListaOrigens(), "ID_origem", "descricao")
         End Sub
+
+        ''' <summary>
+        ''' Utilizado para prever o caso dos tempos serem enviados sem terem sido preenchidos
+        ''' </summary>
+        ''' <param name="tempo"></param>
+        ''' <returns></returns>
+        Function VerificaTempos(tempo As Integer) As Integer
+            If (tempo.Equals("")) Then
+                Return 0
+            Else
+                Return tempo
+            End If
+        End Function
+
+
 
     End Class
 End Namespace

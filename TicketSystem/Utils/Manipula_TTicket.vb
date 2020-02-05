@@ -71,7 +71,10 @@ Public Class Manipula_TTicket
 
     End Sub
 
-    Public Sub EditaTicket()
+    Public Sub EditaTicket(ID_tecnico As Integer, ID_software As Integer, ID_cliente As Integer, ID_problema As Integer,
+                          descricao As String, dataAbertura As String, dataFecho As String, tempoPrevisto As Integer,
+                          tempoTotal As Integer, ID_estado As Integer, ID_prioridade As Integer, ID_utilizador As Integer,
+                          ID_origem As Integer, ID_ticket As Integer)
         Dim query As String
     End Sub
 
