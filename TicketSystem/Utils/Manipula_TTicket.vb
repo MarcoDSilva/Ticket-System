@@ -21,55 +21,52 @@ Public Class Manipula_TTicket
     ''' <param name="ID_prioridade"></param>
     ''' <param name="ID_utilizador"></param>
     ''' <param name="ID_origem"></param>
-    Public Sub CriaTicket(ID_tecnico As Integer, ID_software As Integer, ID_cliente As Integer, ID_problema As Integer, descricao As String,
-                          dataAbertura As String, dataFecho As String, tempoPrevisto As Integer, tempoTotal As Integer, ID_estado As Integer,
-                          ID_prioridade As Integer, ID_utilizador As Integer, ID_origem As Integer)
+    Public Sub CriaTicket(ID_tecnico As Integer, ID_software As Integer, ID_cliente As Integer, ID_problema As Integer,
+                          descricao As String, dataAbertura As String, dataFecho As String, tempoPrevisto As Integer,
+                          tempoTotal As Integer, ID_estado As Integer, ID_prioridade As Integer, ID_utilizador As Integer,
+                          ID_origem As Integer)
+
         Dim query As String
 
-        Dim dataInicio = dataAbertura
-        Dim dataFim = dataFecho
-        Dim utilizador = ID_utilizador
-
-        If dataFecho.Equals("null") Then
-
-            If dataAbertura.Equals("CURRENT_TIMESTAMP") Then
-                query = $"INSERT INTO Ticket VALUES({ID_tecnico},{ID_software},{ID_cliente},
-                 {ID_problema}, @desc, CURRENT_TIMESTAMP, NULL, 
-                 {tempoPrevisto}, {tempoTotal}, {ID_estado}, {ID_prioridade},
-                 {ID_utilizador},{ID_origem}, CURRENT_TIMESTAMP)"
-
-            Else
-                query = $"INSERT INTO Ticket VALUES({ID_tecnico},{ID_software},{ID_cliente},
-                 {ID_problema}, @desc, {dataAbertura}, NULL, 
-                 {tempoPrevisto}, {tempoTotal}, {ID_estado}, {ID_prioridade},
-                 {ID_utilizador},{ID_origem}, CURRENT_TIMESTAMP)"
-            End If
-
-        Else
-
-            If dataAbertura.Equals("CURRENT_TIMESTAMP") Then
-                query = $"INSERT INTO Ticket VALUES({ID_tecnico},{ID_software},{ID_cliente},
-                 {ID_problema}, @desc, CURRENT_TIMESTAMP, {dataFecho}, 
-                 {tempoPrevisto}, {tempoTotal}, {ID_estado}, {ID_prioridade},
-                 {ID_utilizador},{ID_origem}, CURRENT_TIMESTAMP)"
-
-            Else
-                query = $"INSERT INTO Ticket VALUES({ID_tecnico},{ID_software},{ID_cliente},
-                 {ID_problema}, @desc, {dataAbertura}, {dataFecho}, 
-                 {tempoPrevisto}, {tempoTotal}, {ID_estado}, {ID_prioridade},
-                 {ID_utilizador},{ID_origem}, CURRENT_TIMESTAMP)"
-            End If
-
-        End If
-
-        'query = $"INSERT INTO Ticket VALUES({ID_tecnico},{ID_software}, {ID_cliente},
-        '         {ID_problema}, @desc, {dataAbertura}, {dataFecho}, 
-        '         {tempoPrevisto}, {tempoTotal}, {ID_estado}, {ID_prioridade},
-        '         {ID_utilizador},{ID_origem}, CURRENT_TIMESTAMP)"
+        query = $"INSERT INTO Ticket VALUES({ID_tecnico},{ID_software}, {ID_cliente},
+                 {ID_problema}, @desc, @dat_init, @dat_end, 
+                 {tempoPrevisto}, {tempoTotal}, {ID_estado}, {ID_prioridade}, 
+                 @user, {ID_origem}, CURRENT_TIMESTAMP)"
 
         Dim comando As New SqlCommand(query, conexao)
-        comando.Parameters.AddWithValue("@desc", {descricao})
-        'tentar usar o addwithvalue com as condicionais numna tentativa de ter um código mais limpo, em vez de fazer a query non stop
+
+        'as verificações de dados vão ser utilizadas com os parametros que estão na query
+        'evitando assim, varias montagens da query em si
+
+        'caso não tenha sido inserida descrição por algum motivo, lançamos para a bd
+        'uma string a dizer que nunca foi inserida nenhuma (pode ser depois alterado na view)
+        If String.IsNullOrEmpty(descricao) Then
+            comando.Parameters.AddWithValue("@desc", "Descrição não inserida")
+        Else
+            comando.Parameters.AddWithValue("@desc", descricao)
+        End If
+
+        'condicionais para verificar a data de abertura do ticket
+        If dataAbertura.Equals("CURRENT_TIMESTAMP") Then
+            comando.Parameters.AddWithValue("@dat_init", DateTime.Now.ToString("MM-dd-yyyy H:mm:ss"))
+        Else
+            comando.Parameters.AddWithValue("@dat_init", dataAbertura)
+        End If
+
+        'condicionais para verificar a data de fecho do ticket
+        If dataFecho.Equals("null") Then
+            comando.Parameters.AddWithValue("@dat_end", DBNull.Value)
+        Else
+            comando.Parameters.AddWithValue("@dat_end", dataFecho)
+        End If
+
+        'verificar se o ticket tem um utilizador correspondente ao mesmo
+        If ID_utilizador.Equals(0) Then
+            comando.Parameters.AddWithValue("@user", DBNull.Value)
+        Else
+            comando.Parameters.AddWithValue("@user", ID_utilizador)
+        End If
+
         ExecutaComandos(comando)
 
     End Sub

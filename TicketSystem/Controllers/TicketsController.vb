@@ -38,19 +38,22 @@ Namespace Controllers
         <ValidateAntiForgeryToken()>
         Function CriaTicket(ticketParams As Ticket) As ActionResult
 
-            Dim query As String
-            query = ""
-
-            Dim dataAberturaConvertida As String
-            Dim dataFechoConvertida As String
+            'variaveis para serem atribuidos valores para a query
+            Dim tempoPrevisto, tempoTotal As Integer
+            Dim dataAberturaConvertida, dataFechoConvertida As String
+            Dim utilizador As Integer
 
             'verificar os tempos
             If (ticketParams.tempoPrevisto.Equals("")) Then
-                ticketParams.tempoPrevisto = 0
+                tempoPrevisto = 0
+            Else
+                tempoPrevisto = ticketParams.tempoPrevisto
             End If
 
             If (ticketParams.tempoTotal.Equals("")) Then
-                ticketParams.tempoTotal = 0
+                tempoTotal = 0
+            Else
+                tempoTotal = ticketParams.tempoTotal
             End If
 
             'verificar os valores da dataabertura
@@ -62,19 +65,14 @@ Namespace Controllers
 
             'verificar os valores da datafecho
             If IsNothing(ticketParams.dataFecho).Equals(False) Then
-                dataFechoConvertida = "null"
-            Else
                 dataFechoConvertida = ConverteDataHora(ticketParams.dataFecho.Value)
-            End If
-
-            'verificar utilizador
-            If IsNothing(ticketParams.ID_utilizador) Then
-                ticketParams.ID_utilizador = Nothing
+            Else
+                dataFechoConvertida = "null"
             End If
 
             conectaBD.CriaTicket(ticketParams.ID_tecnico, ticketParams.ID_software, ticketParams.ID_cliente, ticketParams.ID_problema,
-                                  ticketParams.descricao, dataAberturaConvertida, dataFechoConvertida, ticketParams.tempoPrevisto,
-                                    ticketParams.tempoTotal, ticketParams.ID_estado, ticketParams.ID_prioridade, ticketParams.ID_utilizador, ticketParams.ID_origem)
+                                  ticketParams.descricao, dataAberturaConvertida, dataFechoConvertida, tempoPrevisto,
+                                    tempoTotal, ticketParams.ID_estado, ticketParams.ID_prioridade, utilizador, ticketParams.ID_origem)
 
             Return RedirectToAction("Index")
         End Function
