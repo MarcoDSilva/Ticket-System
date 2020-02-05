@@ -68,18 +68,11 @@ Public Class ObterDados
 
     ''' <summary>
     ''' Retorna uma lista de Clientes, só com o ID e nome.
-    ''' Retorna também um "Sem utilizador" na posição 0, visto que o valor pode ser nulo.
     ''' </summary>
     ''' <returns></returns>
     Public Function ListaClientes() As List(Of Cliente)
         Dim tabelaClientes As DataTable = LeituraTabela("SELECT ID_cliente, nome FROM Cliente;")
         Dim listagemClientes As List(Of Cliente) = New List(Of Cliente)
-
-        'adicionar o "sem utilizador" na lista
-        Dim extra As New Cliente
-        extra.ID_cliente = 0
-        extra.nome = "Sem Utilizador"
-        listagemClientes.Add(extra)
 
         'ir buscar a informação da bd e adicionar na listagem
         For Each item In tabelaClientes.AsEnumerable

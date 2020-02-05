@@ -18,7 +18,7 @@ Namespace Controllers
 
         'GET: Criação de utilizadores
         Function CriaUtilizador() As ActionResult
-            ViewBag.clientes = New SelectList(conectaBD.ListaClientes(), "ID_cliente", "nome")
+            ViewBag.clientes = New SelectList(ListaClientes(), "ID_cliente", "nome")
             Return View()
         End Function
 
@@ -47,7 +47,7 @@ Namespace Controllers
             If IsNothing(ID_utilizador) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
-                ViewBag.clientes = New SelectList(conectaBD.ListaClientes(), "ID_cliente", "nome")
+                ViewBag.clientes = New SelectList(ListaClientes(), "ID_cliente", "nome")
                 Return View(LeituraDados($"SELECT * FROM Utilizador WHERE ID_utilizador = {ID_utilizador}").First())
             End If
 
@@ -115,6 +115,33 @@ Namespace Controllers
                 listagemUtilizadores.Add(user)
             Next
             Return listagemUtilizadores
+        End Function
+
+        ''' <summary>
+        ''' Retorna uma lista de Clientes, só com o ID e nome.
+        ''' Retorna também um "Sem utilizador" na posição 0, visto que o valor pode ser nulo.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function ListaClientes() As List(Of Cliente)
+            Dim tabelaClientes As DataTable = conectaBD.LeituraTabela("SELECT ID_cliente, nome FROM Cliente;")
+            Dim listagemClientes As List(Of Cliente) = New List(Of Cliente)
+
+            'adicionar o "sem utilizador" na lista
+            Dim extra As New Cliente
+            extra.ID_cliente = 0
+            extra.nome = "Sem Utilizador"
+            listagemClientes.Add(extra)
+
+            'ir buscar a informação da bd e adicionar na listagem
+            For Each item In tabelaClientes.AsEnumerable
+                Dim cli As New Cliente
+                cli.ID_cliente = item(0)
+                cli.nome = item(1)
+
+                listagemClientes.Add(cli)
+            Next
+
+            Return listagemClientes
         End Function
 
     End Class

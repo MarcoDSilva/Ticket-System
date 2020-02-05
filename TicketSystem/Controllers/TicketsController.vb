@@ -29,14 +29,7 @@ Namespace Controllers
 
         'GET: Cria a view para criação de tickets. A mesma contém várias dropdownlists que estão a ser alimentadas por viewbags
         Function CriaTicket() As ActionResult
-            ViewBag.tecnico = New SelectList(conectaBD.ListaTecnicos(), "ID_tecnico", "nome")
-            ViewBag.software = New SelectList(conectaBD.ListaSoftwares(), "ID_software", "nome")
-            ViewBag.cliente = New SelectList(conectaBD.ListaClientes(), "ID_cliente", "nome")
-            ViewBag.problema = New SelectList(conectaBD.ListaProblemas(), "ID_problema", "descricao")
-            ViewBag.estado = New SelectList(conectaBD.ListaEstados(), "ID_estado", "descricao")
-            ViewBag.prioridade = New SelectList(conectaBD.ListaPrioridades(), "ID_prioridade", "descricao")
-            ViewBag.utilizador = New SelectList(conectaBD.ListaUtilizadores(), "ID_utilizador", "nome")
-            ViewBag.origem = New SelectList(conectaBD.ListaOrigens(), "ID_origem", "descricao")
+            CriaViewBags()
             Return View()
         End Function
 
@@ -44,6 +37,9 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken()>
         Function CriaTicket(ticketParams As Ticket) As ActionResult
+
+            Dim query As String
+            query = ""
 
             Dim dataAberturaConvertida As String
             Dim dataFechoConvertida As String
@@ -84,9 +80,29 @@ Namespace Controllers
         End Function
 
         'GET: Recebe a informação do ticket para o mesmo ser editado
-        Function EditarTicket(ID_ticket As Integer) As ActionResult
-            Return View()
+        Function EditarTicket(ID_ticket As Integer?) As ActionResult
+            If IsNothing(ID_ticket) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.Forbidden)
+            Else
+                CriaViewBags()
 
+                Return View(LeituraDados($"SELECT t.ID_ticket, tec.nome, sft.nome, cli.nome, prob.descricao, t.descricao, 
+                                      t.dataAbertura, t.dataFecho, t.tempoPrevisto, t.tempoTotal, est.descricao,
+                                      prio.descricao, t.ID_utilizador, ori.descricao,t.dat_hor
+
+                                      FROM Ticket t,Tecnico tec, Software sft, Cliente cli, 
+                                      Problema prob, Estado est, Prioridade prio,Origem ori
+
+                                      WHERE ID_ticket = {ID_ticket}
+                                          AND t.ID_tecnico = tec.ID_tecnico
+                                          AND sft.ID_software = t.ID_software
+                                          AND cli.ID_cliente = t.ID_cliente
+                                          AND prob.ID_problema = t.ID_problema
+                                          AND est.ID_estado = t.ID_estado
+                                          AND prio.ID_prioridade = t.ID_prioridade
+                                          AND ori.ID_origem = t.ID_origem
+                                    ").First())
+            End If
         End Function
 
         'POST: utiliza a informação recebida do ticket, e actualiza a bd com os mesmos
@@ -173,6 +189,21 @@ Namespace Controllers
             Return DateTime.Parse(tempoAConverter).ToString("MM-dd-yyyy H:mm:ss")
 
         End Function
+
+        ''' <summary>
+        ''' Método que cria as viewBags necessárias para a edição dos campos chave.
+        ''' Para evitar repetição de código
+        ''' </summary>
+        Private Sub CriaViewBags()
+            ViewBag.tecnico = New SelectList(conectaBD.ListaTecnicos(), "ID_tecnico", "nome")
+            ViewBag.software = New SelectList(conectaBD.ListaSoftwares(), "ID_software", "nome")
+            ViewBag.cliente = New SelectList(conectaBD.ListaClientes(), "ID_cliente", "nome")
+            ViewBag.problema = New SelectList(conectaBD.ListaProblemas(), "ID_problema", "descricao")
+            ViewBag.estado = New SelectList(conectaBD.ListaEstados(), "ID_estado", "descricao")
+            ViewBag.prioridade = New SelectList(conectaBD.ListaPrioridades(), "ID_prioridade", "descricao")
+            ViewBag.utilizador = New SelectList(conectaBD.ListaUtilizadores(), "ID_utilizador", "nome")
+            ViewBag.origem = New SelectList(conectaBD.ListaOrigens(), "ID_origem", "descricao")
+        End Sub
 
     End Class
 End Namespace

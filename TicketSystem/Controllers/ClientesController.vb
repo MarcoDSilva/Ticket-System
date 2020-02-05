@@ -20,7 +20,7 @@ Namespace Controllers
 
         'GET : Formulário
         Function CriaCliente() As ActionResult
-            ViewBag.utilizadores = New SelectList(ListaUtilizadores(), "ID_utilizador", "nome")
+            ViewBag.utilizadores = New SelectList(conectaBD.ListaUtilizadores(), "ID_utilizador", "nome")
             Return View()
         End Function
 
@@ -46,15 +46,15 @@ Namespace Controllers
 
         'GET: 
         Function EditarCliente(ID_cliente As Integer) As ActionResult
+
             If IsNothing(ID_cliente) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadGateway)
             Else
-                Dim lista As New SelectList(ListaUtilizadores(), "ID_utilizador", "nome")
-                ViewBag.utilizador = lista
+                ViewBag.utilizador = New SelectList(conectaBD.ListaUtilizadores(), "ID_utilizador", "nome")
 
                 Return View(LeituraDados($"SELECT * FROM Cliente WHERE ID_cliente = {ID_cliente}").First())
-
             End If
+
             Return RedirectToAction("Index")
         End Function
 
@@ -121,30 +121,5 @@ Namespace Controllers
             Next
             Return listagemClientes
         End Function
-
-        'Listagem para trocar o ID dos utilizadores por uma dropdown com o respectivo nome
-        'adicionado um extra para aparecer "Sem utilizador" para podermos enviar NULL para a bd
-        Function ListaUtilizadores() As List(Of Utilizador)
-            Dim tabelaUtilizadores As DataTable = conectaBD.LeituraTabela("SELECT * FROM Utilizador;")
-            Dim listagemUtilizadores As List(Of Utilizador) = New List(Of Utilizador)
-
-            'adicionar o "sem utilizador" na lista
-            Dim extra As New Utilizador
-            extra.ID_utilizador = 0
-            extra.nome = "Sem Utilizador"
-            listagemUtilizadores.Add(extra)
-
-            'ir buscar a informação da bd e adicionar na listagem
-            For Each item In tabelaUtilizadores.AsEnumerable
-                Dim ut As New Utilizador
-                ut.ID_utilizador = item(0)
-                ut.nome = item(1)
-
-                listagemUtilizadores.Add(ut)
-            Next
-
-            Return listagemUtilizadores
-        End Function
-
     End Class
 End Namespace

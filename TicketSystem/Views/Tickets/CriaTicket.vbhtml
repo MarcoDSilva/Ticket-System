@@ -1,6 +1,8 @@
 ﻿@ModelType TicketSystem.Ticket
 @Code
     ViewData("Title") = "CriaTicket"
+
+    Dim 
 End Code
 
 <h2>Criação de ticket</h2>
@@ -44,11 +46,11 @@ End Code
                 </p>
                 <p>
                     @Html.LabelFor(Function(ticket) ticket.tempoPrevisto, New With {.class = "form-check-label"})
-                    @Html.TextBoxFor(Function(ticket) ticket.tempoPrevisto, New With {.class = "form-control"})
+                    @Html.TextBoxFor(Function(ticket) ticket.tempoPrevisto, New With {.class = "form-control", .Value = "258"})
                 </p>
                 <p>
                     @Html.LabelFor(Function(ticket) ticket.tempoTotal, New With {.class = "form-check-label"})
-                    @Html.TextBoxFor(Function(ticket) ticket.tempoTotal, New With {.class = "form-control"})
+                    @Html.TextBoxFor(Function(ticket) ticket.tempoTotal, New With {.class = "form-control", .Value = "122"})
                 </p>
                 <p>
                     @Html.LabelFor(Function(ticket) ticket.ID_estado, New With {.class = "form-check-label"})
