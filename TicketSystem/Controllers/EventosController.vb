@@ -131,7 +131,7 @@ Namespace Controllers
         ''' </summary>
         ''' <param name="query"></param>
         ''' <returns></returns>
-        Function LeituraDados(query As String) As List(Of VM_EventoTecnico)
+        Private Function LeituraDados(query As String) As List(Of VM_EventoTecnico)
 
             Dim tabelaDados As DataTable = conectaBD.LeituraTabela(query)
             Dim listagemEventos As New List(Of VM_EventoTecnico)
@@ -168,7 +168,7 @@ Namespace Controllers
         ''' </summary>
         ''' <param name="data"></param>
         ''' <returns></returns>
-        Function ConverteDataHora(data As DateTime) As String
+        Private Function ConverteDataHora(data As DateTime) As String
             Dim tempoAConverter = data.AddHours(DateTime.Now.Hour).
                            AddSeconds(DateTime.Now.Second).AddMinutes(DateTime.Now.Minute)
 
@@ -178,7 +178,7 @@ Namespace Controllers
 
         'listagem temporaria para preview de tickets
         'vai ser removida quando o ticket for automatico
-        Function ListaTickets() As List(Of Ticket)
+        Private Function ListaTickets() As List(Of Ticket)
             Dim leituraTickets = conectaBD.LeituraTabela("SELECT * FROM Ticket").AsEnumerable
             Dim lista As New List(Of Ticket)
 

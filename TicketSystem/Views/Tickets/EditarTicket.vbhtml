@@ -31,15 +31,15 @@ End Code
                     </p>
                     <p>
                         @Html.LabelFor(Function(ticket) ticket.ID_software, New With {.class = "form-check-label"})
-                        @Html.DropDownList("ID_tecnico", DirectCast(ViewBag.software, SelectList), New With {.class = "form-control"})
+                        @Html.DropDownList("ID_software", DirectCast(ViewBag.software, SelectList), New With {.class = "form-control"})
                     </p>
                     <p>
                         @Html.LabelFor(Function(ticket) ticket.ID_cliente, New With {.class = "form-check-label"})
-                        @Html.DropDownList("ID_tecnico", DirectCast(ViewBag.cliente, SelectList), New With {.class = "form-control"})
+                        @Html.DropDownList("ID_cliente", DirectCast(ViewBag.cliente, SelectList), New With {.class = "form-control"})
                     </p>
                     <p>
                         @Html.LabelFor(Function(ticket) ticket.ID_problema, New With {.class = "form-check-label"})
-                        @Html.DropDownList("ID_tecnico", DirectCast(ViewBag.problema, SelectList), New With {.class = "form-control"})
+                        @Html.DropDownList("ID_problema", DirectCast(ViewBag.problema, SelectList), New With {.class = "form-control"})
                     </p>
                     <p>
                         @Html.LabelFor(Function(ticket) ticket.descricao, New With {.class = "form-check-label"})
@@ -48,12 +48,10 @@ End Code
                     <p>
                         @Html.LabelFor(Function(ticket) ticket.dataAbertura, New With {.class = "form-check-label"})
                         <input type="date" name="dataAbertura" value="@dataInicial" id="dataAbertura" class="form-control" />
-                        @Html.ValidationMessageFor(Function(ticket) ticket.dataAbertura, "", New With {.class = "text-danger"})
                     </p>
                     <p>
                         @Html.LabelFor(Function(ticket) ticket.dataFecho, New With {.class = "form-check-label"})
                         <input type="date" name="dataFecho" value="@dataFinal" id="dataFecho" class="form-control" />
-                        @Html.ValidationMessageFor(Function(ticket) ticket.dataFecho, "", New With {.class = "text-danger"})
                     </p>
                     <p>
                         @Html.LabelFor(Function(ticket) ticket.tempoPrevisto, New With {.class = "form-check-label"})
@@ -65,19 +63,19 @@ End Code
                     </p>
                     <p>
                         @Html.LabelFor(Function(ticket) ticket.ID_estado, New With {.class = "form-check-label"})
-                        @Html.DropDownList("ID_tecnico", DirectCast(ViewBag.estado, SelectList), New With {.class = "form-control"})
+                        @Html.DropDownList("ID_estado", DirectCast(ViewBag.estado, SelectList), New With {.class = "form-control"})
                     </p>
                     <p>
                         @Html.LabelFor(Function(ticket) ticket.ID_prioridade, New With {.class = "form-check-label"})
-                        @Html.DropDownList("ID_tecnico", DirectCast(ViewBag.prioridade, SelectList), New With {.class = "form-control"})
+                        @Html.DropDownList("ID_prioridade", DirectCast(ViewBag.prioridade, SelectList), New With {.class = "form-control"})
                     </p>
                     <p>
                         @Html.LabelFor(Function(ticket) ticket.ID_utilizador, New With {.class = "form-check-label"})
-                        @Html.DropDownList("ID_tecnico", DirectCast(ViewBag.utilizador, SelectList), New With {.class = "form-control"})
+                        @Html.DropDownList("ID_utilizador", DirectCast(ViewBag.utilizador, SelectList), New With {.class = "form-control"})
                     </p>
                     <p>
                         @Html.LabelFor(Function(ticket) ticket.ID_origem, New With {.class = "form-check-label"})
-                        @Html.DropDownList("ID_tecnico", DirectCast(ViewBag.origem, SelectList), New With {.class = "form-control"})
+                        @Html.DropDownList("ID_origem", DirectCast(ViewBag.origem, SelectList), New With {.class = "form-control"})
                     </p>
                     <input type="submit" class="btn btn-success" value="Guardar" name="Enviar" />
                 </div>

@@ -18,39 +18,21 @@ Public Class Manipula_TEvento
     ''' <param name="ID_ticket"></param>
     Public Sub AdicionaEvento(descricao As String, ID_tecnico As Integer,
                               dataAbertura As String, dataFecho As String, ID_ticket As Integer)
-        Dim query As String
 
-        'se o dataFecho estiver vazio, enviamos NULL como parametro para a bd
-        'caso contrário passamos a data recebida
-        'no caso da data de abertura, passamos current_timestamp caso não haja data escolhida
-        If String.IsNullOrEmpty(dataFecho) Then
-
-            'retiramos ou adicionamos pelicas dependendo da abertura
-            If dataAbertura.Equals("CURRENT_TIMESTAMP") Then
-                query = $"Insert into Evento Values(@desc, {ID_tecnico}, 
-                        {dataAbertura}, NULL, 
-                        {ID_ticket} , CURRENT_TIMESTAMP);"
-            Else
-                query = $"Insert into Evento Values(@desc, {ID_tecnico}, 
-                        '{dataAbertura}', NULL, 
-                         {ID_ticket} , CURRENT_TIMESTAMP);"
-            End If
-        Else
-            'retiramos ou adicionamos pelicas dependendo do resultado da abertura
-            If dataAbertura.Equals("CURRENT_TIMESTAMP") Then
-                query = $"Insert into Evento Values(@desc, {ID_tecnico}, 
-                        {dataAbertura}, '{dataFecho}', 
-                        {ID_ticket} , CURRENT_TIMESTAMP);"
-            Else
-                query = $"Insert into Evento Values(@desc, {ID_tecnico}, 
-                        '{dataAbertura}', '{dataFecho}', 
-                         {ID_ticket} , CURRENT_TIMESTAMP);"
-            End If
-
-        End If
+        Dim query = $"INSERT INTO Evento VALUES(@desc, {ID_tecnico}, @dat_init, @dat_end,
+                      {ID_ticket}, CURRENT_TIMESTAMP);"
 
         Dim comando As New SqlCommand(query, conexao)
+
         comando.Parameters.AddWithValue("@desc", descricao)
+
+        If dataAbertura.Equals("CURRENT_TIMESTAMP") Then
+            comando.Parameters.AddWithValue("@dat_init", DateTime.Now.ToString("MM-dd-yyyy H:mm:ss"))
+        Else
+            comando.Parameters.AddWithValue("@dat_init", dataAbertura)
+        End If
+
+        comando.Parameters.AddWithValue("@dat_end", VerificaDataFecho(dataFecho))
         ExecutaComandos(comando)
 
     End Sub
@@ -101,8 +83,21 @@ Public Class Manipula_TEvento
     ''' <param name="comando"></param>
     Private Sub ExecutaComandos(comando As SqlCommand)
         conexao.Open()
-        comando.ExecuteNonQuery()
         comando.Parameters.Clear()
         conexao.Close()
     End Sub
+
+    ''' <summary>
+    ''' Verifica se a data de fecho foi inserida, caso não tenha , devolve o nulo para ser inserido na bd
+    ''' </summary>
+    ''' <param name="dataFecho"></param>
+    ''' <returns></returns>
+    Private Function VerificaDataFecho(dataFecho As String)
+        If dataFecho.Equals("null") Then
+            Return DBNull.Value
+        Else
+            Return dataFecho
+        End If
+
+    End Function
 End Class

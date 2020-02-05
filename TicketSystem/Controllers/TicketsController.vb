@@ -5,7 +5,7 @@ Namespace Controllers
     Public Class TicketsController
         Inherits Controller
 
-        Dim conectaBD As New Manipula_TTicket
+        Private conectaBD As New Manipula_TTicket
 
         ' GET: Tickets
         Function Index() As ActionResult
@@ -70,22 +70,7 @@ Namespace Controllers
             Else
                 CriaViewBags()
 
-                Return View(LeituraDados($"SELECT t.ID_ticket, tec.nome, sft.nome, cli.nome, prob.descricao, t.descricao, 
-                                      t.dataAbertura, t.dataFecho, t.tempoPrevisto, t.tempoTotal, est.descricao,
-                                      prio.descricao, t.ID_utilizador, ori.descricao,t.dat_hor
-
-                                      FROM Ticket t,Tecnico tec, Software sft, Cliente cli, 
-                                      Problema prob, Estado est, Prioridade prio,Origem ori
-
-                                      WHERE ID_ticket = {ID_ticket}
-                                          AND t.ID_tecnico = tec.ID_tecnico
-                                          AND sft.ID_software = t.ID_software
-                                          AND cli.ID_cliente = t.ID_cliente
-                                          AND prob.ID_problema = t.ID_problema
-                                          AND est.ID_estado = t.ID_estado
-                                          AND prio.ID_prioridade = t.ID_prioridade
-                                          AND ori.ID_origem = t.ID_origem
-                                    ").First())
+                Return View(LeituraDados($"Select * from Ticket where ID_ticket = {ID_ticket}").First())
             End If
         End Function
 
@@ -97,21 +82,19 @@ Namespace Controllers
             If IsNothing(ticketParams.ID_ticket) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.Forbidden)
             Else
-                Dim queryEvento = LeituraDados($"SELECT * FROM Evento WHERE ID_evento = {ticketParams.ID_ticket}").First()
+                Dim queryTicket = LeituraDados($"SELECT * FROM Ticket WHERE ID_Ticket = {ticketParams.ID_ticket}").First()
 
-                'verificações
                 'variaveis para serem atribuidos valores para a query
                 Dim tempoPrevisto, tempoTotal As Integer
                 Dim dataAberturaConvertida, dataFechoConvertida As String
                 Dim utilizador As Integer
-
 
                 tempoPrevisto = VerificaTempos(ticketParams.tempoPrevisto)
                 tempoTotal = VerificaTempos(ticketParams.tempoTotal)
 
                 'se a data de abertura vier vazia, atribuimos o valor que estava anteriormente
                 If (ticketParams.dataAbertura.Equals("")) Then
-                    dataAberturaConvertida = queryEvento.dataAbertura.ToString("MM-dd-yyyy")
+                    dataAberturaConvertida = queryTicket.dataAbertura.ToString("MM-dd-yyyy")
                 Else
                     dataAberturaConvertida = ConverteDataHora(ticketParams.dataAbertura)
                 End If
@@ -124,7 +107,7 @@ Namespace Controllers
                                       ticketParams.ID_origem, ticketParams.ID_ticket)
             End If
 
-            Return View()
+            Return RedirectToAction("Index")
 
         End Function
 
@@ -144,7 +127,7 @@ Namespace Controllers
         ''' </summary>
         ''' <param name="query"></param>
         ''' <returns></returns>
-        Function LeituraDados(query As String) As List(Of VM_Ticket)
+        Private Function LeituraDados(query As String) As List(Of VM_Ticket)
 
             Dim tabelaDados As DataTable = conectaBD.LeituraTabela(query)
             Dim listagemTickets As New List(Of VM_Ticket)
@@ -205,8 +188,12 @@ Namespace Controllers
 
         End Function
 
-
-        Function VerificaDataFechoTicket(data As String) As String
+        ''' <summary>
+        ''' Verifica a data de fecho do ticket e retorna null se não existir data
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        Function VerificaDataFechoTicket(data As DateTime?) As String
             If IsNothing(data).Equals(False) Then
                 Return ConverteDataHora(data)
             Else
@@ -234,15 +221,12 @@ Namespace Controllers
         ''' </summary>
         ''' <param name="tempo"></param>
         ''' <returns></returns>
-        Function VerificaTempos(tempo As Integer) As Integer
+        Private Function VerificaTempos(tempo As Integer) As Integer
             If (tempo.Equals("")) Then
                 Return 0
             Else
                 Return tempo
             End If
         End Function
-
-
-
     End Class
 End Namespace
