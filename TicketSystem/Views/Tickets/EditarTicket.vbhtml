@@ -84,7 +84,7 @@ End Code
 
             <!-- butões com as operações respectivas do formulário de edição -->
             <div id="editaTicket" class="form-group">
-                <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#verificaModal">
+                <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#modalApagarRegisto">
                     Apagar
                 </button>
                 <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaTicket", "Tickets")'">
@@ -92,14 +92,15 @@ End Code
                 </button>
 
                 <!--linktext,actionName, controllerName,routevalue,htmlAttribute-->
-                @Html.ActionLink("CriaEvento", "CriaEvento", "Eventos", New With {.ID_ticket = Model.ID_ticket}, htmlAttributes:=New With {.class = "btn btn-warning"})
+                @Html.ActionLink("CriaEvento", "CriaEvento", "Eventos", New With {.ID_ticket = Model.ID_ticket},
+                                           htmlAttributes:=New With {.class = "btn btn-warning", .type = "button", .data_toggle = "modal", .data_target = "#modalNovoEvento"})
 
                 <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Tickets")'">
                     Voltar
                 </button>
 
-                <!-- Opções do Modal para confirmação do apagamento do registo -->
-                <div class="modal fade" id="verificaModal" tabindex="-1" role="dialog" aria-labelledby="modalApagar" aria-hidden="true">
+                <!-- Modal para apagar registo -->
+                <div class="modal fade" id="modalApagarRegisto" tabindex="-1" role="dialog" aria-labelledby="modalApagar" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -119,7 +120,37 @@ End Code
                         </div>
                     </div>
                 </div>
+
+                <!-- Modal para novo Evento -->
+                <div class="modal fade" id="modalNovoEvento" tabindex="-1" role="dialog" aria-labelledby="modalNovoEvento" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="modalEvento">Novo Evento</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    @Html.Label("Evento.descricao", "Inserir descrição do evento", New With {.class = "form-check-label"})
+                                    @Html.TextBox("", "Evento.descricao", htmlAttributes:=New With {.class = "form-control"})
+                                </p>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                        onclick="location.href ='@Url.Action("CriaEvento", "Eventos", New With {.ID_ticket = Model.ID_ticket})'">
+                                    Novo Evento
+                                </button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+    
 
         </div>
     End Using
