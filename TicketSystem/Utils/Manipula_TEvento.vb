@@ -50,16 +50,13 @@ Public Class Manipula_TEvento
 
         'Se a string enviada pela data fecho for null, a query envia o valor como null
         'caso contrário, enviamos a data que recebemos 
-        If dataFecho.Equals("NULL") Then
-            query = $"UPDATE Evento SET descricao = @desc, ID_tecnico = {ID_tecnico}, dataAbertura = '{dataAbertura}', 
-                                dataFecho = NULL, dat_hor = CURRENT_TIMESTAMP WHERE ID_evento = {ID_evento};"
-        Else
-            query = $"UPDATE Evento SET descricao = @desc, ID_tecnico = {ID_tecnico}, dataAbertura = '{dataAbertura}', 
-                                dataFecho = '{dataFecho}', dat_hor = CURRENT_TIMESTAMP WHERE ID_evento = {ID_evento};"
-        End If
+        query = $"UPDATE Evento SET descricao = @desc, ID_tecnico = {ID_tecnico}, dataAbertura = @dat_init, 
+                                dataFecho = @dat_end, dat_hor = CURRENT_TIMESTAMP WHERE ID_evento = {ID_evento};"
 
         Dim comando As New SqlCommand(query, conexao)
         comando.Parameters.AddWithValue("@desc", descricao)
+        comando.Parameters.AddWithValue("@dat_init", dataAbertura)
+        comando.Parameters.AddWithValue("@dat_end", VerificaDataFecho(dataFecho))
 
         ExecutaComandos(comando)
 

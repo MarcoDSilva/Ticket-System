@@ -88,8 +88,12 @@ End Code
                     Apagar
                 </button>
                 <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaTicket", "Tickets")'">
-                    Novo
+                    Novo Ticket
                 </button>
+
+                <!--linktext,actionName, controllerName,routevalue,htmlAttribute-->
+                @Html.ActionLink("CriaEvento", "CriaEvento", "Eventos", New With {.ID_ticket = Model.ID_ticket}, htmlAttributes:=New With {.class = "btn btn-warning"})
+
                 <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Tickets")'">
                     Voltar
                 </button>

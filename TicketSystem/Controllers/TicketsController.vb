@@ -41,7 +41,6 @@ Namespace Controllers
             'variaveis para serem atribuidos valores para a query
             Dim tempoPrevisto, tempoTotal As Integer
             Dim dataAberturaConvertida, dataFechoConvertida As String
-            Dim utilizador As Integer
 
             'verificar os tempos
             tempoPrevisto = VerificaTempos(ticketParams.tempoPrevisto)
@@ -54,7 +53,7 @@ Namespace Controllers
 
             conectaBD.CriaTicket(ticketParams.ID_tecnico, ticketParams.ID_software, ticketParams.ID_cliente, ticketParams.ID_problema,
                                   ticketParams.descricao, dataAberturaConvertida, dataFechoConvertida, tempoPrevisto,
-                                    tempoTotal, ticketParams.ID_estado, ticketParams.ID_prioridade, utilizador, ticketParams.ID_origem)
+                                    tempoTotal, ticketParams.ID_estado, ticketParams.ID_prioridade, ticketParams.ID_utilizador, ticketParams.ID_origem)
 
             Return RedirectToAction("Index")
         End Function
@@ -83,19 +82,18 @@ Namespace Controllers
                 'variaveis para serem atribuidos valores para a query
                 Dim tempoPrevisto, tempoTotal As Integer
                 Dim dataAberturaConvertida, dataFechoConvertida As String
-                Dim utilizador As Integer
 
                 tempoPrevisto = VerificaTempos(ticketParams.tempoPrevisto)
                 tempoTotal = VerificaTempos(ticketParams.tempoTotal)
 
-                dataAberturaConvertida = IIf(ticketParams.dataAbertura.Equals(""),
+                dataAberturaConvertida = IIf(String.IsNullOrEmpty(ticketParams.dataAbertura.ToString()),
                                              queryTicket.dataAbertura.ToString("MM-dd-yyyy"), ConverteDataHora(ticketParams.dataAbertura))
 
                 dataFechoConvertida = VerificaDataFechoTicket(ticketParams.dataFecho)
 
                 conectaBD.EditaTicket(ticketParams.ID_tecnico, ticketParams.ID_software, ticketParams.ID_cliente,
                                       ticketParams.ID_problema, ticketParams.descricao, dataAberturaConvertida, dataFechoConvertida,
-                                      tempoPrevisto, tempoTotal, ticketParams.ID_estado, ticketParams.ID_prioridade, utilizador,
+                                      tempoPrevisto, tempoTotal, ticketParams.ID_estado, ticketParams.ID_prioridade, ticketParams.ID_utilizador,
                                       ticketParams.ID_origem, ticketParams.ID_ticket)
             End If
 

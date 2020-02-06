@@ -26,6 +26,12 @@ Namespace Controllers
             Return View()
         End Function
 
+        ''GET: View que cria o evento, já com o ticket associado de onde foi criado
+        'Function CriaEvento(ID_ticket As Integer) As ActionResult
+        '    ViewBag.tecnico = New SelectList(conectaBD.ListaTecnicos(), "ID_tecnico", "nome")
+        '    Return View()
+        'End Function
+
         'POST: envia a informação que vem da view para a bd
         'Comparamos as datas , e atribuimos ou valor actual ou nulo , para enviar a informação para a bd
         'verificações que vão ficar na view, estão aqui temporariamente, como id_tecnico ou ticket
@@ -52,7 +58,7 @@ Namespace Controllers
                 If IsNothing(evento.dataFecho).Equals(False) Then
                     dataFechoConvertida = ConverteDataHora(evento.dataFecho)
                 Else
-                    dataFechoConvertida = ""
+                    dataFechoConvertida = "null"
                 End If
 
                 'adiciona os dados na bd
@@ -105,7 +111,7 @@ Namespace Controllers
                 If (IsNothing(evento.dataFecho).Equals(False)) Then
                     dataFechoConvertida = ConverteDataHora(evento.dataFecho)
                 Else
-                    dataFechoConvertida = "NULL"
+                    dataFechoConvertida = "null"
                 End If
 
                 conectaBD.EditaEvento(evento.ID_evento, evento.descricao, evento.ID_tecnico, dataAberturaConvertida, dataFechoConvertida)
