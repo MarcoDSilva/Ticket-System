@@ -4,6 +4,7 @@
 
     Dim dataFinal As String
     Dim dataInicial = Model.dataAbertura.ToString("yyyy-MM-dd")
+    Dim ticketID = Model.ID_ticket
 
     If IsNothing(Model.dataFecho) Then
         dataFinal = ""
@@ -93,7 +94,7 @@ End Code
 
                 <!--linktext,actionName, controllerName,routevalue,htmlAttribute-->
                 @Html.ActionLink("CriaEvento", "CriaEvento", "Eventos", New With {.ID_ticket = Model.ID_ticket},
-                                           htmlAttributes:=New With {.class = "btn btn-warning", .type = "button", .data_toggle = "modal", .data_target = "#modalNovoEvento"})
+                                                     htmlAttributes:=New With {.class = "btn btn-warning", .type = "button", .data_toggle = "modal", .data_target = "#modalNovoEvento"})
 
                 <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Tickets")'">
                     Voltar
@@ -131,14 +132,11 @@ End Code
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <!--
-                                Aqui vamos ter o corpo da Modal com o form para o novo evento
-                                Tentativa de utilizar AJAX para poder enviar dados, se é que isto funciona
-                            -->
+
                             <div class="modal-body">
                                 <form>
                                     <label for="Evento.descricao">Descrição:</label>
-                                    <input type="text" id="Evento.descricao" placeholder="Inserir Descrição" class="form-control" />
+                                    <input type="text" id="Evento.descricao" name="Evento.descricao" placeholder="Inserir Descrição" class="form-control" />
 
                                     <label class="form-check-label" for="Evento.tecnico">Técnico:</label>
 
@@ -149,28 +147,55 @@ End Code
                                     </select>
 
                                     <label class="form-check-label" for="dataAbertura">Data Abertura</label>
-                                    <input type="date" name="dataAbertura" value="dataAbertura" id="Evento.dataAbertura" class="form-control" />
+                                    <input type="date" name="Evento.dataAbertura" value="Evento.dataAbertura" id="Evento.dataAbertura" class="form-control" />
 
                                     <label class="form-check-label" for="Evento.dataFecho">Data Fecho</label>
-                                    <input type="date" name="dataFecho" value="dataFecho" id="dataFecho" class="form-control" />
-
+                                    <input type="date" name="Evento.dataAbertura" value="Evento.dataAbertura" id="Evento.dataFecho" class="form-control" />
+                                    <button type="submit" class="btn btn-primary" data-dismiss="modal"
+                                            onclick="NovoEvento()">
+                                        Criar Evento
+                                    </button>
                                 </form>
 
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                        onclick="location.href ='@Url.Action("CriaEvento", "Eventos", New With {.ID_ticket = Model.ID_ticket})'">
-                                    Criar Evento
-                                </button>
+                                
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-    
-
         </div>
     End Using
 </div>
+
+<script type="text/javascript">
+    function NovoEvento() {
+        var descricao = $('#Evento.descricao').val();
+        var tecnico = $('#Evento.tecnico').val(option);
+        var dataAbertura = $('#Evento.dataAbertura');
+        var dataFecho = $('#Evento.dataFecho');
+        var ticketID = $(+@ticketID);
+
+        $.ajax({
+            type: "POST",
+            url: @Url.Action("testaJSON", "Ticket"),
+            data: {
+                "ID_ticket": ticketID,
+                "descricao": descricao,
+                "tecnico": tecnico,
+                "dataAbertura": dataAbertura,
+                "dataFecho": dataFecho
+            },
+            sucess: function () {
+                alert("sucesso");
+                console.log("sucesso");
+            },
+            error: function () {
+                alert("ERRO");
+                console.log("erro");
+            }
+        });
+    }
+</script>

@@ -112,6 +112,17 @@ Namespace Controllers
 
         End Function
 
+        <HttpPost>
+        Function testaJSON(ID_ticket As Integer, tecnico As String, dataAbertura As String, dataFecho As String) As JsonResult
+
+            If IsNothing(ID_ticket) Or String.IsNullOrEmpty(tecnico) Or String.IsNullOrEmpty(dataAbertura) Or String.IsNullOrEmpty(dataFecho) Then
+                Return Json("error", JsonRequestBehavior.AllowGet)
+            Else
+                Return Json("sucess", JsonRequestBehavior.AllowGet)
+            End If
+        End Function
+
+
         ''' <summary>
         ''' Método interno utilizado para ler dados da bd
         ''' </summary>
