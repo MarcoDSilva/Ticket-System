@@ -132,16 +132,24 @@ End Code
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <p>
-                                    @Html.Label("Evento.descricao", "Inserir descrição do evento", New With {.class = "form-check-label"})
-                                    @Html.TextBox("", "Evento.descricao", htmlAttributes:=New With {.class = "form-control"})
-                                </p>
+                                <form>
+                                    <input type="text" id="Evento.descricao" placeholder="Inserir Descrição" class="form-control" />
+                                    <label class="form-check-label">Técnico: </label>
+                                    @Html.DropDownList("ID_tecnico", DirectCast(ViewBag.tecnico, SelectList), New With {.class = "form-control", .id = ""})
 
+
+                                    <label class="form-check-label">Data Abertura</label>
+                                    <input type="date" name="dataAbertura" value="dataAbertura" id="dataAbertura" class="form-control" />
+                                    <label class="form-check-label">Data Fecho</label>
+                                    <input type="date" name="dataFecho" value="dataFecho" id="dataFecho" class="form-control" />
+
+                                </form>
+                              
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal"
                                         onclick="location.href ='@Url.Action("CriaEvento", "Eventos", New With {.ID_ticket = Model.ID_ticket})'">
-                                    Novo Evento
+                                    Criar Evento
                                 </button>
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                             </div>
