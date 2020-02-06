@@ -94,7 +94,7 @@ End Code
 
                 <!--linktext,actionName, controllerName,routevalue,htmlAttribute-->
                 @Html.ActionLink("CriaEvento", "CriaEvento", "Eventos", New With {.ID_ticket = Model.ID_ticket},
-                                                     htmlAttributes:=New With {.class = "btn btn-warning", .type = "button", .data_toggle = "modal", .data_target = "#modalNovoEvento"})
+                                                          htmlAttributes:=New With {.class = "btn btn-warning", .type = "button", .data_toggle = "modal", .data_target = "#modalNovoEvento"})
 
                 <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Tickets")'">
                     Voltar
@@ -142,7 +142,7 @@ End Code
 
                                     <select class="form-control" id="Evento.tecnico">
                                         @For Each tec In DirectCast(ViewBag.tecnico, SelectList)
-                                            @<option value="@tec.Text">@tec.Text</option>
+                                            @<option value="@tec.Value">@tec.Text</option>
                                         Next
                                     </select>
 
@@ -159,7 +159,7 @@ End Code
 
                             </div>
                             <div class="modal-footer">
-                                
+
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                             </div>
                         </div>
@@ -168,19 +168,23 @@ End Code
             </div>
         </div>
     End Using
-</div>
 
-<script type="text/javascript">
+
+    <script type="text/javascript">
     function NovoEvento() {
-        var descricao = $('#Evento.descricao').val();
-        var tecnico = $('#Evento.tecnico').val(option);
-        var dataAbertura = $('#Evento.dataAbertura');
-        var dataFecho = $('#Evento.dataFecho');
-        var ticketID = $(+@ticketID);
+        var descricao = document.getElementById('Evento.descricao').value;
+        var tecnico = document.getElementById('Evento.tecnico').value;
+
+        var dataAbertura = document.getElementById('Evento.dataAbertura').value;
+        var dataFecho =document.getElementById('Evento.dataFecho').value;
+        var ticketID = @ticketID;
+
+        console.log(descricao, "e ", tecnico, "e " , dataAbertura, "e ", dataFecho, " e " , ticketID);
 
         $.ajax({
             type: "POST",
-            url: @Url.Action("testaJSON", "Ticket"),
+            @*url: '@Url.Action("testaJSON", "Ticket")',*@
+            url: '/Ticket/testaJSON',
             data: {
                 "ID_ticket": ticketID,
                 "descricao": descricao,
@@ -198,4 +202,6 @@ End Code
             }
         });
     }
-</script>
+    </script>
+</div>
+
