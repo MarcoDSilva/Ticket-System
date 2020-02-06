@@ -131,20 +131,31 @@ End Code
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
+                            <!--
+                                Aqui vamos ter o corpo da Modal com o form para o novo evento
+                                Tentativa de utilizar AJAX para poder enviar dados, se é que isto funciona
+                            -->
                             <div class="modal-body">
                                 <form>
+                                    <label for="Evento.descricao">Descrição:</label>
                                     <input type="text" id="Evento.descricao" placeholder="Inserir Descrição" class="form-control" />
-                                    <label class="form-check-label">Técnico: </label>
-                                    @Html.DropDownList("ID_tecnico", DirectCast(ViewBag.tecnico, SelectList), New With {.class = "form-control", .id = ""})
 
+                                    <label class="form-check-label" for="Evento.tecnico">Técnico:</label>
 
-                                    <label class="form-check-label">Data Abertura</label>
-                                    <input type="date" name="dataAbertura" value="dataAbertura" id="dataAbertura" class="form-control" />
-                                    <label class="form-check-label">Data Fecho</label>
+                                    <select class="form-control" id="Evento.tecnico">
+                                        @For Each tec In DirectCast(ViewBag.tecnico, SelectList)
+                                            @<option value="@tec.Text">@tec.Text</option>
+                                        Next
+                                    </select>
+
+                                    <label class="form-check-label" for="dataAbertura">Data Abertura</label>
+                                    <input type="date" name="dataAbertura" value="dataAbertura" id="Evento.dataAbertura" class="form-control" />
+
+                                    <label class="form-check-label" for="Evento.dataFecho">Data Fecho</label>
                                     <input type="date" name="dataFecho" value="dataFecho" id="dataFecho" class="form-control" />
 
                                 </form>
-                              
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" data-dismiss="modal"
