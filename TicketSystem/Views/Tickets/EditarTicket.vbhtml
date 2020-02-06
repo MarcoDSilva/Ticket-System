@@ -94,7 +94,7 @@ End Code
 
                 <!--linktext,actionName, controllerName,routevalue,htmlAttribute-->
                 @Html.ActionLink("CriaEvento", "CriaEvento", "Eventos", New With {.ID_ticket = Model.ID_ticket},
-                                                          htmlAttributes:=New With {.class = "btn btn-warning", .type = "button", .data_toggle = "modal", .data_target = "#modalNovoEvento"})
+                                                               htmlAttributes:=New With {.class = "btn btn-warning", .type = "button", .data_toggle = "modal", .data_target = "#modalNovoEvento"})
 
                 <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Tickets")'">
                     Voltar
@@ -180,11 +180,13 @@ End Code
         var ticketID = @ticketID;
 
         console.log(descricao, "e ", tecnico, "e " , dataAbertura, "e ", dataFecho, " e " , ticketID);
+    
 
         $.ajax({
             type: "POST",
-            @*url: '@Url.Action("testaJSON", "Ticket")',*@
-            url: '/Ticket/testaJSON',
+            url: '@Url.Action("TestaJSON", "Tickets")',
+            //url: 'Ticket/testaJSON',
+            dataType: 'json',
             data: {
                 "ID_ticket": ticketID,
                 "descricao": descricao,
@@ -192,6 +194,7 @@ End Code
                 "dataAbertura": dataAbertura,
                 "dataFecho": dataFecho
             },
+            contentType: "application/json",
             sucess: function () {
                 alert("sucesso");
                 console.log("sucesso");
