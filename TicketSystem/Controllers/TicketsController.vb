@@ -58,8 +58,23 @@ Namespace Controllers
             Return RedirectToAction("Index")
         End Function
 
-        'GET: Recebe a informação do ticket para o mesmo ser editado
+
         Function EditarTicket(ID_ticket As Integer?) As ActionResult
+            If IsNothing(ID_ticket) Then
+                Return New HttpStatusCodeResult(HttpStatusCode.Forbidden)
+            Else
+                CriaViewBags()
+
+                Return View(LeituraDados($"Select * from Ticket where ID_ticket = {ID_ticket}").First())
+            End If
+        End Function
+
+
+        'GET: Recebe a informação do ticket para o mesmo ser editado
+        <HttpPost()>
+        <ValidateAntiForgeryToken()>
+        <ValidateInput(False)>
+        Function _EditarTicket(ID_ticket As Integer?) As ActionResult
             If IsNothing(ID_ticket) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.Forbidden)
             Else
@@ -112,14 +127,46 @@ Namespace Controllers
 
         End Function
 
-        <HttpPost>
-        Function TestaJSON(ID_ticket As Integer, tecnico As String, dataAbertura As String, dataFecho As String) As JsonResult
 
-            If IsNothing(ID_ticket) Or String.IsNullOrEmpty(tecnico) Or String.IsNullOrEmpty(dataAbertura) Or String.IsNullOrEmpty(dataFecho) Then
-                Return Json("error", JsonRequestBehavior.AllowGet)
+        Function TestaEvento(descricao_evento As String, ID_tecnicoEvento As String, dataAberturaEvento As String,
+                             dataFechoEvento As String, ID_ticket As String) As ActionResult
+            Dim ManipulaEvento As New Manipula_TEvento
+
+            Dim descricaoVazia As String
+            Dim dataAberturaConvertida As String
+            Dim dataFechoConvertida As String
+            Dim tecnico As Integer
+
+            If String.IsNullOrEmpty(ID_tecnicoEvento) Then
+                tecnico = 2
             Else
-                Return Json("sucess", JsonRequestBehavior.AllowGet)
+                tecnico = 2
             End If
+
+            If String.IsNullOrEmpty(descricao_evento) Then
+                descricaoVazia = "vazia"
+            Else
+                descricaoVazia = descricao_evento
+            End If
+
+
+            'verificar os valores da dataabertura
+            If (String.IsNullOrEmpty(dataAberturaEvento)) Then
+                dataAberturaConvertida = "CURRENT_TIMESTAMP"
+            Else
+                dataAberturaConvertida = ConverteDataHora(dataAberturaEvento)
+            End If
+
+            'verificar os valores da datafecho
+            If IsNothing(dataFechoEvento).Equals(False) Then
+                dataFechoConvertida = ConverteDataHora(dataFechoEvento)
+            Else
+                dataFechoConvertida = "null"
+            End If
+
+            ManipulaEvento.AdicionaEvento(descricaoVazia, tecnico, dataAberturaConvertida, dataFechoConvertida, ID_ticket)
+
+            Return RedirectToAction($"EditarTicket/?ID_ticket={ID_ticket}")
         End Function
 
 
