@@ -3,6 +3,12 @@
     ViewData("Title") = "CriaTicket"
 
     Dim tempoActual = Date.Today.ToString("yyyy-MM-dd")
+
+    Dim x = ""
+
+    If IsPost Then
+        x = "venho do ticket"
+    End If
 End Code
 
 <h2>Criação de ticket</h2>
@@ -13,7 +19,7 @@ End Code
 
         @<div class="form-group">
             <h4>Tickets</h4>
-
+    <p> x is </p>
             @Html.HiddenFor(Function(ticket) ticket.ID_ticket)
             <div class="col-md-12">
                 <p>

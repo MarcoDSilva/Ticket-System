@@ -2,21 +2,11 @@
 @Code
     ViewData("Title") = "EditarTicket"
 
+    Dim eventoNovo As New Evento
+
     Dim dataFinal As String
     Dim dataInicial = Model.dataAbertura.ToString("yyyy-MM-dd")
     Dim ticketID = Model.ID_ticket
-
-    Dim descricao_evento As String = "a"
-    Dim ID_tecnicoEvento As String = "0"
-    Dim dataAberturaEvento As String = Model.dataAbertura.ToString("yyyy-MM-dd")
-    Dim dataFechoEvento As String = ""
-
-    If IsPost Then
-        descricao_evento = Request.Form("descricao_evento")
-        ID_tecnicoEvento = Request.Form("ID_tecnicoEvento")
-        dataAberturaEvento = Request.Form("dataAberturaEvento")
-        dataFechoEvento = Request.Form("dataAberturaEvento")
-    End If
 
     If IsNothing(Model.dataFecho) Then
         dataFinal = ""
@@ -30,11 +20,9 @@ End Code
 <div class="form-group">
     @Using (Html.BeginForm("EditarTicket", "Tickets"))
         @Html.AntiForgeryToken
-
         @<div class="col-form-label">
     @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
     @Html.HiddenFor(Function(ticket) ticket.ID_ticket)
-
     <!-- form edição -->
     <div class="form-group">
         <div class="col-md-12">
@@ -148,33 +136,29 @@ End Code
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
+                        <div class="modal-body">
+                                <label for="descricao">Descrição:</label>
+                                @Html.TextBoxFor(Function(d) d.descricao, Nothing, htmlAttributes:=New With {.placeHolder = "Inserir Descrição", .class = "form-control", .name = "descricao", .id = "descricao"})
+                                <Label class="form-check-label" for="ID_tecnico">Técnico:</Label>
+                                @Html.DropDownListFor(Function(a) a.ID_tecnico, DirectCast(ViewBag.tecnico, SelectList), "", htmlAttributes:=New With {.class = "form-control", .name = "ID_tecnico"})
 
-                    @Using (Html.BeginForm("TestaTicket", "Ticket", FormMethod.Post))
+                                <Label class="form-check-label" for="dataAbertura">Data Abertura</Label>
+                                <input type="date" name="dataAbertura" id="@eventoNovo.dataAbertura" class="form-control" />
 
-                        @<div Class="modal-body">
-                             <form action="~/Views/Eventos/CriaEvento.vbhtml">
-                                 <label for="descricao_evento">Descrição:</label>
-                                 @Html.TextBox("descricao_evento", Nothing, htmlAttributes:=New With {.placeHolder = "Inserir Descrição", .class = "form-control", .name = "descricao_evento", .value = descricao_evento})
-                                 <Label class="form-check-label" for="ID_tecnicoEvento">Técnico:</Label>
-                                 @Html.DropDownList("ID_tecnicoEvento", DirectCast(ViewBag.tecnico, SelectList), "", htmlAttributes:=New With {.class = "form-control", .name = "ID_tecnicoEvento"})
+                                <Label class="form-check-label" for="dataFecho">Data Fecho</Label>
+                                <input type="date" name="dataFecho" id="@eventoNovo.dataFecho" class="form-control" />
+                                
+                                @Html.ActionLink("Enviar", "CriaEvento", "Eventos", New With {.descricao = "descricao",
+                                         .ID_tecnico = Model.ID_tecnico, .dataAbertura = Model.dataAbertura,
+                                              .dataFecho = Model.dataFecho, .ID_ticket = ticketID},
+                                                 htmlAttributes:=New With {.class = "btn btn-primary"})
 
-                                 <Label class="form-check-label" for="dataAberturaEvento">Data Abertura</Label>
-                                 <input type="date" name="dataAberturaEvento" value="@dataAberturaEvento" id="dataAberturaEvento" class="form-control" />
-
-                                 <Label class="form-check-label" for="dataFechoEvento">Data Fecho</Label>
-                                 <input type="date" name="dataFechoEvento" value="@dataFechoEvento" id="dataFechoEvento" class="form-control" />
-                              
-                                 @Html.ActionLink("Enviar", "TestaEvento", New With {.descricao_evento = Request.Form("descricao_evento"),
-                                   .ID_tecnicoEvento = Request.Form("ID_tecnicoEvento"),
-                                   .dataAberturaEvento = Request.Form("dataAberturaEvento"),
-                                           .dataFechoEvento = Request.Form("dataAberturaEvento"), .ID_ticket = ticketID},
-                                                 htmlAttributes:=New With {.class = "btn btn-primary", .type = "submit"})
-                             </form>
+                                @*@Html.ActionLink("TestaEvento", "TestaEvento", New With {.descricao_evento = "evento",
+                             .ID_tecnicoEvento = "evento", .dataAberturaEvento = Html.Value("dataAberturaEvento"),
+                             .dataFechoEvento = Html.Value("dataFechoEvento"), .ID_ticket = ticketID},
+                             htmlAttributes:=New With {.class = "btn btn-primary", .type = "submit"})*@
                         </div>
-                    End Using
-
                     <div class="modal-footer">
-
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                     </div>
                 </div>
