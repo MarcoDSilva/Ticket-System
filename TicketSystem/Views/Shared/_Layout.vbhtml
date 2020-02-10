@@ -42,9 +42,45 @@
                     </div>
                 </div>
             </div>
+
+            @If IsNothing(Session("login")) Then
+                @<div class="form-check-inline">
+                    <Label class="col-form-label text-white">Email: </Label> <br /><input type="text" class="form-control-sm" size="15" />
+                    <Label class="col-form-label text-white">Password: </Label><br /><input type="password" class="form-control-sm" size="15" />
+                    <input type="submit" class="btn btn-secondary" value="login" />
+                </div>
+            Else
+                If Session("login").Equals("ERRO") Then
+                    @<div class="form-check-inline">
+                        <Label class="col-form-label text-white">Email: </Label> <br /><input type="text" class="form-control-sm" size="15" />
+                        <Label class="col-form-label text-white">Password: </Label><br /><input type="password" class="form-control-sm" size="15" />
+                        <input type="submit" class="btn btn-secondary" style="margin-left:10px;" value="login" />
+                    </div>
+                    @<label class="text-danger small">Password ou utilizador errado</label>
+
+                Else
+                    @<div class="form-check-inline">
+                        <p class="text-white font-weight-bold">Olá, @Session("login").ToString()!</p>
+
+                        <div class="btn-group-sm" role="group" style="margin-left:20px;">
+                            <button id="groupLogins" type="button" class="btn btn-secondary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Opções
+                            </button>
+                            <div class="dropdown-menu align-content-end" aria-labelledby="groupLogins">
+                                <a class="dropdown-item" href="#">Alterar Password</a>
+                                <a class="dropdown-item" href="#">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                End If
+
+
+            End If
+
         </div>
+        
     </nav>
-    <div class="container body-content dark">
+    <div Class="container body-content dark">
         @RenderBody()
         <footer class="card-footer">
             <p>&copy; @DateTime.Now.Year - Ticket System by ms</p>
