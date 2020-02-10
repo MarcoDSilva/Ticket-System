@@ -1,45 +1,38 @@
 ﻿@Code
-    ViewData("Title") = "Index"
+    ViewData("Title") = "Login Page"
 End Code
 
 <h2>Logins</h2>
 
 
+<div class="container-fluid">
 
-@If IsNothing(Session("login")) Then
-    @<div class="form-group">
-        <div class="col-form-label">Email: </div> <br />
-        <input type="text" class="form-control" size="10" />
-        <div class="col-form-label">Password:</div>    <br />
-        <input type="password" class="form-control" size="10" />
-        <input type="submit" class="btn btn-secondary" value="login" />
-    </div>
-Else
-    If Session("login").Equals("ERRO") Then
+    @If IsNothing(Session("login")) Then
         @<div class="form-group">
             <div class="col-form-label">Email: </div> <br />
             <input type="text" class="form-control" size="10" />
             <div class="col-form-label">Password:</div>    <br />
             <input type="password" class="form-control" size="10" />
             <input type="submit" class="btn btn-secondary" value="login" />
-            <label class="text-danger">Password ou utilizador errado</label>
         </div>
     Else
-        @<p>Sessão tem valor e é @Session("login").ToString()</p>
-
-        If Session("key").Equals(1) Then
-            @<p>O seu cargo é administrador!</p>
+        If Session("login").Equals("ERRO") Then
+            @<div class="form-group">
+                <div class="col-form-label">Email: </div> <br />
+                <input type="text" class="form-control" size="10" />
+                <div class="col-form-label">Password:</div>    <br />
+                <input type="password" class="form-control" size="10" />
+                <input type="submit" class="btn btn-secondary" value="login" />
+                <label class="text-danger">Password ou utilizador errado</label>
+            </div>
         Else
-            @<p>O seu cargo é técnico ou utilizador</p>
+            @<p>Sessão tem valor e é @Session("login").ToString()</p>
+
+            If Session("key").Equals(1) Then
+                @<p>O seu cargo é administrador!</p>
+            Else
+                @<p>O seu cargo é técnico ou utilizador</p>
+            End If
         End If
     End If
-End If
-
-
-
-
-@*@If Session("valor").Equals("sem valor") Then
-        @<p>Sessão teste activa</p>
-    Else
-        @<p>Não encontrado</p>
-    End If*@
+</div>

@@ -32,4 +32,7 @@ Partial Public Class Tecnico
     Public Overridable Property Evento As ICollection(Of Evento)
 
     Public Overridable Property Ticket As ICollection(Of Ticket)
+
+    'o login vem da tabela login por precaução
+    Public Overridable Property ID_login As Login
 End Class

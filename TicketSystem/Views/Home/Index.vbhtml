@@ -2,30 +2,40 @@
     ViewData("Title") = "Home Page"
 End Code
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+
+<h2>Login</h2>
+<div class="container-fluid">
+
+    @If IsNothing(Session("login")) Then
+        @<div class="form-group">
+            <div class="col-form-label">Email: </div> <br />
+            <input type="text" class="form-control" size="10" />
+            <div class="col-form-label">Password:</div>    <br />
+            <input type="password" class="form-control" size="10" />
+            <input type="submit" class="btn btn-secondary" value="login" />
+            <button type="button" class="btn btn-primary">Criar Conta</button>
+            <button type="button" class="btn btn-warning">Recuperar Password</button>
+        </div>
+    Else
+        If Session("login").Equals("ERRO") Then
+            @<div class="form-group">
+                <div class="col-form-label">Email: </div> <br />
+                <input type="text" class="form-control" size="10" />
+                <div class="col-form-label">Password:</div>    <br />
+                <input type="password" class="form-control" size="10" />
+                <input type="submit" class="btn btn-secondary" value="login" />
+                <label class="text-danger">Password ou utilizador errado</label>
+            </div>
+        Else
+            @<p>Sessão tem valor e é @Session("login").ToString()</p>
+
+            If Session("key").Equals(1) Then
+                @<p>O seu cargo é administrador!</p>
+            Else
+                @<p>O seu cargo é técnico ou utilizador</p>
+            End If
+        End If
+    End If
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-secondary" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-secondary" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-secondary" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+

@@ -10,7 +10,6 @@ Namespace Controllers
 
         ' GET: Logins
         Function Index() As ActionResult
-
             If 1 = 1 Then
                 Session("login") = "Josefina"
                 Session("key") = 0
@@ -19,20 +18,29 @@ Namespace Controllers
                 Session("key") = 1
             End If
 
-            'Dim u As New HttpCookie("tobias")
-            'u.Name = "tobias"
-            'u("user") = "toby"
-            'u("pw") = "b"
-            'u.Secure = True
-            'u.Domain = "www.google.pt"
-            'u.Value = 1
-            'u.Expires.Add(New TimeSpan(0, 20, 0))
-            'Response.Cookies.Add(u)
-            'TempData("tobias") = "tobias"
+            Return View()
+        End Function
 
-            'Session("valor") = "sem valor"
+
+        'POST:
+        <HttpPost()>
+        <ValidateAntiForgeryToken()>
+        Function Index(username As String, email As String, password As String) As ActionResult
+            Dim x = 10
 
             Return View()
+        End Function
+
+        Function CriarLogin() As ActionResult
+            Return View()
+        End Function
+
+        Function Login() As ActionResult
+
+        End Function
+
+        Function Logout() As ActionResult
+
         End Function
     End Class
 End Namespace
