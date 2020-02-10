@@ -9,7 +9,7 @@ Namespace Controllers
 
         ' GET: Tecnicos
         Function Index() As ActionResult
-            Return View(LeituraDados($"SELECT * FROM Tecnico;"))
+            Return View(LeituraDados($"SELECT ID_tecnico,nome,email,dat_hor FROM Tecnico;"))
         End Function
 
         'GET
@@ -31,7 +31,7 @@ Namespace Controllers
 
         'GET:
         Function EditarTecnico(ID_tecnico As Integer?) As ActionResult
-            Return View(LeituraDados($"SELECT * FROM Tecnico WHERE ID_tecnico = {ID_tecnico}").First())
+            Return View(LeituraDados($"SELECT ID_tecnico,nome,email,dat_hor FROM Tecnico WHERE ID_tecnico = {ID_tecnico}").First())
         End Function
 
         'POST:
