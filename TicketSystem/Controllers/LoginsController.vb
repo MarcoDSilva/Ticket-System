@@ -13,8 +13,10 @@ Namespace Controllers
 
             If 1 = 1 Then
                 Session("login") = "Josefina"
+                Session("key") = 0
             Else
                 Session("login") = "ERRO"
+                Session("key") = 1
             End If
 
             'Dim u As New HttpCookie("tobias")
