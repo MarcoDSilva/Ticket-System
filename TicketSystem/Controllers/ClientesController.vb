@@ -12,6 +12,7 @@ Namespace Controllers
         'A Query está com um left join pois queremos incluir os valores nulos 
         'que provém do utilizador(caso o cliente não tenha nenhum utilizador associado)
         Function Index() As ActionResult
+            BloqueiaUtilizadores()
             Return View(LeituraDados($"SELECT c.ID_cliente, c.nome, c.contacto, c.email, c.empresa, u.nome, c.dat_hor 
                                       FROM Cliente c
                                       LEFT JOIN Utilizador u
@@ -20,6 +21,7 @@ Namespace Controllers
 
         'GET : Formulário
         Function CriaCliente() As ActionResult
+            BloqueiaUtilizadores()
             ViewBag.utilizadores = New SelectList(conectaBD.ListaUtilizadores(), "ID_utilizador", "nome")
             Return View()
         End Function
@@ -31,6 +33,8 @@ Namespace Controllers
         <ValidateAntiForgeryToken>
         Function CriaCliente(nome As String, contacto As String, email As String, empresa As String,
                              ID_utilizador As Integer) As ActionResult
+            BloqueiaUtilizadores()
+
             If String.IsNullOrEmpty(nome) Then
                 Return View()
             Else
@@ -46,7 +50,7 @@ Namespace Controllers
 
         'GET: 
         Function EditarCliente(ID_cliente As Integer) As ActionResult
-
+            BloqueiaUtilizadores()
             If IsNothing(ID_cliente) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadGateway)
             Else
@@ -63,6 +67,7 @@ Namespace Controllers
         <ValidateAntiForgeryToken>
         Function EditarCliente(nome As String, contacto As String, email As String, empresa As String,
                              ID_cliente As Integer?, ID_utilizador As Integer) As ActionResult
+            BloqueiaUtilizadores()
             If IsNothing(ID_cliente) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadGateway)
             Else
@@ -78,6 +83,7 @@ Namespace Controllers
 
         'Apaga o cliente corrrespondente ao id recebido
         Function ApagarCliente(ID_cliente As Integer) As ActionResult
+            BloqueiaUtilizadores()
             If IsNothing(ID_cliente) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
@@ -121,5 +127,11 @@ Namespace Controllers
             Next
             Return listagemClientes
         End Function
+
+        Private Sub BloqueiaUtilizadores()
+            If String.IsNullOrEmpty((Session("Nome"))) Then
+                Response.Redirect("~/Logins/Index")
+            End If
+        End Sub
     End Class
 End Namespace

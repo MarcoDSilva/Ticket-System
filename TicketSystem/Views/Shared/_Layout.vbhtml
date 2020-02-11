@@ -23,7 +23,7 @@
                 <!--Drop down das listagens -->
                 <div class="dropdown show">
                     
-                    @If String.IsNullOrEmpty((Session("Nome"))).Equals(False) Then
+                    @If Not String.IsNullOrEmpty((Session("Nome"))) Then
                         @<a Class="btn btn-secondary btn-sm dropdown-toggle bg-dark" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Listagens
                         </a>
@@ -74,7 +74,6 @@
                         </div>
                     </div>
                 End If
-
             End If
 
         </div>

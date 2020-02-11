@@ -10,11 +10,13 @@ Namespace Controllers
 
         ' GET: Listagem de Estados
         Function Index() As ActionResult
+            BloqueiaUtilizadores()
             Return View(LeituraDados("SELECT * FROM Estado;"))
         End Function
 
         'GET: Estados/CriaEstado
         Function CriaEstado() As ActionResult
+            BloqueiaUtilizadores()
             Return View()
         End Function
 
@@ -24,7 +26,7 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken>
         Function CriaEstado(descricao As String) As ActionResult
-
+            BloqueiaUtilizadores()
             If String.IsNullOrEmpty(descricao) Then
                 Return View()
             Else
@@ -36,6 +38,7 @@ Namespace Controllers
 
         'GET - recebe qual é o tipo de estado que vai ser editado
         Function EditarEstado(ID_estado As Integer?) As ActionResult
+            BloqueiaUtilizadores()
             If IsNothing(ID_estado) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
@@ -47,6 +50,7 @@ Namespace Controllers
         'POST - envia a informação e actualiza o tipo de estado
         <HttpPost()>
         Function EditarEstado(ID_estado As Integer?, descricao As String) As ActionResult
+            BloqueiaUtilizadores()
             If IsNothing(ID_estado) And String.IsNullOrEmpty(descricao) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.MethodNotAllowed)
             Else
@@ -59,6 +63,7 @@ Namespace Controllers
 
         'Recebe o ID para apagar após a confirmação do user
         Function ApagarEstado(ID_estado As Integer) As ActionResult
+            BloqueiaUtilizadores()
             If IsNothing(ID_estado) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
@@ -92,5 +97,10 @@ Namespace Controllers
             Return listagemEstados
         End Function
 
+        Private Sub BloqueiaUtilizadores()
+            If String.IsNullOrEmpty((Session("Nome"))) Then
+                Response.Redirect("~/Logins/Index")
+            End If
+        End Sub
     End Class
 End Namespace

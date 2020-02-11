@@ -11,6 +11,7 @@ Namespace Controllers
 
         ' GET: Eventos
         Function Index() As ActionResult
+            BloqueiaUtilizadores()
             Return View(LeituraDados($"SELECT e.ID_evento, e.descricao,t.nome, 
                         e.dataAbertura, e.dataFecho, e.ID_ticket, e.dat_hor 
                         FROM Evento e, Tecnico t
@@ -21,6 +22,7 @@ Namespace Controllers
         'Neste momento os elementos que vão fazer parte de uma dropbox estão a ser enviados por viewbags
         'ticket é só placeholder, pois irá ser automático
         Function CriaEvento() As ActionResult
+            BloqueiaUtilizadores()
             ViewBag.tickets = New SelectList(ListaTickets(), "ID_ticket", "ID_ticket")
             ViewBag.tecnico = New SelectList(conectaBD.ListaTecnicos(), "ID_tecnico", "nome")
             Return View()
@@ -38,7 +40,7 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken>
         Function CriaEvento(evento As Evento) As ActionResult
-
+            BloqueiaUtilizadores()
             'se o tecnico ou o ticket estiverem vazio da erro -isto é um placeholder, essa verificação
             'vai ser efectuada na view
             If IsNothing(evento.ID_tecnico) Or IsNothing(evento.ID_ticket) Or String.IsNullOrEmpty(evento.descricao) Then
@@ -71,6 +73,7 @@ Namespace Controllers
 
         'GET: obter campos para edição dos dados do evento
         Function EditarEvento(ID_evento As Integer) As ActionResult
+            BloqueiaUtilizadores()
             If IsNothing(ID_evento) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadGateway)
             Else
@@ -90,7 +93,7 @@ Namespace Controllers
         <HttpPost>
         <ValidateAntiForgeryToken>
         Function EditarEvento(evento As Evento) As ActionResult
-
+            BloqueiaUtilizadores()
             If IsNothing(evento.ID_evento) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
@@ -122,6 +125,7 @@ Namespace Controllers
 
         'Recebe o ID do evento a apagar. Apaga o evento se o encontrar. Redireciona para o index após o mesmo.
         Function ApagarEvento(ID_evento As Integer) As ActionResult
+            BloqueiaUtilizadores()
             If IsNothing(ID_evento) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
@@ -183,7 +187,7 @@ Namespace Controllers
         'listagem temporaria para preview de tickets
         'vai ser removida quando o ticket for automatico
         Private Function ListaTickets() As List(Of Ticket)
-            Dim leituraTickets = conectaBD.LeituraTabela("SELECT * FROM Ticket").AsEnumerable
+            Dim leituraTickets = conectaBD.LeituraTabela("SELECT ID_ticket FROM Ticket").AsEnumerable
             Dim lista As New List(Of Ticket)
 
             For Each ticket In leituraTickets
@@ -194,6 +198,12 @@ Namespace Controllers
 
             Return lista
         End Function
+
+        Private Sub BloqueiaUtilizadores()
+            If String.IsNullOrEmpty((Session("Nome"))) Then
+                Response.Redirect("~/Logins/Index")
+            End If
+        End Sub
 
     End Class
 End Namespace

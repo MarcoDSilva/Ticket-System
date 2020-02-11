@@ -9,7 +9,7 @@ Namespace Controllers
 
         ' GET: Tickets
         Function Index() As ActionResult
-
+            BloqueiaUtilizadores()
             Return View(LeituraDados("SELECT t.ID_ticket, tec.nome, sft.nome, cli.nome, prob.descricao, t.descricao, 
                                       t.dataAbertura, t.dataFecho, t.tempoPrevisto, t.tempoTotal, est.descricao,
                                       prio.descricao, t.ID_utilizador, ori.descricao,t.dat_hor
@@ -29,6 +29,7 @@ Namespace Controllers
 
         'GET: Cria a view para criação de tickets. A mesma contém várias dropdownlists que estão a ser alimentadas por viewbags
         Function CriaTicket() As ActionResult
+            BloqueiaUtilizadores()
             CriaViewBags()
             Return View()
         End Function
@@ -37,7 +38,7 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken()>
         Function CriaTicket(ticketParams As Ticket) As ActionResult
-
+            BloqueiaUtilizadores()
             'variaveis para serem atribuidos valores para a query
             Dim tempoPrevisto, tempoTotal As Integer
             Dim dataAberturaConvertida, dataFechoConvertida As String
@@ -61,6 +62,7 @@ Namespace Controllers
 
         'GET:
         Function EditarTicket(ID_ticket As Integer?) As ActionResult
+            BloqueiaUtilizadores()
             If IsNothing(ID_ticket) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.Forbidden)
             Else
@@ -74,7 +76,7 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken()>
         Function EditarTicket(ticketParams As Ticket) As ActionResult
-
+            BloqueiaUtilizadores()
             If IsNothing(ticketParams.ID_ticket) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.Forbidden)
             Else
@@ -104,6 +106,7 @@ Namespace Controllers
 
         'POST - Apagar o ticket 
         Function ApagarTicket(ID_ticket As Integer) As ActionResult
+            BloqueiaUtilizadores()
             If IsNothing(ID_ticket) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.Forbidden)
             Else
@@ -112,49 +115,6 @@ Namespace Controllers
             Return RedirectToAction("Index")
 
         End Function
-
-
-        'Function TestaEvento(descricao_evento As String, ID_tecnicoEvento As String, dataAberturaEvento As String,
-        '                     dataFechoEvento As String, ID_ticket As String) As ActionResult
-        '    Dim ManipulaEvento As New Manipula_TEvento
-
-        '    Dim descricaoVazia As String
-        '    Dim dataAberturaConvertida As String
-        '    Dim dataFechoConvertida As String
-        '    Dim tecnico As Integer
-
-        '    If String.IsNullOrEmpty(ID_tecnicoEvento) Then
-        '        tecnico = 2
-        '    Else
-        '        tecnico = 3
-        '    End If
-
-        '    If String.IsNullOrEmpty(descricao_evento) Then
-        '        descricaoVazia = "vazia"
-        '    Else
-        '        descricaoVazia = descricao_evento
-        '    End If
-
-
-        '    'verificar os valores da dataabertura
-        '    If (String.IsNullOrEmpty(dataAberturaEvento)) Then
-        '        dataAberturaConvertida = "CURRENT_TIMESTAMP"
-        '    Else
-        '        dataAberturaConvertida = ConverteDataHora(dataAberturaEvento)
-        '    End If
-
-        '    'verificar os valores da datafecho
-        '    If IsNothing(dataFechoEvento).Equals(False) Then
-        '        dataFechoConvertida = ConverteDataHora(dataFechoEvento)
-        '    Else
-        '        dataFechoConvertida = "null"
-        '    End If
-
-        '    ManipulaEvento.AdicionaEvento(descricaoVazia, tecnico, dataAberturaConvertida, dataFechoConvertida, ID_ticket)
-
-        '    Return View()
-        'End Function
-
 
         ''' <summary>
         ''' Método interno utilizado para ler dados da bd
@@ -262,5 +222,11 @@ Namespace Controllers
                 Return tempo
             End If
         End Function
+
+        Private Sub BloqueiaUtilizadores()
+            If String.IsNullOrEmpty((Session("Nome"))) Then
+                Response.Redirect("~/Logins/Index")
+            End If
+        End Sub
     End Class
 End Namespace

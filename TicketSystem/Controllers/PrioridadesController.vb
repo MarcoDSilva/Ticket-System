@@ -10,11 +10,13 @@ Namespace Controllers
 
         ' GET: Prioridades
         Function Index() As ActionResult
+            BloqueiaUtilizadores()
             Return View(LeituraDados("SELECT * FROM Prioridade;"))
         End Function
 
         'GET : Prioridade/CriaPrioridade
         Function CriaPrioridade() As ActionResult
+            BloqueiaUtilizadores()
             Return View()
         End Function
 
@@ -24,7 +26,7 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken>
         Function CriaPrioridade(descricao As String) As ActionResult
-
+            BloqueiaUtilizadores()
             If String.IsNullOrEmpty(descricao).Equals(False) Then
                 conectaBD.InserirNovaPrioridade(descricao)
             Else
@@ -41,6 +43,7 @@ Namespace Controllers
         ''' <param name="ID_prioridade"></param>
         ''' <returns></returns>
         Function EditarPrioridade(ID_prioridade As Integer) As ActionResult
+            BloqueiaUtilizadores()
             If IsNothing(ID_prioridade) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
@@ -59,6 +62,7 @@ Namespace Controllers
         ''' <returns></returns>
         <HttpPost()>
         Function EditarPrioridade(ID_prioridade As Integer, descricao As String) As ActionResult
+            BloqueiaUtilizadores()
             If IsNothing(ID_prioridade) Or String.IsNullOrEmpty(descricao) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
@@ -74,6 +78,7 @@ Namespace Controllers
         ''' <param name="ID_prioridade"></param>
         ''' <returns></returns>
         Function ApagarPrioridade(ID_prioridade As Integer) As ActionResult
+            BloqueiaUtilizadores()
             If IsNothing(ID_prioridade) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
@@ -106,5 +111,11 @@ Namespace Controllers
 
             Return listagemPrioridades
         End Function
+
+        Private Sub BloqueiaUtilizadores()
+            If String.IsNullOrEmpty((Session("Nome"))) Then
+                Response.Redirect("~/Logins/Index")
+            End If
+        End Sub
     End Class
 End Namespace

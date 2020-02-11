@@ -10,6 +10,7 @@ Namespace Controllers
 
         ' GET: Utilizadores
         Function Index() As ActionResult
+            BloqueiaUtilizadores()
             Return View(LeituraDados("SELECT u.ID_utilizador, u.nome, u.contacto, u.email, c.nome, u.dat_hor
                                       FROM Utilizador u
                                       LEFT JOIN Cliente c	
@@ -18,6 +19,7 @@ Namespace Controllers
 
         'GET: Criação de utilizadores
         Function CriaUtilizador() As ActionResult
+            BloqueiaUtilizadores()
             ViewBag.clientes = New SelectList(ListaClientes(), "ID_cliente", "nome")
             Return View()
         End Function
@@ -28,7 +30,7 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken()>
         Function CriaUtilizador(nome As String, contacto As String, email As String, ID_cliente As Integer) As ActionResult
-
+            BloqueiaUtilizadores()
             If String.IsNullOrEmpty(nome) Or String.IsNullOrEmpty(contacto) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadGateway)
             Else
@@ -44,6 +46,7 @@ Namespace Controllers
 
         'GET: Informação para editar o utilizador
         Function EditarUtilizador(ID_utilizador As Integer) As ActionResult
+            BloqueiaUtilizadores()
             If IsNothing(ID_utilizador) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
@@ -60,6 +63,7 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken()>
         Function EditarUtilizador(ID_utilizador As Integer, nome As String, contacto As String, email As String, ID_cliente As Integer?) As ActionResult
+            BloqueiaUtilizadores()
             If IsNothing(ID_utilizador) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
@@ -75,6 +79,7 @@ Namespace Controllers
 
         'Apagar utilizador consoante o ID
         Function ApagarUtilizador(ID_utilizador As Integer) As ActionResult
+            BloqueiaUtilizadores()
             If IsNothing(ID_utilizador) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.Forbidden)
             Else
@@ -143,6 +148,10 @@ Namespace Controllers
 
             Return listagemClientes
         End Function
-
+        Private Sub BloqueiaUtilizadores()
+            If String.IsNullOrEmpty((Session("Nome"))) Then
+                Response.Redirect("~/Logins/Index")
+            End If
+        End Sub
     End Class
 End Namespace

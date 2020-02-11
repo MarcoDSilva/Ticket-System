@@ -1,8 +1,5 @@
 ﻿@Code
     ViewData("Title") = "Home Page"
-    If String.IsNullOrEmpty((Session("Nome"))) Then
-        Response.Redirect("~/Logins/Index")
-    End If
 End Code
 
 

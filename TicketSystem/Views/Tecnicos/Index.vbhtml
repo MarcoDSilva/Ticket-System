@@ -1,10 +1,6 @@
 ﻿@ModelType IEnumerable(Of TicketSystem.Tecnico)
 @Code
     ViewData("Title") = "Index"
-
-    If Session("Administrador") <> 1 Then
-        Response.Redirect("~/Home/Index")
-    End If
 End Code
 
 <h2>Listagem Tecnicos</h2>

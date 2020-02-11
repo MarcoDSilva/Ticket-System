@@ -1,10 +1,13 @@
 ﻿@Code
     ViewData("Title") = "CriarLogin"
-
-    If Session("Administrador") <> 1 Then
-        Response.Redirect("~/Home/Index")
-    End If
 End Code
 
-<h2>Criar Novo Técnico</h2>
+<h2>Inserir Novo Técnico</h2>
 
+
+<div class="form-group">
+    @Using (Html.BeginForm())
+        'FORMS
+    End Using
+
+</div>

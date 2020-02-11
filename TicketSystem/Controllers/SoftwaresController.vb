@@ -9,6 +9,7 @@ Namespace Controllers
 
         ' GET: Softwares
         Function Index() As ActionResult
+            BloqueiaUtilizadores()
             Return View(LeituraDados("SELECT * FROM Software;"))
         End Function
 
@@ -19,6 +20,7 @@ Namespace Controllers
         ''' <param name="ID_software"></param>
         ''' <returns></returns>
         Function EditarSoftware(ID_software As Integer) As ActionResult
+            BloqueiaUtilizadores()
             If IsNothing(ID_software) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
@@ -37,6 +39,7 @@ Namespace Controllers
         ''' <returns></returns>
         <HttpPost()>
         Function EditarSoftware(ID_software As Integer, nome As String) As ActionResult
+            BloqueiaUtilizadores()
             If IsNothing(ID_software) Or String.IsNullOrEmpty(nome) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
@@ -52,6 +55,7 @@ Namespace Controllers
         ''' <param name="nome"></param>
         ''' <returns></returns>
         Function CriaSoftware(nome As String) As ActionResult
+            BloqueiaUtilizadores()
             If String.IsNullOrEmpty(nome) Then
                 Return View()
             Else
@@ -67,6 +71,7 @@ Namespace Controllers
         ''' <param name="ID_software"></param>
         ''' <returns></returns>
         Function ApagarSoftware(ID_software As Integer) As ActionResult
+            BloqueiaUtilizadores()
             If IsNothing(ID_software) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
@@ -100,5 +105,10 @@ Namespace Controllers
             Return listagemSoftware
         End Function
 
+        Private Sub BloqueiaUtilizadores()
+            If String.IsNullOrEmpty((Session("Nome"))) Then
+                Response.Redirect("~/Logins/Index")
+            End If
+        End Sub
     End Class
 End Namespace

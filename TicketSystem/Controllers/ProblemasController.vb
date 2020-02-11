@@ -9,11 +9,13 @@ Namespace Controllers
 
         ' GET: Listagem da tabela dos problemas
         Function Index() As ActionResult
+            BloqueiaUtilizadores()
             Return View(LeituraDados("Select * From Problema;"))
         End Function
 
         'GET : Problemas/CriaProblema
         Function CriaProblema() As ActionResult
+            BloqueiaUtilizadores()
             Return View()
         End Function
 
@@ -23,7 +25,7 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken>
         Function CriaProblema(descricao As String) As ActionResult
-
+            BloqueiaUtilizadores()
             If String.IsNullOrEmpty(descricao).Equals(False) Then
                 conectaBD.InserirNovoProblema(descricao)
             Else
@@ -36,6 +38,7 @@ Namespace Controllers
 
         'GET: recebe a nova descrição e o id do problema a actualizar
         Function EditarProblema(ID_problema As Integer) As ActionResult
+            BloqueiaUtilizadores()
             If IsNothing(ID_problema) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             Else
@@ -47,6 +50,7 @@ Namespace Controllers
         'POST: com a informação que recebe dos dados, actualiza os campos respectivos na bd
         <HttpPost()>
         Function EditarProblema(ID_problema As Integer?, descricao As String) As ActionResult
+            BloqueiaUtilizadores()
             Dim problema = LeituraDados($"Select * From Problema WHERE ID_problema = {ID_problema};").First()
 
             If IsNothing(ID_problema) Or String.IsNullOrEmpty(descricao) Then
@@ -60,8 +64,8 @@ Namespace Controllers
 
         'Recebe o ID do elemento a apagar após a confirmação do utilizador , caso haja tentativa de acesso
         'a este controlo sem um ID especifico, a ideia para o futuro é lançar um erro de acesso
-       Function ConfirmaApaga(ID_problema As Integer?) As ActionResult
-
+        Function ConfirmaApaga(ID_problema As Integer?) As ActionResult
+            BloqueiaUtilizadores()
             If IsNothing(ID_problema) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadRequest)
             ElseIf ID_problema.HasValue Then
@@ -93,6 +97,12 @@ Namespace Controllers
             Next
             Return listagemProblemas
         End Function
+
+        Private Sub BloqueiaUtilizadores()
+            If String.IsNullOrEmpty((Session("Nome"))) Then
+                Response.Redirect("~/Logins/Index")
+            End If
+        End Sub
 
     End Class
 End Namespace

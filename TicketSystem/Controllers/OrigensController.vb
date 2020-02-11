@@ -9,11 +9,13 @@ Namespace Controllers
 
         ' GET: Origens
         Function Index() As ActionResult
+            BloqueiaUtilizadores()
             Return View(LeituraDados("SELECT * FROM Origem;"))
         End Function
 
         'GET: 
         Function CriaOrigem() As ActionResult
+            BloqueiaUtilizadores()
             Return View()
         End Function
 
@@ -22,6 +24,7 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken>
         Function CriaOrigem(descricao As String) As ActionResult
+            BloqueiaUtilizadores()
             If String.IsNullOrEmpty(descricao) Then
                 Return View()
             Else
@@ -32,6 +35,7 @@ Namespace Controllers
 
         'GET - obtem a view para editar os dados correspondentes
         Function EditarOrigem(ID_origem As Integer)
+            BloqueiaUtilizadores()
             If IsNothing(ID_origem) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.Forbidden)
             Else
@@ -43,6 +47,7 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken>
         Function EditarOrigem(ID_origem As Integer, descricao As String)
+            BloqueiaUtilizadores()
             If IsNothing(ID_origem) Or String.IsNullOrEmpty(descricao) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadGateway)
             Else
@@ -57,6 +62,7 @@ Namespace Controllers
         ''' <param name="ID_origem"></param>
         ''' <returns></returns>
         Function ApagarOrigem(ID_origem As Integer)
+            BloqueiaUtilizadores()
             If IsNothing(ID_origem) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.Forbidden)
             Else
@@ -90,5 +96,11 @@ Namespace Controllers
 
             Return listagemOrigens
         End Function
+
+        Private Sub BloqueiaUtilizadores()
+            If String.IsNullOrEmpty((Session("Nome"))) Then
+                Response.Redirect("~/Logins/Index")
+            End If
+        End Sub
     End Class
 End Namespace

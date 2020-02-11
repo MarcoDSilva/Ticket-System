@@ -9,11 +9,14 @@ Namespace Controllers
 
         ' GET: Tecnicos
         Function Index() As ActionResult
+            BloqueiaUtilizadores()
             Return View(LeituraDados($"SELECT ID_tecnico,nome,email,dat_hor FROM Tecnico;"))
         End Function
 
         'GET
         Function CriaTecnico() As ActionResult
+            BloqueiaUtilizadores()
+
             Return View()
         End Function
 
@@ -21,6 +24,8 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken>
         Function CriaTecnico(nome As String, email As String) As ActionResult
+            BloqueiaUtilizadores()
+
             If String.IsNullOrEmpty(nome) Or String.IsNullOrEmpty(email) Then
                 Return View()
             Else
@@ -31,6 +36,7 @@ Namespace Controllers
 
         'GET:
         Function EditarTecnico(ID_tecnico As Integer?) As ActionResult
+            BloqueiaUtilizadores()
             Return View(LeituraDados($"SELECT ID_tecnico,nome,email,dat_hor FROM Tecnico WHERE ID_tecnico = {ID_tecnico}").First())
         End Function
 
@@ -38,6 +44,7 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken()>
         Function EditarTecnico(nome As String, email As String, ID_tecnico As Integer?) As ActionResult
+            BloqueiaUtilizadores()
             If String.IsNullOrEmpty(nome) Or String.IsNullOrEmpty(email) Or ID_tecnico.HasValue.Equals(False) Then
                 Return View()
             Else
@@ -48,6 +55,7 @@ Namespace Controllers
 
         'Apaga o tecnico que corresponde ao ID enviado
         Function ApagarTecnico(ID_tecnico As Integer?) As ActionResult
+            BloqueiaUtilizadores()
             If IsNothing(ID_tecnico) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.Forbidden)
             Else
@@ -63,7 +71,6 @@ Namespace Controllers
         ''' <param name="query"></param>
         ''' <returns></returns>
         Function LeituraDados(query As String) As List(Of Tecnico)
-
             Dim tabelaDados As DataTable = conectaBD.LeituraTabela(query)
             Dim listagemTecnicos As List(Of Tecnico) = New List(Of Tecnico)
 
@@ -83,6 +90,12 @@ Namespace Controllers
 
             Return listagemTecnicos
         End Function
+
+        Private Sub BloqueiaUtilizadores()
+            If String.IsNullOrEmpty((Session("Nome"))) Or Session("Administrador") <> 1 Then
+                Response.Redirect("~/Logins/Index")
+            End If
+        End Sub
 
     End Class
 End Namespace
