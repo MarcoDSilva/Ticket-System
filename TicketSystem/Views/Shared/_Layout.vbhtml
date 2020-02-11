@@ -40,7 +40,7 @@
                 </div>
             </div>
 
-            @If Session("login") = 0 Then
+            @If Session("Login") = 0 Then
                 @*@<div class="form-check-inline">
                     <Label class="col-form-label text-white">Email: </Label> <br /><input type="text" class="form-control-sm" size="15" />
                     <Label class="col-form-label text-white">Password: </Label><br /><input type="password" class="form-control-sm" size="15" />
@@ -56,7 +56,7 @@
                     @<label class="text-danger small">Password ou utilizador errado</label>*@
 
             Else
-                If Session("login") = 1 And Session("LoginErrado") = 0 Then
+                If Session("Login") = 1 And Session("LoginErrado") = 0 Then
                     @<div class="form-check-inline">
                         <p class="text-white font-weight-bold">Olá, @Session("Email")!</p>
 
@@ -66,7 +66,7 @@
                             </button>
                             <div class="dropdown-menu align-content-end" aria-labelledby="groupLogins">
                                 <a class="dropdown-item" href="#">Alterar Password</a>
-                                <a class="dropdown-item" href="#">Logout</a>
+                                <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("Logout", "Logins")'">Logout</a>
                             </div>
                         </div>
                     </div>

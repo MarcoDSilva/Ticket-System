@@ -29,7 +29,7 @@ Public Class VM_Ticket
     Public Property descricao As String
 
     <Display(Name:="Data de abertura")>
-    Public Property dataAbertura As Date
+    Public Property dataAbertura As DateTime
 
     <Display(Name:="Data de fecho")>
     Public Property dataFecho As Date?

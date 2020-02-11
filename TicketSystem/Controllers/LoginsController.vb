@@ -26,12 +26,10 @@ Namespace Controllers
             If String.IsNullOrEmpty(email) Or String.IsNullOrEmpty(password) Then
                 Session("LoginErrado") = 1
                 Session("Login") = 1
-                'Session("Email") = Nothing
-                'Session("Administrador") = 0
             Else
                 Session("Login") = 1
 
-                Dim tecnicoLogado As New Login()
+                Dim tecnicoLogado As New VM_TecnicoLogin()
                 tecnicoLogado = conectaBD.Login(password, email)
 
                 If IsNothing(tecnicoLogado) Then
@@ -46,7 +44,8 @@ Namespace Controllers
 
                     Session("LoginErrado") = 0
                     Session("Login") = 1
-                    Session("Email") = tecnicoLogado.email.ToString()
+                    Session("Email") = tecnicoLogado.Email.ToString()
+                    Session("Nome") = tecnicoLogado.Nome.ToString()
                 End If
             End If
 
@@ -62,6 +61,13 @@ Namespace Controllers
         End Function
 
         Function Logout() As ActionResult
+            Session("Administrador") = 0
+            Session("LoginErrado") = 0
+            Session("Login") = 0
+            Session("Email") = ""
+            Session("Nome") = ""
+
+            Return Redirect("~/Home/Index")
 
         End Function
     End Class
