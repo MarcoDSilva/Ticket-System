@@ -8,11 +8,14 @@ Namespace Controllers
     Public Class LoginsController
         Inherits Controller
 
+        Private conectaBD As New ManuseiaLogin
+
         ' GET: Logins
         Function Index() As ActionResult
             If 1 = 1 Then
                 Session("login") = "Josefina"
                 Session("key") = 0
+
             Else
                 Session("login") = "ERRO"
                 Session("key") = 1
@@ -25,8 +28,8 @@ Namespace Controllers
         'POST:
         <HttpPost()>
         <ValidateAntiForgeryToken()>
-        Function Index(username As String, email As String, password As String) As ActionResult
-            Dim x = 10
+        Function Index(email As String, password As String) As ActionResult
+
 
             Return View()
         End Function

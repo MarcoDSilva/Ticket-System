@@ -23,6 +23,7 @@ Partial Public Class Tecnico
     <Display(Name:="Email")>
     <Required>
     <StringLength(255)>
+    <DataType(DataType.EmailAddress)>
     Public Property email As String
 
     <Display(Name:="Ultima actualização")>

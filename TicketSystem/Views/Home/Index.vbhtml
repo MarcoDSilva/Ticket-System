@@ -5,7 +5,6 @@ End Code
 
 <h2>Login</h2>
 <div class="container-fluid">
-
     @If IsNothing(Session("login")) Then
         @<div class="form-group">
             <div class="col-form-label">Email: </div> <br />

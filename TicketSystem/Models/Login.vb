@@ -14,6 +14,7 @@ Partial Public Class Login
     <Required>
     <Display(Name:="E-mail de acesso")>
     <StringLength(255)>
+    <DataType(DataType.EmailAddress)>
     Public Property email As String
 
     <DataType(DataType.Password)>
