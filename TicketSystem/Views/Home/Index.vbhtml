@@ -5,7 +5,7 @@ End Code
 
 <h2>Login</h2>
 <div class="container-fluid">
-    @If IsNothing(Session("login")) Then
+    @*@If IsNothing(Session("login")) Then
         @<div class="form-group">
             <div class="col-form-label">Email: </div> <br />
             <input type="text" class="form-control" size="10" />
@@ -34,7 +34,7 @@ End Code
                 @<p>O seu cargo é técnico ou utilizador</p>
             End If
         End If
-    End If
+    End If*@
 </div>
 
 
