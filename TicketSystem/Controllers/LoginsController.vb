@@ -35,7 +35,6 @@ Namespace Controllers
                 If IsNothing(tecnicoLogado) Then
                     Session("LoginErrado") = 1
                 Else
-
                     If tecnicoLogado.ID_role = 1 Then
                         Session("Administrador") = 1
                     Else
@@ -56,10 +55,15 @@ Namespace Controllers
             Return View()
         End Function
 
+
         Function Login() As ActionResult
 
         End Function
 
+        ''' <summary>
+        ''' Reset em todas as sessões do login
+        ''' </summary>
+        ''' <returns></returns>
         Function Logout() As ActionResult
             Session("Administrador") = 0
             Session("LoginErrado") = 0
@@ -68,7 +72,14 @@ Namespace Controllers
             Session("Nome") = ""
 
             Return Redirect("~/Home/Index")
-
         End Function
+
+        Function RecuperaPassword(email As String) As ActionResult
+            'procurar na bd correspondente ao email
+            'se encontrado, dar ordem de reset (para o email)
+            'se não encontrado, dar aviso de email não valido
+            Return View()
+        End Function
+
     End Class
 End Namespace

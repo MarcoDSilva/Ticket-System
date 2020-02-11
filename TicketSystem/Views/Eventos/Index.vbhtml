@@ -6,9 +6,9 @@ End Code
 
 <h2>Listar eventos</h2>
 
-<table class="table table-hover">
+<Table class="table table-hover">
     <tr>
-        <th>@Html.DisplayNameFor(Function(modelEv) modelEv.ID_evento)</th>
+    <th>@Html.DisplayNameFor(Function(modelEv) modelEv.ID_evento)</th>
         <th>@Html.DisplayNameFor(Function(modelEv) modelEv.descricao)</th>
         <th>@Html.DisplayNameFor(Function(modelEv) modelEv.ID_tecnico)</th>
         <th>@Html.DisplayNameFor(Function(modelEv) modelEv.dataAbertura)</th>

@@ -19,24 +19,28 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", New With {.area = ""}, New With {.class = "nav-link"})</li>
-              </ul>
+                </ul>
                 <!--Drop down das listagens -->
                 <div class="dropdown show">
-                    <a class="btn btn-secondary btn-sm dropdown-toggle bg-dark" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    
+                    @If String.IsNullOrEmpty((Session("Nome"))).Equals(False) Then
+                        @<a Class="btn btn-secondary btn-sm dropdown-toggle bg-dark" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Listagens
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item">@Html.ActionLink("Software", "Index", "Softwares", New With {.area = ""}, New With {.class = "nav-link"})</a>
-                        <a class="dropdown-item">@Html.ActionLink("Problemas", "Index", "Problemas", New With {.area = ""}, New With {.class = "nav-link"})</a>
-                        <a class="dropdown-item">@Html.ActionLink("Estados", "Index", "Estados", New With {.area = ""}, New With {.class = "nav-link"})</a>
-                        <a class="dropdown-item">@Html.ActionLink("Prioridades", "Index", "Prioridades", New With {.area = ""}, New With {.class = "nav-link"})</a>
-                        <a class="dropdown-item">@Html.ActionLink("Origens", "Index", "Origens", New With {.area = ""}, New With {.class = "nav-link"})</a>
-                        <a class="dropdown-item">@Html.ActionLink("Tecnicos", "Index", "Tecnicos", New With {.area = ""}, New With {.class = "nav-link"})</a>
-                        <a class="dropdown-item">@Html.ActionLink("Eventos", "Index", "Eventos", New With {.area = ""}, New With {.class = "nav-link"})</a>
-                        <a class="dropdown-item">@Html.ActionLink("Clientes", "Index", "Clientes", New With {.area = ""}, New With {.class = "nav-link"})</a>
-                        <a class="dropdown-item">@Html.ActionLink("Utilizadores", "Index", "Utilizadores", New With {.area = ""}, New With {.class = "nav-link"})</a>
-                        <a class="dropdown-item">@Html.ActionLink("Tickets", "Index", "Tickets", New With {.area = ""}, New With {.class = "nav-link"})</a>
-                    </div>
+                        </a>
+                        @<div Class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a Class="dropdown-item">@Html.ActionLink("Software", "Index", "Softwares", New With {.area = ""}, New With {.class = "nav-link"})</a>
+                            <a Class="dropdown-item">@Html.ActionLink("Problemas", "Index", "Problemas", New With {.area = ""}, New With {.class = "nav-link"})</a>
+                            <a Class="dropdown-item">@Html.ActionLink("Estados", "Index", "Estados", New With {.area = ""}, New With {.class = "nav-link"})</a>
+                            <a Class="dropdown-item">@Html.ActionLink("Prioridades", "Index", "Prioridades", New With {.area = ""}, New With {.class = "nav-link"})</a>
+                            <a Class="dropdown-item">@Html.ActionLink("Origens", "Index", "Origens", New With {.area = ""}, New With {.class = "nav-link"})</a>
+                            <a Class="dropdown-item">@Html.ActionLink("Tecnicos", "Index", "Tecnicos", New With {.area = ""}, New With {.class = "nav-link"})</a>
+                            <a Class="dropdown-item">@Html.ActionLink("Eventos", "Index", "Eventos", New With {.area = ""}, New With {.class = "nav-link"})</a>
+                            <a Class="dropdown-item">@Html.ActionLink("Clientes", "Index", "Clientes", New With {.area = ""}, New With {.class = "nav-link"})</a>
+                            <a Class="dropdown-item">@Html.ActionLink("Utilizadores", "Index", "Utilizadores", New With {.area = ""}, New With {.class = "nav-link"})</a>
+                            <a Class="dropdown-item">@Html.ActionLink("Tickets", "Index", "Tickets", New With {.area = ""}, New With {.class = "nav-link"})</a>
+                        </div>
+                    End If
+
                 </div>
             </div>
 
@@ -58,8 +62,7 @@
             Else
                 If Session("Login") = 1 And Session("LoginErrado") = 0 Then
                     @<div class="form-check-inline">
-                        <p class="text-white font-weight-bold">Olá, @Session("Email")!</p>
-
+                        <p class="text-white font-weight-bold">Bom dia, @Session("Nome") - @Session("Email")</p>                        
                         <div class="btn-group-sm" role="group" style="margin-left:20px;">
                             <button id="groupLogins" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Opções

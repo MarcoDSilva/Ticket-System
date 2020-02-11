@@ -1,9 +1,12 @@
 ﻿@Code
     ViewData("Title") = "Home Page"
+    If String.IsNullOrEmpty((Session("Nome"))) Then
+        Response.Redirect("~/Logins/Index")
+    End If
 End Code
 
 
-<h2>Login</h2>
+<h2>Home</h2>
 <div class="container-fluid">
     @*@If IsNothing(Session("login")) Then
         @<div class="form-group">

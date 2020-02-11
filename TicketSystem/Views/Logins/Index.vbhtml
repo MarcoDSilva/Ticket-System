@@ -1,11 +1,6 @@
 ﻿@ModelType TicketSystem.Login
 @Code
     ViewData("Title") = "Login Page"
-
-    Dim administrador = Session("Administrador")
-    Dim loginEfetuado = Session("Login")
-    Dim loginFalhado = Session("LoginErrado")
-    Dim emailUtilizador = Session("Email")
 End Code
 
 <h2>Logins</h2>
@@ -14,7 +9,7 @@ End Code
     @Using (Html.BeginForm())
         @Html.AntiForgeryToken()
 
-        If loginEfetuado = 0 And loginFalhado = 0 Then
+        If Session("Login") = 0 And Session("LoginErrado") = 0 Then
             @<div class="form-group">
                 @Html.LabelFor(Function(log) log.email, New With {.class = "form-label"})
                 @Html.TextBoxFor(Function(log) log.email, New With {.class = "form-control"})
@@ -26,7 +21,7 @@ End Code
                 <button type="button" class="btn btn-warning">Recuperar Password</button>
             </div>
         Else
-            If loginFalhado = 1 Then
+            If Session("LoginErrado") = 1 Then
                 @<div class="form-group">
                     @Html.LabelFor(Function(log) log.email, New With {.class = "form-label"})
                     @Html.TextBoxFor(Function(log) log.email, New With {.class = "form-control"})
@@ -39,9 +34,9 @@ End Code
                     <label class="text-danger">Password ou utilizador errado</label>
                 </div>
             Else
-                @<p>Bem vindo @emailUtilizador</p>
+                @<p>Bem vindo @Session("Nome")</p>
 
-                If administrador = 1 Then
+                If Session("Administrador") = 1 Then
                     @<p>O seu cargo é administrador!</p>
                 Else
                     @<p>O seu cargo é técnico ou utilizador</p>
