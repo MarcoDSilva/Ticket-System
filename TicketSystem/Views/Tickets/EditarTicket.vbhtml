@@ -1,6 +1,6 @@
 ﻿@ModelType TicketSystem.VM_Ticket
 @Code
-    ViewData("Title") = "EditarTicket"
+    ViewData("Title") = "Edição de Ticket"
 
     Dim eventoNovo As New Evento
 

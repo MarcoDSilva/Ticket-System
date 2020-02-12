@@ -1,6 +1,6 @@
 ﻿@ModelType TicketSystem.Estado
 @Code
-    ViewData("Title") = "EditarEstado"
+    ViewData("Title") = "Edição de estados"
     Dim idParaApagar = Model.ID_estado
 End Code
 

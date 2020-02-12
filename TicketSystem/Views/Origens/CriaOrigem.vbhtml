@@ -1,6 +1,6 @@
 ﻿@ModelType TicketSystem.Origem
 @Code
-    ViewData("Title") = "CriaOrigem"
+    ViewData("Title") = "Criação de origens"
 End Code
 
 <h2>Criar nova origem</h2>

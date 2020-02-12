@@ -51,13 +51,24 @@ Namespace Controllers
             Return View()
         End Function
 
+        'GET:
         Function CriarLogin() As ActionResult
+            'If String.IsNullOrEmpty((Session("Nome"))) Then
+            '    Response.Redirect("~/Logins/Index")
+            'End If
             Return View()
         End Function
 
+        'POST:
+        <HttpPost()>
+        <ValidateAntiForgeryToken()>
+        Function CriarLogin(email As String, password As String) As ActionResult
+            If String.IsNullOrEmpty((Session("Nome"))) Then
+                Response.Redirect("~/Logins/Index")
+            End If
 
-        Function Login() As ActionResult
 
+            Return View()
         End Function
 
         ''' <summary>
@@ -80,6 +91,12 @@ Namespace Controllers
             'se não encontrado, dar aviso de email não valido
             Return View()
         End Function
+
+        Private Sub BloqueiaUtilizadores()
+            If String.IsNullOrEmpty((Session("Nome"))) Or Session("Administrador") <> 1 Then
+                Response.Redirect("~/Logins/Index")
+            End If
+        End Sub
 
     End Class
 End Namespace

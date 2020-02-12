@@ -1,7 +1,7 @@
 ﻿@ModelType IEnumerable(Of TicketSystem.Problema)
 
 @Code
-    ViewData("Title") = "Index"
+    ViewData("Title") = "Problema"
 End Code
 
 <h2>Listagem de problemas</h2>

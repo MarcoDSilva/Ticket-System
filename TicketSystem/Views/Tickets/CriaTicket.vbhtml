@@ -1,6 +1,6 @@
 ﻿@ModelType TicketSystem.Ticket
 @Code
-    ViewData("Title") = "CriaTicket"
+    ViewData("Title") = "Criação de ticket"
 
     Dim tempoActual = Date.Today.ToString("yyyy-MM-dd")
 

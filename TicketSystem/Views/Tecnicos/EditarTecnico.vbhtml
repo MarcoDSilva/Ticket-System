@@ -1,6 +1,6 @@
 ﻿@ModelType TicketSystem.Tecnico
 @Code
-    ViewData("Title") = "EditarTecnico"
+    ViewData("Title") = "Editar técnico"
     Dim idParaApagar = Model.ID_tecnico
 End Code
 

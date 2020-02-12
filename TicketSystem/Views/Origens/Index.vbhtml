@@ -1,6 +1,6 @@
 ﻿@ModelType IEnumerable(Of TicketSystem.Origem)
 @Code
-    ViewData("Title") = "Index"
+    ViewData("Title") = "Origem"
 End Code
 
 <h2>Listagem Origem</h2>

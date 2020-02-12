@@ -1,6 +1,6 @@
 ﻿@ModelType TicketSystem.Cliente
 @Code
-    ViewData("Title") = "Criar cliente"
+    ViewData("Title") = "Criação De Cliente"
 End Code
 
 <h2>Criação de cliente</h2>

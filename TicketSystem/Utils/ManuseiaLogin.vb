@@ -35,7 +35,8 @@ Public Class ManuseiaLogin
                 log.Email = tecnico(2)
                 log.ID_role = tecnico(3)
             Next
-
+            comando.Parameters.Clear()
+            conexao.Close()
             Return log
         Else
             conexao.Close()
@@ -44,17 +45,23 @@ Public Class ManuseiaLogin
     End Function
 
     'função para obter login
+    Private Function CriarLogin(email As String, password As String)
+        Return 0;
+        'se X, lançar erro email existente
+        'se Y, lançar sucesso
+        'se Z, lançar outro tipo de erro não relacionado com a bd
+    End Function
 
     'função para dar ordem de reset na pw
 
     'função para alterar pw/email/user
 
 
-    ''' <summary>
-    ''' Método que executa os comandos/queries a serem executadas na base de dados
-    ''' Utilizado apenas para evitar repetição no código
-    ''' </summary>
-    ''' <param name="comando"></param>
+    '' <summary>
+    '' Método que executa os comandos/queries a serem executadas na base de dados
+    '' Utilizado apenas para evitar repetição no código
+    '' </summary>
+    '' <param name="comando"></param>
     Private Sub ExecutaComandos(comando As SqlCommand)
         conexao.Open()
         comando.ExecuteNonQuery()
@@ -91,6 +98,7 @@ Public Class ManuseiaLogin
         Dim dados As New DataTable()
 
         recetor.Fill(dados)
+        comando.Parameters.Clear()
         conexao.Close()
         Return dados
     End Function

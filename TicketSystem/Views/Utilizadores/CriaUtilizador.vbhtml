@@ -1,6 +1,6 @@
 ﻿@ModelType TicketSystem.VM_UtilizadorCliente
 @Code
-    ViewData("Title") = "CriaUtilizador"
+    ViewData("Title") = "Criação de utilizador"
 End Code
 
 <h2>Criação de Utilizador</h2>

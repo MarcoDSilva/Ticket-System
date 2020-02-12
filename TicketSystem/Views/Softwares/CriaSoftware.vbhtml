@@ -1,6 +1,6 @@
 ﻿@ModelType TicketSystem.Software
 @Code
-    ViewData("Title") = "CriaSoftware"
+    ViewData("Title") = "Criação de software"
 End Code
 
 <h2>Adição novo software</h2>

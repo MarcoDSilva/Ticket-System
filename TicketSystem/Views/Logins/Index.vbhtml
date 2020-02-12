@@ -36,13 +36,7 @@ End Code
                     <label class="text-danger">Password ou utilizador errado</label>
                 </div>
             Else
-                @<p>Bem vindo @Session("Nome")</p>
-
-                If Session("Administrador") = 1 Then
-                    @<p>O seu cargo é administrador!</p>
-                Else
-                    @<p>O seu cargo é técnico ou utilizador</p>
-                End If
+                Response.Redirect("~/Home/Index")
             End If
         End If
     End Using

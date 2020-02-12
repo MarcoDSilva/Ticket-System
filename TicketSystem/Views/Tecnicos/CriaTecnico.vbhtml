@@ -1,7 +1,7 @@
 ﻿@ModelType TicketSystem.Tecnico
 
 @Code
-    ViewData("Title") = "CriaTecnico"
+    ViewData("Title") = "Criação de técnico"
 End Code
 
 <h2>Adicionar novo Tecnico</h2>

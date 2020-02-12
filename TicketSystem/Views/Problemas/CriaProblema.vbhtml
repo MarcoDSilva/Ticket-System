@@ -1,6 +1,6 @@
 ﻿@ModelType TicketSystem.Problema
 @Code
-    ViewData("Title") = "CriaProblema"
+    ViewData("Title") = "Criar problema"
 End Code
 
 <h2>Inserir novo tipo de problema</h2>

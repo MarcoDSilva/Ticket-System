@@ -1,6 +1,6 @@
 ﻿@ModelType TicketSystem.Origem
 @Code
-    ViewData("Title") = "EditaOrigem"
+    ViewData("Title") = "Edição de origem"
     Dim idParaApagar = Model.ID_origem
 End Code
 

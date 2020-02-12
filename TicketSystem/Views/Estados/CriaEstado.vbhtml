@@ -1,6 +1,6 @@
 ﻿@ModelType TicketSystem.Estado
 @Code
-    ViewData("Title") = "CriaEstado"
+    ViewData("Title") = "Criação de estados"
 End Code
 
 <h2>Inserir novo estado de resolução</h2>
@@ -11,7 +11,7 @@ End Code
     @<div class="form-horizontal">
         <div class="form-group">
             <p>
-                @Html.LabelFor(Function(modelEst) Model.descricao)
+                @Html.LabelFor(Function(modelEst) Model.descricao, New With {.class = "form-check-label"})
                 @Html.TextBoxFor(Function(modelEst) Model.descricao, New With {.class = "form-control"})
             </p>
         </div>

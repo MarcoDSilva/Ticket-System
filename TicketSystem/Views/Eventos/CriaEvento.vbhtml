@@ -1,6 +1,6 @@
 ﻿@ModelType TicketSystem.Evento
 @Code
-    ViewData("Title") = "CriaEvento"
+    ViewData("Title") = "Criação de eventos"
 
     Dim ticketNum As Boolean = False
     Dim idTicket = 0

@@ -1,6 +1,6 @@
 ﻿@ModelType IEnumerable(Of TicketSystem.Prioridade)
 @Code
-    ViewData("Title") = "Index"
+    ViewData("Title") = "Prioridades"
 End Code
 
 <h2>Listar Prioridades</h2>

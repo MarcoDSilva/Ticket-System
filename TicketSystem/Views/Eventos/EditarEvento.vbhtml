@@ -1,6 +1,6 @@
 ﻿@ModelType TicketSystem.VM_EventoTecnico
 @Code
-    ViewData("Title") = "EditarEvento"
+    ViewData("Title") = "Edição de eventos"
 
     Dim dataFinal As String
     Dim dataInicial = Model.dataAbertura.ToString("yyyy-MM-dd")

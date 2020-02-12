@@ -1,6 +1,6 @@
 ﻿@ModelType IEnumerable(Of TicketSystem.VM_ClienteUtilizador)
 @Code
-    ViewData("Title") = "Index"
+    ViewData("Title") = "Clientes"
 End Code
 
 <h2>Listagem Clientes</h2>

@@ -1,6 +1,6 @@
 ﻿@ModelType TicketSystem.Prioridade
 @Code
-    ViewData("Title") = "CriaPrioridade"
+    ViewData("Title") = "Criação de prioridades"
 End Code
 
 <h2>Criação de nova prioridade</h2>

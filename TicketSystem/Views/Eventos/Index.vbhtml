@@ -1,7 +1,7 @@
 ﻿@ModelType IEnumerable(Of TicketSystem.VM_EventoTecnico)
 
 @Code
-    ViewData("Title") = "Index"
+    ViewData("Title") = "Eventos"
 End Code
 
 <h2>Listar eventos</h2>

@@ -1,6 +1,6 @@
 ﻿@ModelType TicketSystem.Prioridade
 @Code
-    ViewData("Title") = "EditarPrioridade"
+    ViewData("Title") = "Edição de prioridades"
     Dim idParaApagar = Model.ID_prioridade
 End Code
 

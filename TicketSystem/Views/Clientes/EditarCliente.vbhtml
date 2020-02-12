@@ -1,6 +1,6 @@
 ﻿@ModelType TicketSystem.VM_ClienteUtilizador
 @Code
-    ViewData("Title") = "EditarCliente"
+    ViewData("Title") = "Edição de clientes"
 End Code
 
 <h2>Edição de cliente</h2>
