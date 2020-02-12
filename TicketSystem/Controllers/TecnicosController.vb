@@ -18,6 +18,7 @@ Namespace Controllers
         'GET
         Function CriaTecnico() As ActionResult
             'BloqueiaUtilizadores()
+            ViewBag.roles = New SelectList(conectaBD.ListaRoles(), "ID_role", "descricao")
 
             Return View()
         End Function
@@ -25,15 +26,27 @@ Namespace Controllers
         'POST
         <HttpPost()>
         <ValidateAntiForgeryToken>
-        Function CriaTecnico(nome As String, email As String) As ActionResult
+        Function CriaTecnico(tec As VM_TecnicoRole) As ActionResult
             BloqueiaUtilizadores()
+            ViewBag.roles = New SelectList(conectaBD.ListaRoles(), "ID_role", "descricao")
+            Session("EmailExiste") = 0
 
-            If String.IsNullOrEmpty(nome) Or String.IsNullOrEmpty(email) Then
-                Return View()
+            If Not ModelState.IsValid() Then
+                Return View(tec)
             Else
-                conectaBD.AdicionaTecnico(nome, email)
+                'verificar se o email existe, e retorna caso encontre
+                Dim confirmaAdicao = conectaBD.AdicionaTecnico(tec.nome, tec.email, tec.ID_role)
+
+                'se o valor foi 1, então a adição foi bem sucedida e não existem emails repetentes
+                If (confirmaAdicao = 1) Then
+                    Session("EmailExiste") = 0
+                    Return RedirectToAction("Index")
+                Else
+                    Session("EmailExiste") = 1
+                    Return View(tec)
+                End If
             End If
-            Return RedirectToAction("Index")
+
         End Function
 
         'GET:
@@ -49,12 +62,14 @@ Namespace Controllers
         'POST:
         <HttpPost()>
         <ValidateAntiForgeryToken()>
-        Function EditarTecnico(nome As String, email As String, ID_tecnico As Integer?) As ActionResult
+        Function EditarTecnico(tec As VM_TecnicoRole) As ActionResult
             BloqueiaUtilizadores()
-            If String.IsNullOrEmpty(nome) Or String.IsNullOrEmpty(email) Or ID_tecnico.HasValue.Equals(False) Then
-                Return View()
+
+            If Not ModelState.IsValid() Then
+                ViewBag.roles = New SelectList(conectaBD.ListaRoles(), "ID_role", "descricao")
+                Return View(tec)
             Else
-                conectaBD.EditaTecnico(nome, email, ID_tecnico)
+                conectaBD.EditaTecnico(tec.nome, tec.email, tec.ID_role, tec.ID_tecnico)
             End If
             Return RedirectToAction("Index")
         End Function

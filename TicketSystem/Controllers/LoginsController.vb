@@ -51,31 +51,6 @@ Namespace Controllers
             Return View()
         End Function
 
-        'GET:
-        Function CriarLogin() As ActionResult
-            'If String.IsNullOrEmpty((Session("Nome"))) Or Session("Administrador") <> 1 Then
-            '    Response.Redirect("~/Logins/Index")
-            'End If
-            Return View()
-        End Function
-
-        'POST:
-        <HttpPost()>
-        <ValidateAntiForgeryToken()>
-        Function CriarLogin(Login As Login) As ActionResult
-            Session("NovoLogin") = 0
-            ' Session("NovoLoginErro") = 0
-
-            'If String.IsNullOrEmpty((Session("Nome"))) Or Session("Administrador") <> 1 Then
-            '    Response.Redirect("~/Logins/Index")
-            'End If
-            If ModelState.IsValid() Then
-                'testa valores na bd a ver se os mesmos funcionam e se este valor de retorno realmente funciona
-            End If
-
-            Return View(Login)
-        End Function
-
         ''' <summary>
         ''' Reset em todas as sessões do login
         ''' </summary>
@@ -90,6 +65,11 @@ Namespace Controllers
             Return Redirect("~/Home/Index")
         End Function
 
+        ''' <summary>
+        ''' reset na password do user cujo email foi pedido
+        ''' </summary>
+        ''' <param name="email"></param>
+        ''' <returns></returns>
         Function RecuperaPassword(email As String) As ActionResult
             'procurar na bd correspondente ao email
             'se encontrado, dar ordem de reset (para o email)

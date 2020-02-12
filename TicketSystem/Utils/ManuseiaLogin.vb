@@ -44,22 +44,7 @@ Public Class ManuseiaLogin
         End If
     End Function
 
-    'função para obter login
-    Private Function CriarLogin(email As String, password As String)
-        Dim query As String
-        query = $"INSERT INTO LOGIN values (@malito, @pass, 2, CURRENT_TIMESTAMP);"
 
-        Dim comando As New SqlCommand(query, conexao)
-        comando.Parameters.AddWithValue("@pass", password)
-        comando.Parameters.AddWithValue("@malito", email)
-
-
-
-        Return 0
-        'se X, lançar erro email existente
-        'se Y, lançar sucesso
-        'se Z, lançar outro tipo de erro não relacionado com a bd
-    End Function
 
     'função para dar ordem de reset na pw
     Private Function ResetPassword(email As String)

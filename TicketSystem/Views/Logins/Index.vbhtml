@@ -18,8 +18,7 @@ End Code
                         @Html.LabelFor(Function(log) log.password, New With {.class = "col-sm-2 col-form-label"})
                         @Html.EditorFor(Function(log) log.password, New With {.HtmlAttributes = New With {.class = "form-control", .placeholder = "Password"}})<br />
                     </div>
-                    <input type="submit" class="btn btn-secondary" value="login" />
-                    <button type="button" class="btn btn-primary">Novo Registo</button>
+                    <input type="submit" class="btn btn-secondary" value="login" /> 
                     <button type="button" class="btn btn-warning">Recuperar Password</button>
                 </div>
             Else
@@ -33,8 +32,7 @@ End Code
                             @Html.LabelFor(Function(log) log.password, New With {.class = "col-sm-2 col-form-label"})
                             @Html.EditorFor(Function(log) log.password, New With {.HtmlAttributes = New With {.class = "form-control", .placeholder = "Password"}})<br />
                         </div>
-                        <input type="submit" class="btn btn-secondary" value="login" />
-                        <button type="button" class="btn btn-primary">Novo Registo</button>
+                        <input type="submit" class="btn btn-secondary" value="login" />                      
                         <button type="button" class="btn btn-warning">Recuperar Password</button>
                         <small id="erro" class="form-text text-danger">Password ou utilizador errado</small>
                     </div>

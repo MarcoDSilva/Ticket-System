@@ -6,22 +6,37 @@ Public Class Manipula_TTecnico
     'conecta SC
     Private ReadOnly conexao As New SqlConnection(Conector.stringConnection)
 
-    Public Sub AdicionaTecnico(nome As String, email As String)
-        Dim query As String = "INSERT INTO Tecnico Values (@tecn, @malito, CURRENT_TIMESTAMP)"
+    Public Function AdicionaTecnico(nome As String, email As String, ID_role As Integer) As Integer
+        Dim query As String = $"INSERT INTO Tecnico Values (@tecn, @malito, 'password',
+                                {ID_role}, CURRENT_TIMESTAMP)"
+
         Dim comando As New SqlCommand(query, conexao)
 
         comando.Parameters.AddWithValue("@tecn", nome)
         comando.Parameters.AddWithValue("@malito", email)
-        ExecutaComandos(comando)
 
-    End Sub
+        If LeituraTabela(email).Rows(0).ToString() = "" Then
+            ExecutaComandos(comando)
+            Return 1
+        Else
+            Return 0
+        End If
 
-    Public Sub EditaTecnico(nome As String, email As String, ID_tecnico As Integer)
-        Dim query As String = $"UPDATE Tecnico SET nome = @tecn, email = @malito, dat_hor = CURRENT_TIMESTAMP WHERE ID_tecnico = {ID_tecnico};"
+        'ExecutaComandos(comando)
+        ''se tudo correr bem, devolvemos 1 para confirmar no controlo que foi sucesso
+        'Return 1
+    End Function
+
+    Public Sub EditaTecnico(nome As String, email As String, ID_role As Integer, ID_tecnico As Integer)
+        Dim query As String = $"UPDATE Tecnico SET nome = @tecn, email = @malito, ID_role = {ID_role}, 
+                                dat_hor = CURRENT_TIMESTAMP
+                                WHERE ID_tecnico = {ID_tecnico};"
         Dim comando As New SqlCommand(query, conexao)
 
         comando.Parameters.AddWithValue("@tecn", nome)
         comando.Parameters.AddWithValue("@malito", email)
+
+        'VERIFICAR SE EMAIL EXISTE, SE SIM, DEVOLVER ERRO
         ExecutaComandos(comando)
 
     End Sub
@@ -43,6 +58,38 @@ Public Class Manipula_TTecnico
         comando.Parameters.Clear()
         conexao.Close()
     End Sub
+
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="email"></param>
+    ''' <returns></returns>
+    Public Function VerificaEmail(email As String) As DataTable
+
+        'conexao e comando para termos acesso e podermos enviar a query para a base de dados
+        Dim conexao As New SqlConnection(Conector.stringConnection)
+        Dim comando As SqlCommand = conexao.CreateCommand()
+
+        Dim query As String = $"SELECT email 
+                                FROM Tecnico
+                                WHERE email = '@malito'"
+
+        comando.Parameters.AddWithValue("@malito", email)
+        comando.CommandText() = query
+        conexao.Open()
+
+
+
+        'para onde a informação vai ser recebida e atribuida
+        Dim recetor As New SqlDataAdapter(comando)
+        Dim dados As New DataTable()
+
+        recetor.Fill(dados)
+        comando.Parameters.Clear()
+        conexao.Close()
+        Return dados
+    End Function
 
 
 End Class
