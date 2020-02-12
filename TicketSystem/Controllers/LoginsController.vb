@@ -29,7 +29,7 @@ Namespace Controllers
             Else
                 Session("Login") = 1
 
-                Dim tecnicoLogado As New VM_TecnicoLogin()
+                Dim tecnicoLogado As New Tecnico()
                 tecnicoLogado = conectaBD.Login(password, email)
 
                 If IsNothing(tecnicoLogado) Then

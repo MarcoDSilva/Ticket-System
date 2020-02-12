@@ -10,7 +10,7 @@ Namespace Controllers
         ' GET: Tecnicos
         Function Index() As ActionResult
             BloqueiaUtilizadores()
-            Return View(LeituraDados($"SELECT ID_tecnico,nome,email,dat_hor FROM Tecnico;"))
+            Return View(LeituraDados($"SELECT ID_tecnico,nome,email, dat_hor FROM Tecnico;"))
         End Function
 
         'GET
@@ -30,7 +30,6 @@ Namespace Controllers
                 Return View()
             Else
                 conectaBD.AdicionaTecnico(nome, email)
-                'redirectiona para login criação com os dados daqui?
             End If
             Return RedirectToAction("Index")
         End Function

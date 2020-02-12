@@ -22,7 +22,7 @@ End Code
     @If Session("Administrador") = 1 Then
         @<p>O seu cargo é administrador!</p>
     Else
-        @<p>O seu cargo é técnico ou utilizador e são @dataDia horas</p>
+        @<p>O seu cargo é técnico/utilizador</p>
     End If
 
 </div>
