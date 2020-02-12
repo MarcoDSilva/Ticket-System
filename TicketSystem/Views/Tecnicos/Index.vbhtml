@@ -1,4 +1,4 @@
-﻿@ModelType IEnumerable(Of TicketSystem.Tecnico)
+﻿@ModelType IEnumerable(Of TicketSystem.VM_TecnicoRole)
 @Code
     ViewData("Title") = "Técnicos"
 End Code
@@ -10,6 +10,7 @@ End Code
         <th>@Html.DisplayNameFor(Function(modelTec) modelTec.ID_tecnico)
         <th>@Html.DisplayNameFor(Function(modelTec) modelTec.nome)</th>
         <th>@Html.DisplayNameFor(Function(modelTec) modelTec.email)</th>
+        <th>@Html.DisplayNameFor(Function(modelTec) modelTec.ID_role)</th>
         <th>@Html.DisplayNameFor(Function(modelTec) modelTec.dat_hor)</th>
     </tr>
 
@@ -18,6 +19,7 @@ End Code
             <td>@Html.DisplayFor(Function(modelTec) tecnico.ID_tecnico)</td>
             <td>@Html.DisplayFor(Function(modelTec) tecnico.nome)</td>
             <td>@Html.DisplayFor(Function(modelTec) tecnico.email)</td>
+            <td>@Html.DisplayFor(Function(modelTec) tecnico.ID_role)</td>
             <td>@Html.DisplayFor(Function(modelTec) tecnico.dat_hor)</td>
             <td>@Html.ActionLink("Detalhes", "EditarTecnico", New With {.ID_tecnico = tecnico.ID_tecnico})</td>
         </tr>

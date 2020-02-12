@@ -26,6 +26,15 @@ Partial Public Class Tecnico
     <DataType(DataType.EmailAddress)>
     Public Property email As String
 
+    <DataType(DataType.Password)>
+    <Required>
+    <Display(Name:="Password")>
+    <StringLength(255)>
+    Public Property password As String
+
+    <Display(Name:="Role")>
+    Public Property ID_role As Integer
+
     <Display(Name:="Ultima actualização")>
     Public Property dat_hor As Date
 
@@ -35,5 +44,5 @@ Partial Public Class Tecnico
     Public Overridable Property Ticket As ICollection(Of Ticket)
 
     'o login vem da tabela login por precaução
-    Public Overridable Property ID_login As Login
+    Public Overridable Property Role As Role
 End Class

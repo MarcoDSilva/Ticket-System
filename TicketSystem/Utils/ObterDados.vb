@@ -192,4 +192,23 @@ Public Class ObterDados
         Return listagemOrigens
     End Function
 
+    ''' <summary>
+    ''' Retorna uma lista de Roles, só com o campo ID e descrição.
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function ListaRoles() As List(Of Role)
+        Dim tabelaRoles As DataTable = LeituraTabela("SELECT ID_role, descricao FROM Role;")
+        Dim listagemRoles As List(Of Role) = New List(Of Role)
+
+        'ir buscar a informação da bd e adicionar na listagem
+        For Each item In tabelaRoles.AsEnumerable
+            Dim rol As New Role
+            rol.ID_role = item(0)
+            rol.descricao = item(1)
+            listagemRoles.Add(rol)
+        Next
+
+        Return listagemRoles
+    End Function
+
 End Class

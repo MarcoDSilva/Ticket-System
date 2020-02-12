@@ -10,7 +10,9 @@ Namespace Controllers
         ' GET: Tecnicos
         Function Index() As ActionResult
             BloqueiaUtilizadores()
-            Return View(LeituraDados($"SELECT ID_tecnico,nome,email, dat_hor FROM Tecnico;"))
+            Return View(LeituraDados($"SELECT t.ID_tecnico, t.nome,t.email,r.descricao, t.dat_hor 
+                                     FROM Tecnico t
+                                     INNER JOIN Role r on t.ID_role = r.ID_role;"))
         End Function
 
         'GET
@@ -37,7 +39,11 @@ Namespace Controllers
         'GET:
         Function EditarTecnico(ID_tecnico As Integer?) As ActionResult
             BloqueiaUtilizadores()
-            Return View(LeituraDados($"SELECT ID_tecnico,nome,email,dat_hor FROM Tecnico WHERE ID_tecnico = {ID_tecnico}").First())
+            ViewBag.roles = New SelectList(conectaBD.ListaRoles(), "ID_role", "descricao")
+
+            Return View(LeituraDados($"SELECT ID_tecnico,nome,email,ID_role, dat_hor 
+                                     FROM Tecnico 
+                                     WHERE ID_tecnico = {ID_tecnico}").First())
         End Function
 
         'POST:
@@ -70,20 +76,21 @@ Namespace Controllers
         ''' </summary>
         ''' <param name="query"></param>
         ''' <returns></returns>
-        Function LeituraDados(query As String) As List(Of Tecnico)
+        Function LeituraDados(query As String) As List(Of VM_TecnicoRole)
             Dim tabelaDados As DataTable = conectaBD.LeituraTabela(query)
-            Dim listagemTecnicos As List(Of Tecnico) = New List(Of Tecnico)
+            Dim listagemTecnicos As List(Of VM_TecnicoRole) = New List(Of VM_TecnicoRole)
 
             'fazemos um ciclo, que vai iterar por cada elemento que recebenos da base de dados
             'criamos um novo objecto do tipo Tecnico, onde atribuimos os dados da iteração actual
             'e no fim após a atribuição desses dados, inserimos numa List(a) de Tecnicos, o qual usamos para retornar os dados
             For Each item In tabelaDados.AsEnumerable
-                Dim tec As New Tecnico()
+                Dim tec As New VM_TecnicoRole()
 
                 tec.ID_tecnico = item(0)
                 tec.nome = item(1)
                 tec.email = item(2)
-                tec.dat_hor = item(3)
+                tec.ID_role = item(3)
+                tec.dat_hor = item(4)
 
                 listagemTecnicos.Add(tec)
             Next

@@ -7,7 +7,7 @@ Imports System.Data.Entity.Spatial
 <Table("Role")>
 Partial Public Class Role
     Public Sub New()
-        Login = New HashSet(Of Login)()
+        Tecnico = New HashSet(Of Tecnico)()
     End Sub
 
     <Key>
@@ -21,6 +21,6 @@ Partial Public Class Role
     <Display(Name:="Ultima Actualização")>
     Public Property dat_hor As Date
 
-    'um role pode pertencer a vários logins
-    Public Overridable Property Login As ICollection(Of Login)
+    'um role pode pertencer a vários Técnicos
+    Public Overridable Property Tecnico As ICollection(Of Tecnico)
 End Class
