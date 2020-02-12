@@ -33,7 +33,7 @@ End Code
                     <input type="submit" class="btn btn-secondary" value="login" />
                     <button type="button" class="btn btn-primary">Novo Registo</button>
                     <button type="button" class="btn btn-warning">Recuperar Password</button>
-                    <label class="text-danger">Password ou utilizador errado</label>
+                    <small id="erro" class="form-text text-danger">Password ou utilizador errado</small>
                 </div>
             Else
                 Response.Redirect("~/Home/Index")

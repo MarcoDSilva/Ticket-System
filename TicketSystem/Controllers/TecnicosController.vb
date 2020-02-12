@@ -15,7 +15,7 @@ Namespace Controllers
 
         'GET
         Function CriaTecnico() As ActionResult
-            BloqueiaUtilizadores()
+            'BloqueiaUtilizadores()
 
             Return View()
         End Function
@@ -30,6 +30,7 @@ Namespace Controllers
                 Return View()
             Else
                 conectaBD.AdicionaTecnico(nome, email)
+                'redirectiona para login criação com os dados daqui?
             End If
             Return RedirectToAction("Index")
         End Function

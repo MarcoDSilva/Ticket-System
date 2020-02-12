@@ -1,10 +1,10 @@
 ﻿@Code
-    Dim dataDia As DateTime = DateTime.Now
+    Dim dataDia = DateTime.Now.Hour
     Dim mensagem As String
-    If dataDia.Hour > 6 And dataDia.Hour < 12 Then
+    If Convert.ToInt16(dataDia) >= 6 And Convert.ToInt16(dataDia) <= 12 Then
         mensagem = "Bom dia"
     Else
-        If dataDia.Hour > 12 And dataDia.Hour < 18 Then
+        If Convert.ToInt16(dataDia) > 12 And Convert.ToInt16(dataDia) <= 18 Then
             mensagem = "Boa tarde"
         Else
             mensagem = "Boa Noite"

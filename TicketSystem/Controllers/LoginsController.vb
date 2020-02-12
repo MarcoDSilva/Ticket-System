@@ -53,7 +53,7 @@ Namespace Controllers
 
         'GET:
         Function CriarLogin() As ActionResult
-            'If String.IsNullOrEmpty((Session("Nome"))) Then
+            'If String.IsNullOrEmpty((Session("Nome"))) Or Session("Administrador") <> 1 Then
             '    Response.Redirect("~/Logins/Index")
             'End If
             Return View()
@@ -62,13 +62,18 @@ Namespace Controllers
         'POST:
         <HttpPost()>
         <ValidateAntiForgeryToken()>
-        Function CriarLogin(email As String, password As String) As ActionResult
-            If String.IsNullOrEmpty((Session("Nome"))) Then
-                Response.Redirect("~/Logins/Index")
+        Function CriarLogin(Login As Login) As ActionResult
+            Session("NovoLogin") = 0
+            ' Session("NovoLoginErro") = 0
+
+            'If String.IsNullOrEmpty((Session("Nome"))) Or Session("Administrador") <> 1 Then
+            '    Response.Redirect("~/Logins/Index")
+            'End If
+            If ModelState.IsValid() Then
+                'testa valores na bd a ver se os mesmos funcionam e se este valor de retorno realmente funciona
             End If
 
-
-            Return View()
+            Return View(Login)
         End Function
 
         ''' <summary>
