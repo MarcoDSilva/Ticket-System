@@ -12,16 +12,16 @@ End Code
 
             @<div class="form-group">
                 <h2>Alteração de password</h2>
-                <div class="form-group">
+                <p>
                     @Html.Label("Introduza password actual:", New With {.class = "form-text"})
                     @Html.TextBox("passwordAntiga", "", htmlAttributes:=New With {.class = "form-control", .type = "password"})
                     @Html.ValidationMessageFor(Function(modelTec) modelTec.password, "", New With {.class = "text-danger"})
-                </div>
-                <div class="form-group">
+                </p>
+                <p>
                     @Html.Label("Introduza nova password:", New With {.class = "form-text"})
                     @Html.TextBox("passwordNova", "", htmlAttributes:=New With {.class = "form-control", .type = "password"})
                     @Html.ValidationMessageFor(Function(modelTec) modelTec.password, "", New With {.class = "text-danger"})
-                </div>
+                </p>
 
                 @If Session("PasswordErrada") = 1 Then
                     @<small id="erro" class="form-text text-danger">Password introduzida não é igual à actual!</small>

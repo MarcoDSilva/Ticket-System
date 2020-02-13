@@ -46,9 +46,6 @@ Public Class ManuseiaLogin
     Public Function AlterarPassword(ID_tecnico As Integer, email As String,
                                     passwordActual As String, passwordNova As String) As Integer
 
-        Dim query As String = "SELECT ID_tecnico FROM Tecnico
-                               WHERE password = @pass AND email = @malito"
-
         Dim passwordAntigaValidada = ValidarEdicaoPassword(ID_tecnico, email, passwordActual, passwordNova)
 
         If passwordAntigaValidada = 1 Then
@@ -108,7 +105,6 @@ Public Class ManuseiaLogin
                                            passwordActual As String, passwordNova As String) As Integer
 
         Dim idEncontrado = 0
-        Dim passwordValidada = 0
         Dim query As String = $"SELECT ID_tecnico FROM Tecnico WHERE email = @malito
                                 AND password = @pass"
 
@@ -120,26 +116,35 @@ Public Class ManuseiaLogin
             Try
                 conexao.Open()
                 idEncontrado = Convert.ToInt32(comando.ExecuteScalar())
-
-                If idEncontrado = ID_tecnico Then
-                    Dim queryNova = $"UPDATE Tecnico SET password = @passNova WHERE ID_tecnico = {ID_tecnico}"
-
-                    Dim comandoActualizaPw As New SqlCommand(queryNova, conexao)
-                    comandoActualizaPw.Parameters.AddWithValue("@passNova", passwordNova)
-
-                    conexao.Open()
-
-
-                    passwordValidada = comandoActualizaPw.ExecuteNonQuery()
-                    comandoActualizaPw.Parameters.Clear()
-                    conexao.Close()
-                End If
-
             Catch ex As Exception
                 'não temos conexão, ou outros erros
             End Try
             comando.Parameters.Clear()
         End Using
+
+        Return ActualizaPassword(idEncontrado, ID_tecnico, passwordNova)
+    End Function
+
+    Private Function ActualizaPassword(idEncontrado As Integer, ID_tecnico As Integer,
+                                       passwordNova As String) As Integer
+        Dim passwordValidada = 0
+
+        If idEncontrado = ID_tecnico Then
+            Dim query = $"UPDATE Tecnico SET password = @passNova WHERE ID_tecnico = {ID_tecnico}"
+
+            Using conexao As New SqlConnection(Conector.stringConnection)
+                Dim comando As New SqlCommand(query, conexao)
+                comando.Parameters.AddWithValue("@passNova", passwordNova)
+
+                Try
+                    conexao.Open()
+                    passwordValidada = comando.ExecuteNonQuery()
+                    comando.Parameters.Clear()
+                Catch ex As Exception
+                    'erros e tal
+                End Try
+            End Using
+        End If
 
         Return passwordValidada
     End Function
