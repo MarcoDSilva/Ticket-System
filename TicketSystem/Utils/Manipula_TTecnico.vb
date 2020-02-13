@@ -67,7 +67,7 @@ Public Class Manipula_TTecnico
     ''' Utilizado apenas para evitar repetição no código
     ''' </summary>
     ''' <param name="comando"></param>
-    Public Sub ExecutaComandos(comando As SqlCommand)
+    Private Sub ExecutaComandos(comando As SqlCommand)
         conexao.Open()
         comando.ExecuteNonQuery()
         comando.Parameters.Clear()
@@ -81,7 +81,7 @@ Public Class Manipula_TTecnico
     ''' </summary>
     ''' <param name="email"></param>
     ''' <returns></returns>
-    Public Function VerificaEmail(email As String) As Integer
+    Private Function VerificaEmail(email As String) As Integer
 
         Dim emailEncontrado = 0
         Dim query As String = $"SELECT count(email)
@@ -111,7 +111,7 @@ Public Class Manipula_TTecnico
     ''' <param name="ID_tecnico"></param>
     ''' <param name="email"></param>
     ''' <returns></returns>
-    Public Function EmailEditarAssociado(ID_tecnico As Integer, email As String) As Integer
+    Private Function EmailEditarAssociado(ID_tecnico As Integer, email As String) As Integer
 
         Dim idEmailProcurado = 0
         Dim query As String = $"SELECT ID_tecnico

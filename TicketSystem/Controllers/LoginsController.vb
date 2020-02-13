@@ -54,22 +54,6 @@
             Return View()
         End Function
 
-        ''' <summary>
-        ''' Reset em todas as sessões do login
-        ''' </summary>
-        ''' <returns></returns>
-        Function Logout() As ActionResult
-            BloqueiaUtilizadores()
-            Session("Administrador") = 0
-            Session("LoginErrado") = 0
-            Session("Login") = 0
-            Session("Email") = ""
-            Session("Nome") = ""
-            Session("Inativo") = 0
-            Session("ID_tecnico") = 0
-
-            Return Redirect("~/Home/Index")
-        End Function
 
         ''' <summary>
         ''' reset na password do user cujo email foi pedido
@@ -87,25 +71,52 @@
         'GET:
         Function AlterarPassword(ID_tecnico As Integer) As ActionResult
             BloqueiaUtilizadores()
+            Session("PasswordErrada") = 0
             Return View(LeituraDados($"SELECT ID_tecnico, nome FROM Tecnico
                                                   WHERE ID_tecnico = {ID_tecnico}").First())
         End Function
 
-        'POST: 
+
+        'POST:
+        'Se o resultado da tentativa de update ser 0, então a password actual passada pelo utilizador é errada
+        'Se for 1 ou outro, é porque a password é valida e procedemos ao update da mesma
         <HttpPost()>
         <ValidateAntiForgeryToken()>
-        Function AlterarPassword(tec As Tecnico, passwordAntiga As String) As ActionResult
+        Function AlterarPassword(ID_tecnico As Integer, email As String,
+                                 passwordAntiga As String, passwordNova As String) As ActionResult
             BloqueiaUtilizadores()
 
-            If Not ModelState.IsValid() Then
-                Return View(tec)
-            Else
-                If conectaBD.AlterarPassword(tec.ID_tecnico, tec.email, tec.password, passwordAntiga) Then
-
+            If Not String.IsNullOrEmpty(passwordAntiga) And Not String.IsNullOrEmpty(passwordNova) Then
+                If conectaBD.AlterarPassword(ID_tecnico, email, passwordAntiga, passwordNova) = 0 Then
+                    Session("PasswordErrada") = 1
+                    Return View(LeituraDados($"SELECT ID_tecnico, nome FROM Tecnico
+                                                  WHERE ID_tecnico = {ID_tecnico}").First())
+                Else
+                    Session("PasswordErrada") = 0
+                    Response.Redirect("~/Home/Index")
                 End If
+            Else
+                Return View()
             End If
 
-                Return View()
+        End Function
+
+        ''' <summary>
+        ''' Reset em todas as sessões do login
+        ''' </summary>
+        ''' <returns></returns>
+        Function Logout() As ActionResult
+            BloqueiaUtilizadores()
+            Session("Administrador") = 0
+            Session("LoginErrado") = 0
+            Session("Login") = 0
+            Session("Email") = ""
+            Session("Nome") = ""
+            Session("Inativo") = 0
+            Session("ID_tecnico") = 0
+            Session("PasswordErrada") = 0
+
+            Return Redirect("~/Home/Index")
         End Function
 
         Private Sub BloqueiaUtilizadores()
@@ -119,7 +130,7 @@
         ''' </summary>
         ''' <param name="query"></param>
         ''' <returns></returns>
-        Function LeituraDados(query As String) As List(Of Tecnico)
+        Private Function LeituraDados(query As String) As List(Of Tecnico)
             Dim tabelaDados As DataTable = lerDados.LeituraTabela(query)
             Dim listagemTecnicos As List(Of Tecnico) = New List(Of Tecnico)
 

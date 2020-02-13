@@ -34,7 +34,7 @@ Public Class Manipula_TOrigem
     ''' Utilizado apenas para evitar repetição no código
     ''' </summary>
     ''' <param name="comando"></param>
-    Public Sub ExecutaComandos(comando As SqlCommand)
+    Private Sub ExecutaComandos(comando As SqlCommand)
         conexao.Open()
         comando.ExecuteNonQuery()
         comando.Parameters.Clear()
