@@ -15,18 +15,25 @@ Public Class Manipula_TTecnico
         comando.Parameters.AddWithValue("@tecn", nome)
         comando.Parameters.AddWithValue("@malito", email)
 
-        If LeituraTabela(email).Rows(0).ToString() = "" Then
+        'se email foi encontrado o método retorna 1, portanto
+        'podemos avançar com a inserção do novo técnico, 
+        'e devolvemos a mesma informação para o controlador poder confirmar a inserção
+        If VerificaEmail(email) = 1 Then
             ExecutaComandos(comando)
             Return 1
         Else
             Return 0
         End If
-
-        'ExecutaComandos(comando)
-        ''se tudo correr bem, devolvemos 1 para confirmar no controlo que foi sucesso
-        'Return 1
     End Function
 
+    ''' <summary>
+    ''' Editar os valores actuais do técnico.
+    ''' Se email for repetido, a actualização falha.
+    ''' </summary>
+    ''' <param name="nome"></param>
+    ''' <param name="email"></param>
+    ''' <param name="ID_role"></param>
+    ''' <param name="ID_tecnico"></param>
     Public Sub EditaTecnico(nome As String, email As String, ID_role As Integer, ID_tecnico As Integer)
         Dim query As String = $"UPDATE Tecnico SET nome = @tecn, email = @malito, ID_role = {ID_role}, 
                                 dat_hor = CURRENT_TIMESTAMP
@@ -41,6 +48,10 @@ Public Class Manipula_TTecnico
 
     End Sub
 
+    ''' <summary>
+    ''' Apagar o técnico pelo ID do mesmo
+    ''' </summary>
+    ''' <param name="ID_tecnico"></param>
     Public Sub ApagaTecnico(ID_tecnico As Integer)
         Dim query As String = $"DELETE FROM Tecnico WHERE ID_tecnico = {ID_tecnico}"
         Dim comando As New SqlCommand(query, conexao)
@@ -61,35 +72,29 @@ Public Class Manipula_TTecnico
 
 
     ''' <summary>
-    ''' 
+    ''' Procedemos À execução de um scalar, onde vai buscar exactamente o primeiro campo da query
+    ''' Devolvemos 1 se encontrado (pois será o resultado da query) ou 0 caso não seja
     ''' </summary>
     ''' <param name="email"></param>
     ''' <returns></returns>
-    Public Function VerificaEmail(email As String) As DataTable
+    Public Function VerificaEmail(email As String) As Integer
 
-        'conexao e comando para termos acesso e podermos enviar a query para a base de dados
-        Dim conexao As New SqlConnection(Conector.stringConnection)
-        Dim comando As SqlCommand = conexao.CreateCommand()
-
-        Dim query As String = $"SELECT email 
+        Dim emailEncontrado = 0
+        Dim query As String = $"SELECT count(email)
                                 FROM Tecnico
                                 WHERE email = '@malito'"
 
-        comando.Parameters.AddWithValue("@malito", email)
-        comando.CommandText() = query
-        conexao.Open()
+        Using conexao As New SqlConnection(Conector.stringConnection)
+            Dim comando As New SqlCommand(query, conexao)
+            comando.Parameters.AddWithValue("@malito", email)
+            Try
+                conexao.Open()
+                emailEncontrado = Convert.ToInt32(comando.ExecuteScalar())
+            Catch ex As Exception
+                'não temos conexão, ou outros erros
+            End Try
+        End Using
 
-
-
-        'para onde a informação vai ser recebida e atribuida
-        Dim recetor As New SqlDataAdapter(comando)
-        Dim dados As New DataTable()
-
-        recetor.Fill(dados)
-        comando.Parameters.Clear()
-        conexao.Close()
-        Return dados
+        Return emailEncontrado
     End Function
-
-
 End Class

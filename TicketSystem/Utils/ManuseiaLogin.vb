@@ -26,18 +26,12 @@ Public Class ManuseiaLogin
         conexao.Open()
 
         If comando.ExecuteReader().Read() Then
-
             Dim tecnicos = LeituraTabela(password, email)
-            Dim log As New Tecnico
-            For Each tecnico In tecnicos.AsEnumerable()
-                log.ID_tecnico = tecnico(0)
-                log.Nome = tecnico(1)
-                log.Email = tecnico(2)
-                log.ID_role = tecnico(3)
-            Next
+
             comando.Parameters.Clear()
             conexao.Close()
-            Return log
+
+            Return tecnicos
         Else
             conexao.Close()
             Return Nothing
@@ -60,30 +54,30 @@ Public Class ManuseiaLogin
     ''' <param name="password"></param>
     ''' <param name="email"></param>
     ''' <returns></returns>
-    Public Function LeituraTabela(password As String, email As String) As DataTable
-
-        'conexao e comando para termos acesso e podermos enviar a query para a base de dados
-        Dim conexao As New SqlConnection(Conector.stringConnection)
-        Dim comando As SqlCommand = conexao.CreateCommand()
+    Public Function LeituraTabela(password As String, email As String) As Tecnico
 
         Dim query As String = $"SELECT t.ID_tecnico, t.nome, t.email, t.ID_role
                                 FROM Tecnico as t
                                 WHERE t.password = @pass
                                 AND t.email = @malito"
 
-        comando.Parameters.AddWithValue("@pass", password)
-        comando.Parameters.AddWithValue("@malito", email)
+        Using conexao As New SqlConnection(Conector.stringConnection)
+            Dim comando As New SqlCommand(query, conexao)
+            comando.Parameters.AddWithValue("@pass", password)
+            comando.Parameters.AddWithValue("@malito", email)
 
-        comando.CommandText() = Query
-        conexao.Open()
+            conexao.Open()
+            Dim leituraDados As SqlDataReader = comando.ExecuteReader()
+            Dim tecnicoEncontrado As New Tecnico
 
-        'para onde a informação vai ser recebida e atribuida
-        Dim recetor As New SqlDataAdapter(comando)
-        Dim dados As New DataTable()
+            While leituraDados.Read()
+                tecnicoEncontrado.ID_tecnico = leituraDados.Item(0)
+                tecnicoEncontrado.nome = leituraDados.Item(1)
+                tecnicoEncontrado.email = leituraDados.Item(2)
+                tecnicoEncontrado.ID_role = leituraDados.Item(3)
+            End While
 
-        recetor.Fill(dados)
-        comando.Parameters.Clear()
-        conexao.Close()
-        Return dados
+            Return tecnicoEncontrado
+        End Using
     End Function
 End Class
