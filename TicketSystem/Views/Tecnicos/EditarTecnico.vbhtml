@@ -14,22 +14,26 @@ End Code
 
         'form
         @<div class="form-group">
-            <div class="col-md-12">
-                <p>
-                    @Html.LabelFor(Function(modelTec) modelTec.nome)
-                    @Html.EditorFor(Function(modelTec) modelTec.nome, New With {.HtmlAttributes = New With {.class = "form-control"}})
-                    @Html.ValidationMessageFor(Function(modelTec) modelTec.nome, "", New With {.class = "text-danger"})
-                </p>
-                <p>
-                    @Html.LabelFor(Function(modelTec) modelTec.email)
-                    @Html.EditorFor(Function(modelTec) modelTec.email, New With {.HtmlAttributes = New With {.class = "form-control"}})
-                    @Html.ValidationMessageFor(Function(modelTec) modelTec.email, "", New With {.class = "text-danger"})
-                </p>
-                <p>
-                    @Html.LabelFor(Function(modelTec) modelTec.ID_role)
-                    @Html.DropDownList("ID_role", DirectCast(ViewBag.roles, SelectList), New With {.class = "form-control"})
-                </p>
-            </div>
+             <div class="col-md-12">
+                 <p>
+                     @Html.LabelFor(Function(modelTec) modelTec.nome)
+                     @Html.EditorFor(Function(modelTec) modelTec.nome, New With {.HtmlAttributes = New With {.class = "form-control"}})
+                     @Html.ValidationMessageFor(Function(modelTec) modelTec.nome, "", New With {.class = "text-danger"})
+                 </p>
+                 <p>
+                     @Html.LabelFor(Function(modelTec) modelTec.email)
+                     @Html.EditorFor(Function(modelTec) modelTec.email, New With {.HtmlAttributes = New With {.class = "form-control"}})
+                     @Html.ValidationMessageFor(Function(modelTec) modelTec.email, "", New With {.class = "text-danger"})
+                 </p>
+                 <p>
+                     @Html.LabelFor(Function(modelTec) modelTec.ID_role)
+                     @Html.DropDownList("ID_role", DirectCast(ViewBag.roles, SelectList), New With {.class = "form-control"})
+                 </p>
+                 @If Session("EmailEditarExiste") = 1 Then
+                     @<small id="erro" class="form-text text-danger">Email já existente na base de dados!</small>
+                 End If
+             </div>
+                
             <input type="submit" value="Guardar" class="btn btn-success" />
         </div>
     End Using

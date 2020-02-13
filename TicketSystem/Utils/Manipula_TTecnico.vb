@@ -15,14 +15,13 @@ Public Class Manipula_TTecnico
         comando.Parameters.AddWithValue("@tecn", nome)
         comando.Parameters.AddWithValue("@malito", email)
 
-        'se email foi encontrado o método retorna 1, portanto
-        'podemos avançar com a inserção do novo técnico, 
-        'e devolvemos a mesma informação para o controlador poder confirmar a inserção
+        'se email foi encontrado o método retorna 0 para o controlo, 
+        'se não foi, e foi inserido com sucesso, enviamos 1
         If VerificaEmail(email) = 1 Then
+            Return 0
+        Else
             ExecutaComandos(comando)
             Return 1
-        Else
-            Return 0
         End If
     End Function
 
@@ -34,7 +33,7 @@ Public Class Manipula_TTecnico
     ''' <param name="email"></param>
     ''' <param name="ID_role"></param>
     ''' <param name="ID_tecnico"></param>
-    Public Sub EditaTecnico(nome As String, email As String, ID_role As Integer, ID_tecnico As Integer)
+    Public Function EditaTecnico(nome As String, email As String, ID_role As Integer, ID_tecnico As Integer) As Integer
         Dim query As String = $"UPDATE Tecnico SET nome = @tecn, email = @malito, ID_role = {ID_role}, 
                                 dat_hor = CURRENT_TIMESTAMP
                                 WHERE ID_tecnico = {ID_tecnico};"
@@ -43,10 +42,15 @@ Public Class Manipula_TTecnico
         comando.Parameters.AddWithValue("@tecn", nome)
         comando.Parameters.AddWithValue("@malito", email)
 
-        'VERIFICAR SE EMAIL EXISTE, SE SIM, DEVOLVER ERRO
-        ExecutaComandos(comando)
+        'Se email e id do técnico actual forem os mesmos, deixamos actualizar, se não for, nada.
+        If EmailEditarAssociado(ID_tecnico, email) = 1 Then
+            ExecutaComandos(comando)
+            Return 1
+        Else
+            Return 0
+        End If
 
-    End Sub
+    End Function
 
     ''' <summary>
     ''' Apagar o técnico pelo ID do mesmo
@@ -82,7 +86,7 @@ Public Class Manipula_TTecnico
         Dim emailEncontrado = 0
         Dim query As String = $"SELECT count(email)
                                 FROM Tecnico
-                                WHERE email = '@malito'"
+                                WHERE email = @malito"
 
         Using conexao As New SqlConnection(Conector.stringConnection)
             Dim comando As New SqlCommand(query, conexao)
@@ -93,8 +97,48 @@ Public Class Manipula_TTecnico
             Catch ex As Exception
                 'não temos conexão, ou outros erros
             End Try
+            comando.Parameters.Clear()
         End Using
 
         Return emailEncontrado
     End Function
+
+
+    ''' <summary>
+    ''' Se email a actualizar pertencer ao utilizador, validamos essa actualização
+    ''' se não for do user e pertencer a alguém, bloqueamos
+    ''' </summary>
+    ''' <param name="ID_tecnico"></param>
+    ''' <param name="email"></param>
+    ''' <returns></returns>
+    Public Function EmailEditarAssociado(ID_tecnico As Integer, email As String) As Integer
+
+        Dim idEmailProcurado = 0
+        Dim query As String = $"SELECT ID_tecnico
+                                FROM Tecnico
+                                WHERE email = @malito"
+
+        Using conexao As New SqlConnection(Conector.stringConnection)
+            Dim comando As New SqlCommand(query, conexao)
+            comando.Parameters.AddWithValue("@malito", email)
+            Try
+                conexao.Open()
+                idEmailProcurado = Convert.ToInt32(comando.ExecuteScalar())
+            Catch ex As Exception
+                'não temos conexão, ou outros erros
+            End Try
+            comando.Parameters.Clear()
+        End Using
+
+        If idEmailProcurado > 0 Then
+            If idEmailProcurado.Equals(ID_tecnico) Then
+                Return 1
+            End If
+        Else
+            Return 1
+        End If
+
+        Return 0
+    End Function
+
 End Class

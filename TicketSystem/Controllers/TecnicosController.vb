@@ -17,7 +17,8 @@ Namespace Controllers
 
         'GET
         Function CriaTecnico() As ActionResult
-            'BloqueiaUtilizadores()
+            Session("EmailExiste") = 0
+            BloqueiaUtilizadores()
             ViewBag.roles = New SelectList(conectaBD.ListaRoles(), "ID_role", "descricao")
 
             Return View()
@@ -29,7 +30,6 @@ Namespace Controllers
         Function CriaTecnico(tec As VM_TecnicoRole) As ActionResult
             BloqueiaUtilizadores()
             ViewBag.roles = New SelectList(conectaBD.ListaRoles(), "ID_role", "descricao")
-            Session("EmailExiste") = 0
 
             If Not ModelState.IsValid() Then
                 Return View(tec)
@@ -53,7 +53,7 @@ Namespace Controllers
         Function EditarTecnico(ID_tecnico As Integer?) As ActionResult
             BloqueiaUtilizadores()
             ViewBag.roles = New SelectList(conectaBD.ListaRoles(), "ID_role", "descricao")
-
+            Session("EmailEditarExiste") = 0
             Return View(LeituraDados($"SELECT ID_tecnico,nome,email,ID_role, dat_hor 
                                      FROM Tecnico 
                                      WHERE ID_tecnico = {ID_tecnico}").First())
@@ -64,14 +64,23 @@ Namespace Controllers
         <ValidateAntiForgeryToken()>
         Function EditarTecnico(tec As VM_TecnicoRole) As ActionResult
             BloqueiaUtilizadores()
+            Session("EmailEditarExiste") = 0
+            ViewBag.roles = New SelectList(conectaBD.ListaRoles(), "ID_role", "descricao")
 
-            If Not ModelState.IsValid() Then
-                ViewBag.roles = New SelectList(conectaBD.ListaRoles(), "ID_role", "descricao")
-                Return View(tec)
+            If ModelState.IsValid() Then
+                Dim emailEditar = conectaBD.EditaTecnico(tec.nome, tec.email, tec.ID_role, tec.ID_tecnico)
+
+                If emailEditar = 1 Then
+                    Session("EmailEditarExiste") = 0
+                    Response.Redirect("~/Tecnicos/Index")
+                Else
+                    Session("EmailEditarExiste") = 1
+                    Return View(tec)
+                End If
             Else
-                conectaBD.EditaTecnico(tec.nome, tec.email, tec.ID_role, tec.ID_tecnico)
+                Return View(tec)
             End If
-            Return RedirectToAction("Index")
+
         End Function
 
         'Apaga o tecnico que corresponde ao ID enviado
