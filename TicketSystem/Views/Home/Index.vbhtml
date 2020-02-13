@@ -13,16 +13,18 @@
     End If
 End Code
 
-
-<h2>Home</h2>
 <div class="container-fluid">
-
+    <h2>Home</h2>
     <p>@mensagem @Session("Nome")</p>
 
     @If Session("Administrador") = 1 Then
         @<p>O seu cargo é administrador!</p>
     Else
-        @<p>O seu cargo é técnico/utilizador</p>
+        @<p>O seu cargo é técnico/a</p>
+    End If
+
+    @If Session("Inativo") = 1 Then
+        @<p>A sua conta esta desactivada de momento. Por favor contacte o administrador do software.</p>
     End If
 
 </div>

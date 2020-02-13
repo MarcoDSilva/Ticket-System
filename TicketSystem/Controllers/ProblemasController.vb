@@ -99,7 +99,7 @@ Namespace Controllers
         End Function
 
         Private Sub BloqueiaUtilizadores()
-            If String.IsNullOrEmpty((Session("Nome"))) Then
+            If String.IsNullOrEmpty((Session("Nome"))) Or Session("Inativo") = 1 Then
                 Response.Redirect("~/Logins/Index")
             End If
         End Sub

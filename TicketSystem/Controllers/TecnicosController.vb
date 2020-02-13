@@ -69,7 +69,6 @@ Namespace Controllers
 
             If ModelState.IsValid() Then
                 Dim emailEditar = conectaBD.EditaTecnico(tec.nome, tec.email, tec.ID_role, tec.ID_tecnico)
-
                 If emailEditar = 1 Then
                     Session("EmailEditarExiste") = 0
                     Response.Redirect("~/Tecnicos/Index")
@@ -80,7 +79,6 @@ Namespace Controllers
             Else
                 Return View(tec)
             End If
-
         End Function
 
         'Apaga o tecnico que corresponde ao ID enviado
@@ -93,7 +91,6 @@ Namespace Controllers
             End If
             Return RedirectToAction("Index")
         End Function
-
 
         ''' <summary>
         ''' Método interno utilizado para ler dados da bd
