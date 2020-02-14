@@ -52,7 +52,7 @@ Namespace Controllers
 
             dataFechoConvertida = VerificaDataFechoTicket(ticketParams.dataFecho)
 
-            conectaBD.CriaTicket(ticketParams.ID_tecnico, ticketParams.ID_software, ticketParams.ID_cliente, ticketParams.ID_problema,
+            conectaBD.CriaTicket(Session("ID_tecnico"), ticketParams.ID_software, ticketParams.ID_cliente, ticketParams.ID_problema,
                                   ticketParams.descricao, dataAberturaConvertida, dataFechoConvertida, tempoPrevisto,
                                     tempoTotal, ticketParams.ID_estado, ticketParams.ID_prioridade, ticketParams.ID_utilizador, ticketParams.ID_origem)
 
@@ -94,7 +94,7 @@ Namespace Controllers
 
                 dataFechoConvertida = VerificaDataFechoTicket(ticketParams.dataFecho)
 
-                conectaBD.EditaTicket(ticketParams.ID_tecnico, ticketParams.ID_software, ticketParams.ID_cliente,
+                conectaBD.EditaTicket(Session("ID_tecnico"), ticketParams.ID_software, ticketParams.ID_cliente,
                                       ticketParams.ID_problema, ticketParams.descricao, dataAberturaConvertida, dataFechoConvertida,
                                       tempoPrevisto, tempoTotal, ticketParams.ID_estado, ticketParams.ID_prioridade, ticketParams.ID_utilizador,
                                       ticketParams.ID_origem, ticketParams.ID_ticket)

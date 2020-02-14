@@ -4,28 +4,19 @@
 
     Dim tempoActual = Date.Today.ToString("yyyy-MM-dd")
 
-    Dim x = ""
-
-    If IsPost Then
-        x = "venho do ticket"
-    End If
 End Code
 
-<h2>Criação de ticket</h2>
 
-<div class="form-row">
+<div class="container">
     @Using (Html.BeginForm())
         @Html.AntiForgeryToken()
 
+
         @<div class="form-group">
-            <h4>Tickets</h4>
-    <p> x is </p>
+            <h2>Criação de ticket</h2>
+   
             @Html.HiddenFor(Function(ticket) ticket.ID_ticket)
-            <div class="col-md-12">
-                <p>
-                    @Html.LabelFor(Function(ticket) ticket.ID_tecnico, New With {.class = "form-check-label"})
-                    @Html.DropDownList("ID_tecnico", DirectCast(ViewBag.tecnico, SelectList), New With {.class = "form-control"})
-                </p>
+            <div class="col-md-12">               
                 <p>
                     @Html.LabelFor(Function(ticket) ticket.ID_software, New With {.class = "form-check-label"})
                     @Html.DropDownList("ID_software", DirectCast(ViewBag.software, SelectList), New With {.class = "form-control"})

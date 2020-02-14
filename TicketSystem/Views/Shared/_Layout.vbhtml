@@ -33,7 +33,10 @@ End Code
 
                 <ul class="list-unstyled components">
                     <li>
-                        <a href="#listagensSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Listagens</a>
+                        <a href="#listagensSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">   
+                            <img src="~/img/list.svg" alt="" width="32" height="32" title="icon">
+                            Listagens
+                        </a>
                         <ul class="collapse list-unstyled " id="listagensSubmenu">
                             <li>
                                 @Html.ActionLink("Tickets", "Index", "Tickets")
@@ -43,8 +46,12 @@ End Code
                             </li>
                         </ul>
                     </li>
+
                     <li>
-                        <a href="#tabelasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Tabelas</a>
+                        <a href="#tabelasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <img src="~/img/table.svg" alt="" width="32" height="32" title="icon">
+                            Tabelas
+                        </a>
                         <ul class="collapse list-unstyled" id="tabelasSubmenu">
                             <li>
                                 @Html.ActionLink("Tecnicos", "Index", "Tecnicos")
@@ -66,6 +73,7 @@ End Code
                             </li>
                         </ul>
                     </li>
+
                     <li>
                         <a href="#gestaoSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Gestão</a>
                         <ul class="collapse list-unstyled" id="gestaoSubmenu">
@@ -83,20 +91,23 @@ End Code
                 </ul>
             </nav>
         End If
+
         <!-- MENU DA PÁGINA -->
         <div id="content">
             <nav class="navbar navbar-dark shadow-sm navbar-expand-lg navColor">
-                <button type="button" id="sidebarCollapse" class="btn btn-secondary">
-                    <i class="fas fa-align-left"></i>
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                @If Not String.IsNullOrEmpty((Session("Nome"))) Then
+                    @<button type="button" id="sidebarCollapse" Class="btn btn-secondary">
+                        <i Class="fas fa-align-left"></i>
+                        <span Class="navbar-toggler-icon"></span>
+                    </button>
+                End If
+
                 <a class="navbar-brand" href="#">
                     @Html.ActionLink("Ticket System", "Index", "Home", New With {.area = ""}, New With {.class = "navbar-brand"})
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                >
                 @If Session("Login") = 1 And Session("LoginErrado") = 0 Then
                     @<div class="container">
                         <p class="text-white font-weight-bold">@mensagem, @Session("Nome") - @Session("Email")</p>

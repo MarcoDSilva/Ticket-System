@@ -52,14 +52,14 @@ a[data-toggle="collapse"] {
     background: #4C1A55;
     color: #E3C044;
     transition: all 0.3s;
-    min-width: 250px;
-    max-width: 250px;
-    min-height: 100vh;
+    min-width: 225px;
+    max-width: 225px;
+    height: 100vh;
 }
 
 
     #sidebar.active {
-        margin-left: -250px;
+        margin-left: -225px;
     }
 
 
@@ -113,7 +113,7 @@ ul ul a {
 
 @media (max-width: 768px) {
     #sidebar {
-        margin-left: -250px;
+        margin-left: -225px;
     }
 
         #sidebar.active {
