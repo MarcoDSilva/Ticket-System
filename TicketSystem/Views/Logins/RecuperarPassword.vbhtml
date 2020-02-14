@@ -19,9 +19,7 @@ End Code
             </div>
         Else
             @<p id="succedido" class="form-text text-success">Password enviada para o endereço de email indicado.</p>
-            @<p  class="form-text text-danger">Funcionalidade não implementada, só a verificação</p>
+            @<p class="form-text text-danger">Funcionalidade não implementada, só a verificação</p>
         End If
-
-
     End Using
 </div>

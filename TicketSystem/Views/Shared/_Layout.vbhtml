@@ -22,69 +22,119 @@ End Code
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <nav class="navbar navbar-dark bg-dark shadow-sm navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                @Html.ActionLink("Ticket System", "Index", "Home", New With {.area = ""}, New With {.class = "navbar-brand"})
-            </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", New With {.area = ""}, New With {.class = "nav-link"})</li>
-                </ul>
-                <!--Drop down das listagens -->
-                <div class="dropdown show">
+    <div class="wrapper">
 
-                    @If Not String.IsNullOrEmpty((Session("Nome"))) Then
-                        @<a class="btn btn-secondary btn-sm dropdown-toggle bg-dark" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Listagens
-                        </a>
-                        @<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item">@Html.ActionLink("Software", "Index", "Softwares", New With {.area = ""}, New With {.class = "nav-link"})</a>
-                            <a class="dropdown-item">@Html.ActionLink("Problemas", "Index", "Problemas", New With {.area = ""}, New With {.class = "nav-link"})</a>
-                            <a class="dropdown-item">@Html.ActionLink("Estados", "Index", "Estados", New With {.area = ""}, New With {.class = "nav-link"})</a>
-                            <a class="dropdown-item">@Html.ActionLink("Prioridades", "Index", "Prioridades", New With {.area = ""}, New With {.class = "nav-link"})</a>
-                            <a class="dropdown-item">@Html.ActionLink("Origens", "Index", "Origens", New With {.area = ""}, New With {.class = "nav-link"})</a>
-                            <a class="dropdown-item">@Html.ActionLink("Tecnicos", "Index", "Tecnicos", New With {.area = ""}, New With {.class = "nav-link"})</a>
-                            <a class="dropdown-item">@Html.ActionLink("Eventos", "Index", "Eventos", New With {.area = ""}, New With {.class = "nav-link"})</a>
-                            <a class="dropdown-item">@Html.ActionLink("Clientes", "Index", "Clientes", New With {.area = ""}, New With {.class = "nav-link"})</a>
-                            <a class="dropdown-item">@Html.ActionLink("Utilizadores", "Index", "Utilizadores", New With {.area = ""}, New With {.class = "nav-link"})</a>
-                            <a class="dropdown-item">@Html.ActionLink("Tickets", "Index", "Tickets", New With {.area = ""}, New With {.class = "nav-link"})</a>
-                        </div>
-                    End If
-
+        <!-- NAVBAR -->
+        @If Not String.IsNullOrEmpty((Session("Nome"))) Then
+            @<nav id="sidebar">
+                <div class="sidebar-header">
+                    <h3>Menu lateral</h3>
                 </div>
-            </div>
-            @If Session("Login") = 1 And Session("LoginErrado") = 0 Then
-                @<div class="form-check-inline">
-                    <p class="text-white font-weight-bold">@mensagem, @Session("Nome") - @Session("Email")</p>
-                    <div class="btn-group-sm" role="group" style="margin-left:20px;">
-                        <button id="groupLogins" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Opções
-                        </button>
-                        <div class="dropdown-menu align-content-end" aria-labelledby="groupLogins">
-                            <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("AlterarPassword", "Logins", New With {.ID_tecnico = Session("ID_tecnico")})'">Alterar Password</a>
-                            <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("Logout", "Logins")'">Logout</a>
+
+                <ul class="list-unstyled components">
+                    <li>
+                        <a href="#listagensSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Listagens</a>
+                        <ul class="collapse list-unstyled " id="listagensSubmenu">
+                            <li>
+                                @Html.ActionLink("Tickets", "Index", "Tickets")
+                            </li>
+                            <li>
+                                @Html.ActionLink("Eventos", "Index", "Eventos")
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#tabelasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Tabelas</a>
+                        <ul class="collapse list-unstyled" id="tabelasSubmenu">
+                            <li>
+                                @Html.ActionLink("Tecnicos", "Index", "Tecnicos")
+                            </li>
+                            <li>
+                                @Html.ActionLink("Clientes", "Index", "Clientes")
+                            </li>
+                            <li>
+                                @Html.ActionLink("Origens", "Index", "Origens")
+                            </li>
+                            <li>
+                                @Html.ActionLink("Problemas", "Index", "Problemas")
+                            </li>
+                            <li>
+                                @Html.ActionLink("Estados", "Index", "Estados")
+                            </li>
+                            <li>
+                                @Html.ActionLink("Prioridades", "Index", "Prioridades")
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#gestaoSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Gestão</a>
+                        <ul class="collapse list-unstyled" id="gestaoSubmenu">
+                            <li>
+                                @Html.ActionLink("Utilizadores", "Index", "Utilizadores")
+                            </li>
+                            <li>
+                                @Html.ActionLink("Tecnicos", "Index", "Tecnicos")
+                            </li>
+                            <li>
+                                @Html.ActionLink("Clientes", "Index", "Clientes")
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        End If
+        <!-- MENU DA PÁGINA -->
+        <div id="content">
+            <nav class="navbar navbar-dark shadow-sm navbar-expand-lg navColor">
+                <button type="button" id="sidebarCollapse" class="btn btn-secondary">
+                    <i class="fas fa-align-left"></i>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand" href="#">
+                    @Html.ActionLink("Ticket System", "Index", "Home", New With {.area = ""}, New With {.class = "navbar-brand"})
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                >
+                @If Session("Login") = 1 And Session("LoginErrado") = 0 Then
+                    @<div class="container">
+                        <p class="text-white font-weight-bold">@mensagem, @Session("Nome") - @Session("Email")</p>
+                        <div class="btn-group-sm" role="group" style="margin-left:20px;">
+                            <button id="groupLogins" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Opções
+                            </button>
+                            <div class="dropdown-menu align-content-end" aria-labelledby="groupLogins">
+                                <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("AlterarPassword", "Logins", New With {.ID_tecnico = Session("ID_tecnico")})'">Alterar Password</a>
+                                <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("Logout", "Logins")'">Logout</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            End If
+                End If
+            </nav>
 
-
+            <!-- PÁGINA PARA RENDERIZAR DAS VIEWS-->
+            <div>
+                @RenderBody()
+                <footer class="card-footer">
+                    <p>&copy; @DateTime.Now.Year - Ticket System by ms</p>
+                </footer>
+            </div>
         </div>
-        
-    </nav>
-    <div Class="container body-content dark">
-        @RenderBody()
-        <footer class="card-footer">
-            <p>&copy; @DateTime.Now.Year - Ticket System by ms</p>
-        </footer>
-    </div>
 
+
+    </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required:=False)
+    <script>
+        $(document).ready(function () {
+
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+
+        });
+    </script>
 </body>
 </html>

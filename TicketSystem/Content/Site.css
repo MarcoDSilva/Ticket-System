@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    /*padding-top: 50px;*/
     padding-bottom: 20px;
 }
 
@@ -21,4 +21,102 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+/* CLASSES E IDS PARA A BARRA LATERAL DO LAYOUT */
+.wrapper {
+    display:flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+#content {
+    min-height: 100vh;
+    width:100%;
+}
+
+
+#sidebar {
+    /* don't forget to add all the previously mentioned styles here too */
+    background: #4C1A55;
+    color: #E3C044;
+    transition: all 0.3s;
+    min-width: 250px;
+    max-width: 250px;
+    min-height: 100vh;
+}
+
+
+    #sidebar.active {
+        margin-left: -250px;
+    }
+
+
+    #sidebar .sidebar-header {
+        padding: 20px;
+        background: #4C1A55;
+
+    }
+
+    #sidebar ul.components {
+        padding: 20px 0;
+        border-bottom: 1px solid #E3C044;
+        color: #E3C044;
+    }
+
+    #sidebar ul p {
+        color: #1b213b;
+        padding: 10px;
+    }
+
+    #sidebar ul li a {
+        padding: 10px;
+        font-size: 1.1em;
+        display: block;
+        color: #E3C044;
+    }
+
+        #sidebar ul li a:hover {
+            color: #fff;
+            background-color: #2F1135;
+        }
+
+    #sidebar ul li.active > a, a[aria-expanded="true"] {
+        color: #E3C044;
+        background-color: #1b213b;
+    }
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #6B2477;
+    color: #E3C044;
+}
+
+.navColor {
+    width: 100%;
+    background-color: #4C1A55;
+
+}
+
+
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: -250px;
+    }
+
+        #sidebar.active {
+            margin-left: 0;
+        }
 }

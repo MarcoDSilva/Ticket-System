@@ -54,7 +54,6 @@ Namespace Controllers
             Return View()
         End Function
 
-
         'GET
         Function RecuperarPassword() As ActionResult
             Session("RecuperarPassword") = 0
