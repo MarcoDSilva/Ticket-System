@@ -55,16 +55,31 @@ Namespace Controllers
         End Function
 
 
-        ''' <summary>
-        ''' reset na password do user cujo email foi pedido
-        ''' </summary>
-        ''' <param name="email"></param>
-        ''' <returns></returns>
-        Function RecuperaPassword(email As String) As ActionResult
-            BloqueiaNaoUtilizadores()
-            'procurar na bd correspondente ao email
-            'se encontrado, dar ordem de reset (para o email)
-            'se não encontrado, dar aviso de email não valido
+        'GET
+        Function RecuperarPassword() As ActionResult
+            Session("RecuperarPassword") = 0
+            Session("PasswordResetada") = 0
+            Return View()
+        End Function
+
+
+        'POST
+        <HttpPost()>
+        <ValidateAntiForgeryToken()>
+        Function RecuperarPassword(email As String) As ActionResult
+
+            If String.IsNullOrEmpty(email) Then
+                Session("RecuperarPassword") = 1
+                Return View()
+            Else
+                If conectaBD.ResetPassword(email) > 0 Then
+                    Session("PasswordResetada") = 1
+                Else
+                    Session("PasswordResetada") = 0
+                    Session("RecuperarPassword") = 1
+                End If
+            End If
+
             Return View()
         End Function
 

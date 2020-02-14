@@ -39,8 +39,27 @@ Public Class ManuseiaLogin
     End Function
 
     'função para dar ordem de reset na pw
-    Public Sub ResetPassword(email As String)
-    End Sub
+    Public Function ResetPassword(email As String) As Integer
+
+        Dim utilizador = 0
+        Dim query As String = $"SELECT ID_tecnico FROM Tecnico
+                                WHERE email = @malito"
+
+        Using conexao As New SqlConnection(Conector.stringConnection)
+            Dim comando As New SqlCommand(query, conexao)
+            comando.Parameters.AddWithValue("@malito", email)
+
+            Try
+                conexao.Open()
+                utilizador = Convert.ToInt32(comando.ExecuteScalar())
+                comando.Parameters.Clear()
+            Catch ex As Exception
+                'erros e tal
+            End Try
+        End Using
+
+        Return utilizador
+    End Function
 
     'função para alterar pw/email/user
     Public Function AlterarPassword(ID_tecnico As Integer, email As String,

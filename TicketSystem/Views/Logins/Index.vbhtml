@@ -19,7 +19,8 @@ End Code
                     @Html.EditorFor(Function(log) log.password, New With {.HtmlAttributes = New With {.class = "form-control", .placeholder = "Password"}})<br />
                 </div>
                 <input type="submit" class="btn btn-secondary" value="login" />
-                <button type="button" class="btn btn-warning">Recuperar Password</button>
+                @Html.ActionLink("Recuperar Password", "RecuperarPassword", Nothing,
+                                          htmlAttributes:=New With {.class = "btn btn-warning"})
             </div>
         Else
             If Session("LoginErrado") = 1 Then
