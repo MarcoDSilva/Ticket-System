@@ -26,7 +26,7 @@ Public Class ManuseiaLogin
         conexao.Open()
 
         If comando.ExecuteReader().Read() Then
-            Dim tecnicos = LeituraTabela(password, email)
+            Dim tecnicos = ValidarLogin(password, email)
 
             comando.Parameters.Clear()
             conexao.Close()
@@ -46,13 +46,7 @@ Public Class ManuseiaLogin
     Public Function AlterarPassword(ID_tecnico As Integer, email As String,
                                     passwordActual As String, passwordNova As String) As Integer
 
-        Dim passwordAntigaValidada = ValidarEdicaoPassword(ID_tecnico, email, passwordActual, passwordNova)
-
-        If passwordAntigaValidada = 1 Then
-            Return 1
-        Else
-            Return 0
-        End If
+        Return ValidarEdicaoPassword(ID_tecnico, email, passwordActual, passwordNova)
 
     End Function
 
@@ -62,7 +56,7 @@ Public Class ManuseiaLogin
     ''' <param name="password"></param>
     ''' <param name="email"></param>
     ''' <returns></returns>
-    Private Function LeituraTabela(password As String, email As String) As Tecnico
+    Private Function ValidarLogin(password As String, email As String) As Tecnico
 
         Dim query As String = $"SELECT t.ID_tecnico, t.nome, t.email, t.ID_role
                                 FROM Tecnico as t
@@ -102,49 +96,44 @@ Public Class ManuseiaLogin
     ''' <param name="passwordNova"></param>
     ''' <returns></returns>
     Private Function ValidarEdicaoPassword(ID_tecnico As Integer, email As String,
-                                           passwordActual As String, passwordNova As String) As Integer
+                                        passwordActual As String, passwordNova As String) As Integer
 
-        Dim idEncontrado = 0
-        Dim query As String = $"SELECT ID_tecnico FROM Tecnico WHERE email = @malito
-                                AND password = @pass"
+        Dim tecnicoEncontrado = ValidarLogin(passwordActual, email)
 
-        Using conexao As New SqlConnection(Conector.stringConnection)
-            Dim comando As New SqlCommand(query, conexao)
-            comando.Parameters.AddWithValue("@malito", email)
-            comando.Parameters.AddWithValue("@pass", passwordActual)
+        If tecnicoEncontrado.ID_tecnico = ID_tecnico Then
+            Return ActualizaPassword(ID_tecnico, passwordNova)
+        End If
 
-            Try
-                conexao.Open()
-                idEncontrado = Convert.ToInt32(comando.ExecuteScalar())
-            Catch ex As Exception
-                'não temos conexão, ou outros erros
-            End Try
-            comando.Parameters.Clear()
-        End Using
-
-        Return ActualizaPassword(idEncontrado, ID_tecnico, passwordNova)
+        Return 0
     End Function
 
-    Private Function ActualizaPassword(idEncontrado As Integer, ID_tecnico As Integer,
+    ''' <summary>
+    ''' Procede à alteração da password do utilizador requirido
+    ''' Devolve 1 ou 0 consoante a execução da query.
+    ''' </summary>
+    ''' <param name="ID_tecnico"></param>
+    ''' <param name="passwordNova"></param>
+    ''' <returns></returns>
+    Private Function ActualizaPassword(ID_tecnico As Integer,
                                        passwordNova As String) As Integer
         Dim passwordValidada = 0
 
-        If idEncontrado = ID_tecnico Then
-            Dim query = $"UPDATE Tecnico SET password = @passNova WHERE ID_tecnico = {ID_tecnico}"
+        Dim query = $"UPDATE Tecnico SET password = @passNova,
+                      dat_hor = CURRENT_TIMESTAMP
+                      WHERE ID_tecnico = {ID_tecnico}"
 
-            Using conexao As New SqlConnection(Conector.stringConnection)
-                Dim comando As New SqlCommand(query, conexao)
-                comando.Parameters.AddWithValue("@passNova", passwordNova)
+        Using conexao As New SqlConnection(Conector.stringConnection)
+            Dim comando As New SqlCommand(query, conexao)
+            comando.Parameters.AddWithValue("@passNova", passwordNova)
 
-                Try
-                    conexao.Open()
-                    passwordValidada = comando.ExecuteNonQuery()
-                    comando.Parameters.Clear()
-                Catch ex As Exception
-                    'erros e tal
-                End Try
-            End Using
-        End If
+            Try
+                conexao.Open()
+                passwordValidada = comando.ExecuteNonQuery()
+                comando.Parameters.Clear()
+            Catch ex As Exception
+                'erros e tal
+            End Try
+        End Using
 
         Return passwordValidada
     End Function
