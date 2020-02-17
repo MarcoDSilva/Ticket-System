@@ -95,11 +95,11 @@ a[data-toggle="collapse"] {
         box-shadow: inset 0 0 5rem rgba(166, 93, 152, 0.53) !important;
     }
 
-    /*#sidebar ul.components {
+    #sidebar ul.components {
         padding: 20px 0;
         border-bottom: 1px solid #CC76BC;
         color: #CC76BC;
-    }*/
+    }
 
     #sidebar ul p {
         color: #1b213b;
@@ -187,9 +187,9 @@ ul ul a {
 
 #tabelaTickets {
     margin-top: 30px;
-    background-color: lightgray;
+    background-color: rgba(166, 93, 152, 0.23);
     border-radius: 10px;
-    width:400px;
+    width: 400px;
 }
 
 .clickableCell {

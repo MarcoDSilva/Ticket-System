@@ -27,9 +27,10 @@ End Code
         @<p>A sua conta esta desactivada de momento. Por favor contacte o administrador do software.</p>
     End If
 
-    <div id="ticketsIndex" class="jumbotron" >
+    <div id="ticketsIndex" class="jumbotron">
         <table class="table table-sm table-striped table-hover">
             <tr class="thead-dark">
+                <th>ID</th>
                 <th>Tecnico</th>
                 <th>cliente</th>
                 <th>software</th>
@@ -38,6 +39,7 @@ End Code
                 <th>estado</th>
             </tr>
             <tr>
+                <td>11</td>
                 <td>Lorem </td>
                 <td>ipsum </td>
                 <td>dolore</td>
@@ -46,6 +48,7 @@ End Code
                 <td>consectetur</td>
             </tr>
             <tr>
+                <td>411</td>
                 <td>Lorem </td>
                 <td>ipsum </td>
                 <td>dolore</td>
@@ -55,7 +58,7 @@ End Code
             </tr>
             <caption>Tickets Abertos</caption>
         </table>
-     
+
     </div>
 
 </div>
