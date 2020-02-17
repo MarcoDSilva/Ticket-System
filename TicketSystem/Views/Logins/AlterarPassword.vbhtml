@@ -3,7 +3,7 @@
     ViewData("Title") = "Alterar Password"
 End Code
 
-<div class="container-fluid align-self-center">
+<div id="editaPasswordForm">
     @Using (Html.BeginForm())
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
@@ -11,8 +11,8 @@ End Code
         @Html.HiddenFor(Function(modelTec) modelTec.email)
 
         @If Session("PasswordResetada") = 0 Then
-            @<div class="form-group">
-                <h2>Alteração de password</h2>
+            @<div class="menuEditaPassword form-group">
+                <p class="text-info">Alteração de password</p>
                 <p>
                     @Html.Label("Introduza password actual:", New With {.class = "form-text"})
                     @Html.TextBox("passwordAntiga", "", htmlAttributes:=New With {.class = "form-control", .type = "password"})

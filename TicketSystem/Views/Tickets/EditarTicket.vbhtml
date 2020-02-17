@@ -132,7 +132,11 @@ End Code
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <div class="modal-body">
+
+                            <iframe class="modalbody" src="@Url.Action("CriaEvento", "Eventos", New With {.ID_ticket = ticketID})"
+                                    style="width:500px;height:500px;"></iframe>
+
+                            @*<div class="modal-body">
                                 <label for="descricao">Descrição:</label>
                                 @Html.TextBoxFor(Function(d) d.descricao, Nothing, htmlAttributes:=New With {.placeHolder = "Inserir Descrição", .class = "form-control", .name = "descricao", .id = "descricao"})
                                 <Label class="form-check-label" for="ID_tecnico">Técnico:</Label>
@@ -149,11 +153,11 @@ End Code
                                               .dataFecho = Model.dataFecho, .ID_ticket = ticketID},
                                                  htmlAttributes:=New With {.class = "btn btn-primary"})
 
-                                @*@Html.ActionLink("TestaEvento", "TestaEvento", New With {.descricao_evento = "evento",
+                                @Html.ActionLink("TestaEvento", "TestaEvento", New With {.descricao_evento = "evento",
                                     .ID_tecnicoEvento = "evento", .dataAberturaEvento = Html.Value("dataAberturaEvento"),
                                     .dataFechoEvento = Html.Value("dataFechoEvento"), .ID_ticket = ticketID},
-                                    htmlAttributes:=New With {.class = "btn btn-primary", .type = "submit"})*@
-                            </div>
+                                    htmlAttributes:=New With {.class = "btn btn-primary", .type = "submit"})
+                            </div>*@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                             </div>

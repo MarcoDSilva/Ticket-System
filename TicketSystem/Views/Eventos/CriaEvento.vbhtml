@@ -4,18 +4,9 @@
 
     Dim ticketNum As Boolean = False
     Dim idTicket = 0
-    Dim descricao = ""
-    Dim idTecnico = ""
-    Dim dataAbertura = ""
-    Dim dataFecho = ""
 
     Try
         idTicket = Request.Params.Item("ID_ticket")
-        descricao = Request.Item("descricao")
-        idTecnico = Request.Params.Item("ID_tecnico").ToString()
-        dataAbertura = Request.Params.Item("dataAbertura").ToString()
-        dataFecho = Request.Params.Item("dataFecho").ToString()
-
     Catch ex As Exception
         ticketNum = True
     End Try
@@ -31,7 +22,6 @@ End Code
         @Html.AntiForgeryToken()
         @<div class="form-group">
     <h4>Evento</h4>
-    <p>ticket id é @idTicket, descrição é = @descricao, idTecnico = @idTecnico, dataAbertura = @dataAbertura, dataFecho = @dataFecho  </p>
     <div class="col-md-12">
         <p>
             @Html.LabelFor(Function(modelEve) modelEve.descricao, New With {.class = "form-check-label"})
