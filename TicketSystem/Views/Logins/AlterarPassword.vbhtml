@@ -11,8 +11,8 @@ End Code
         @Html.HiddenFor(Function(modelTec) modelTec.email)
 
         @If Session("PasswordResetada") = 0 Then
-            @<div class="menuEditaPassword form-group">
-                <p class="text-info">Alteração de password</p>
+            @<div class="menuEditaPassword form-group" >
+                <p class="font-weight-bolder" style="font-size:30px;">Alterar password</p>
                 <p>
                     @Html.Label("Introduza password actual:", New With {.class = "form-text"})
                     @Html.TextBox("passwordAntiga", "", htmlAttributes:=New With {.class = "form-control", .type = "password"})
