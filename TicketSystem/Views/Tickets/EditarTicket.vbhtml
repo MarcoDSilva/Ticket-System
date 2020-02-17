@@ -15,65 +15,64 @@
     End If
 End Code
 
-<h2>Edição Ticket</h2>
-
 <div class="form-group">
     @Using (Html.BeginForm("EditarTicket", "Tickets"))
         @Html.AntiForgeryToken
-        @<div class="col-form-label">
+        @<div class="container">
+            <h2>Edição Ticket</h2>
             @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
             @Html.HiddenFor(Function(ticket) ticket.ID_ticket)
             <!-- form edição -->
             <div class="form-group">
                 <div class="col-md-12">
-                    <p>
+                    <div style="float:left;">
                         @Html.LabelFor(Function(ticket) ticket.ID_software, New With {.class = "form-check-label"})
                         @Html.DropDownList("ID_software", DirectCast(ViewBag.software, SelectList), New With {.class = "form-control"})
-                    </p>
-                    <p>
+                    </div>
+                    <div style="float:left;">
                         @Html.LabelFor(Function(ticket) ticket.ID_cliente, New With {.class = "form-check-label"})
                         @Html.DropDownList("ID_cliente", DirectCast(ViewBag.cliente, SelectList), New With {.class = "form-control"})
-                    </p>
-                    <p>
+                    </div>
+                    <div>
                         @Html.LabelFor(Function(ticket) ticket.ID_problema, New With {.class = "form-check-label"})
                         @Html.DropDownList("ID_problema", DirectCast(ViewBag.problema, SelectList), New With {.class = "form-control"})
-                    </p>
-                    <p>
+                    </div>
+                    <div>
                         @Html.LabelFor(Function(ticket) ticket.descricao, New With {.class = "form-check-label"})
                         @Html.TextAreaFor(Function(ticket) ticket.descricao, New With {.class = "form-control"})
-                    </p>
-                    <p>
+                    </div>
+                    <div style="float:left;">
                         @Html.LabelFor(Function(ticket) ticket.dataAbertura, New With {.class = "form-check-label"})
                         <input type="date" name="dataAbertura" value="@dataInicial" id="@Model.dataAbertura" class="form-control" />
-                    </p>
-                    <p>
+                    </div>
+                    <div style="float:left;">
                         @Html.LabelFor(Function(ticket) ticket.dataFecho, New With {.class = "form-check-label"})
                         <input type="date" name="dataFecho" value="@dataFinal" id="dataFecho" class="form-control" />
-                    </p>
-                    <p>
+                    </div>
+                    <div style="float:left;">
                         @Html.LabelFor(Function(ticket) ticket.tempoPrevisto, New With {.class = "form-check-label"})
                         @Html.TextBoxFor(Function(ticket) ticket.tempoPrevisto, New With {.class = "form-control"})
-                    </p>
-                    <p>
+                    </div>
+                    <div>
                         @Html.LabelFor(Function(ticket) ticket.tempoTotal, New With {.class = "form-check-label"})
                         @Html.TextBoxFor(Function(ticket) ticket.tempoTotal, New With {.class = "form-control"})
-                    </p>
-                    <p>
+                    </div>
+                    <div style="float:left;">
                         @Html.LabelFor(Function(ticket) ticket.ID_estado, New With {.class = "form-check-label"})
                         @Html.DropDownList("ID_estado", DirectCast(ViewBag.estado, SelectList), New With {.class = "form-control"})
-                    </p>
-                    <p>
+                    </div>
+                    <div>
                         @Html.LabelFor(Function(ticket) ticket.ID_prioridade, New With {.class = "form-check-label"})
                         @Html.DropDownList("ID_prioridade", DirectCast(ViewBag.prioridade, SelectList), New With {.class = "form-control"})
-                    </p>
-                    <p>
+                    </div>
+                    <div>
                         @Html.LabelFor(Function(ticket) ticket.ID_utilizador, New With {.class = "form-check-label"})
                         @Html.DropDownList("ID_utilizador", DirectCast(ViewBag.utilizador, SelectList), New With {.class = "form-control"})
-                    </p>
-                    <p>
+                    </div>
+                    <div>
                         @Html.LabelFor(Function(ticket) ticket.ID_origem, New With {.class = "form-check-label"})
                         @Html.DropDownList("ID_origem", DirectCast(ViewBag.origem, SelectList), New With {.class = "form-control"})
-                    </p>
+                    </div>
                     <input type="submit" class="btn btn-success" value="Guardar" name="Enviar" />
                 </div>
             </div>
@@ -137,27 +136,27 @@ End Code
                                     style="width:500px;height:500px;"></iframe>
 
                             @*<div class="modal-body">
-                                <label for="descricao">Descrição:</label>
-                                @Html.TextBoxFor(Function(d) d.descricao, Nothing, htmlAttributes:=New With {.placeHolder = "Inserir Descrição", .class = "form-control", .name = "descricao", .id = "descricao"})
-                                <Label class="form-check-label" for="ID_tecnico">Técnico:</Label>
-                                @Html.DropDownListFor(Function(a) a.ID_tecnico, DirectCast(ViewBag.tecnico, SelectList), "", htmlAttributes:=New With {.class = "form-control", .name = "ID_tecnico"})
+                                    <label for="descricao">Descrição:</label>
+                                    @Html.TextBoxFor(Function(d) d.descricao, Nothing, htmlAttributes:=New With {.placeHolder = "Inserir Descrição", .class = "form-control", .name = "descricao", .id = "descricao"})
+                                    <Label class="form-check-label" for="ID_tecnico">Técnico:</Label>
+                                    @Html.DropDownListFor(Function(a) a.ID_tecnico, DirectCast(ViewBag.tecnico, SelectList), "", htmlAttributes:=New With {.class = "form-control", .name = "ID_tecnico"})
 
-                                <Label class="form-check-label" for="dataAbertura">Data Abertura</Label>
-                                <input type="date" name="dataAbertura" id="@eventoNovo.dataAbertura" class="form-control" />
+                                    <Label class="form-check-label" for="dataAbertura">Data Abertura</Label>
+                                    <input type="date" name="dataAbertura" id="@eventoNovo.dataAbertura" class="form-control" />
 
-                                <Label class="form-check-label" for="dataFecho">Data Fecho</Label>
-                                <input type="date" name="dataFecho" id="@eventoNovo.dataFecho" class="form-control" />
+                                    <Label class="form-check-label" for="dataFecho">Data Fecho</Label>
+                                    <input type="date" name="dataFecho" id="@eventoNovo.dataFecho" class="form-control" />
 
-                                @Html.ActionLink("Enviar", "CriaEvento", "Eventos", New With {.descricao = "descricao",
-                                         .ID_tecnico = Model.ID_tecnico, .dataAbertura = Model.dataAbertura,
-                                              .dataFecho = Model.dataFecho, .ID_ticket = ticketID},
-                                                 htmlAttributes:=New With {.class = "btn btn-primary"})
+                                    @Html.ActionLink("Enviar", "CriaEvento", "Eventos", New With {.descricao = "descricao",
+                                             .ID_tecnico = Model.ID_tecnico, .dataAbertura = Model.dataAbertura,
+                                                  .dataFecho = Model.dataFecho, .ID_ticket = ticketID},
+                                                     htmlAttributes:=New With {.class = "btn btn-primary"})
 
-                                @Html.ActionLink("TestaEvento", "TestaEvento", New With {.descricao_evento = "evento",
-                                    .ID_tecnicoEvento = "evento", .dataAberturaEvento = Html.Value("dataAberturaEvento"),
-                                    .dataFechoEvento = Html.Value("dataFechoEvento"), .ID_ticket = ticketID},
-                                    htmlAttributes:=New With {.class = "btn btn-primary", .type = "submit"})
-                            </div>*@
+                                    @Html.ActionLink("TestaEvento", "TestaEvento", New With {.descricao_evento = "evento",
+                                        .ID_tecnicoEvento = "evento", .dataAberturaEvento = Html.Value("dataAberturaEvento"),
+                                        .dataFechoEvento = Html.Value("dataFechoEvento"), .ID_ticket = ticketID},
+                                        htmlAttributes:=New With {.class = "btn btn-primary", .type = "submit"})
+                                </div>*@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                             </div>

@@ -106,7 +106,6 @@ End Code
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
-
                     <a class="navbar-brand" href="#">
                         @Html.ActionLink("Ticket System", "Index", "Home", New With {.area = ""}, New With {.class = "navbar-brand"})
                     </a>
@@ -139,7 +138,6 @@ End Code
                     </footer>*@
             </div>
         </div>
-
 
     </div>
     @Scripts.Render("~/bundles/jquery")
