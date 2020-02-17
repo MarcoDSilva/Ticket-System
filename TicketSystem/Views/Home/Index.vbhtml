@@ -13,8 +13,8 @@
     End If
 End Code
 
-<div class="container-fluid">
-    <h2>Home</h2>
+<div class="container container-fluid">
+    <h2>@DateTime.Now.ToLongDateString()</h2>
     <p>@mensagem @Session("Nome")</p>
 
     @If Session("Administrador") = 1 Then
@@ -26,6 +26,11 @@ End Code
     @If Session("Inativo") = 1 Then
         @<p>A sua conta esta desactivada de momento. Por favor contacte o administrador do software.</p>
     End If
+
+    <div class="jumbotron" id="ticketsIndex">
+        tickets
+        tickets
+    </div>
 
 </div>
 

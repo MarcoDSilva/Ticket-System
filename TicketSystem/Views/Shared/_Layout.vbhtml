@@ -25,7 +25,7 @@ End Code
     <div class="wrapper">
 
         <!-- NAVBAR -->
-        @If Not String.IsNullOrEmpty((Session("Nome"))) Then
+        @If Not String.IsNullOrEmpty((Session("Nome"))) And Not Session("Inativo") = 1 Then
             @<nav id="sidebar">
                 <div class="sidebar-header">
                     <h3>Menu lateral</h3>
@@ -33,7 +33,7 @@ End Code
 
                 <ul class="list-unstyled components">
                     <li>
-                        <a href="#listagensSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">   
+                        <a href="#listagensSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                             <img src="~/img/list.svg" alt="" width="32" height="32" title="icon">
                             Listagens
                         </a>
@@ -54,9 +54,6 @@ End Code
                         </a>
                         <ul class="collapse list-unstyled" id="tabelasSubmenu">
                             <li>
-                                @Html.ActionLink("Tecnicos", "Index", "Tecnicos")
-                            </li>
-                            <li>
                                 @Html.ActionLink("Clientes", "Index", "Clientes")
                             </li>
                             <li>
@@ -75,16 +72,23 @@ End Code
                     </li>
 
                     <li>
-                        <a href="#gestaoSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Gestão</a>
+                        <a href="#gestaoSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                            <img src="~/img/tools.svg" alt="" width="32" height="32" title="icon">
+                            Gestão
+                        </a>
                         <ul class="collapse list-unstyled" id="gestaoSubmenu">
                             <li>
-                                @Html.ActionLink("Utilizadores", "Index", "Utilizadores")
-                            </li>
-                            <li>
-                                @Html.ActionLink("Tecnicos", "Index", "Tecnicos")
-                            </li>
-                            <li>
                                 @Html.ActionLink("Clientes", "Index", "Clientes")
+                            </li>
+
+                            @If Session("Administrador") = 1 Then
+                                @<li>
+                                    @Html.ActionLink("Tecnicos", "Index", "Tecnicos")
+                                </li>
+                            End If
+
+                            <li>
+                                @Html.ActionLink("Utilizadores", "Index", "Utilizadores")
                             </li>
                         </ul>
                     </li>
@@ -92,60 +96,63 @@ End Code
             </nav>
         End If
 
-        <!-- MENU DA PÁGINA -->
-        <div id="content">
-            <nav class="navbar navbar-dark shadow-sm navbar-expand-lg navColor">
-                @If Not String.IsNullOrEmpty((Session("Nome"))) Then
-                    @<button type="button" id="sidebarCollapse" Class="btn btn-secondary">
-                        <i Class="fas fa-align-left"></i>
-                        <span Class="navbar-toggler-icon"></span>
-                    </button>
-                End If
+        <!-- navbar DA PÁGINA -->
+    <div id="content">
+        @If Not String.IsNullOrEmpty((Session("Nome"))) Then
+
+            @<nav Class="navbar navbar-dark shadow-sm navbar-expand-lg navColor">
+                <button type="button" id="sidebarCollapse" Class="btn btn-secondary">
+                    <i Class="fas fa-align-left"></i>
+                    <span Class="navbar-toggler-icon"></span>
+                </button>
+
 
                 <a class="navbar-brand" href="#">
                     @Html.ActionLink("Ticket System", "Index", "Home", New With {.area = ""}, New With {.class = "navbar-brand"})
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarBtn" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 @If Session("Login") = 1 And Session("LoginErrado") = 0 Then
                     @<div class="container">
-                        <p class="text-white font-weight-bold">@mensagem, @Session("Nome") - @Session("Email")</p>
-                        <div class="btn-group-sm" role="group" style="margin-left:20px;">
-                            <button id="groupLogins" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Opções
-                            </button>
-                            <div class="dropdown-menu align-content-end" aria-labelledby="groupLogins">
-                                <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("AlterarPassword", "Logins", New With {.ID_tecnico = Session("ID_tecnico")})'">Alterar Password</a>
-                                <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("Logout", "Logins")'">Logout</a>
+                        <div class="collapse navbar-collapse" id="navbarBtn">
+                            <div class="text-white font-weight-bold text-center">@mensagem, @Session("Nome") - @Session("Email")</div>
+                            <div class="btn-group-sm" role="group" style="margin-left:20px;">
+                                <button id="groupLogins" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Opções
+                                </button>
+                                <div class="dropdown-menu align-content-end" aria-labelledby="groupLogins">
+                                    <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("AlterarPassword", "Logins", New With {.ID_tecnico = Session("ID_tecnico")})'">Alterar Password</a>
+                                    <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("Logout", "Logins")'">Logout</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 End If
             </nav>
-
-            <!-- PÁGINA PARA RENDERIZAR DAS VIEWS-->
-            <div>
-                @RenderBody()
-                <footer class="card-footer">
-                    <p>&copy; @DateTime.Now.Year - Ticket System by ms</p>
-                </footer>
-            </div>
+        End If
+        <!-- PÁGINA PARA RENDERIZAR DAS VIEWS-->
+        <div>
+            @RenderBody()
+            @*<footer class="card-footer">
+                <p>&copy; @DateTime.Now.Year - Ticket System by ms</p>
+            </footer>*@
         </div>
-
-
     </div>
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required:=False)
-    <script>
-        $(document).ready(function () {
 
-            $('#sidebarCollapse').on('click', function () {
-                $('#sidebar').toggleClass('active');
-            });
 
-        });
-    </script>
+                </div>
+            @Scripts.Render("~/bundles/jquery")
+            @Scripts.Render("~/bundles/bootstrap")
+            @RenderSection("scripts", required:=False)
+                <script>
+                    $(document).ready(function () {
+
+                        $('#sidebarCollapse').on('click', function () {
+                            $('#sidebar').toggleClass('active');
+                        });
+
+                    });
+                </script>
 </body>
 </html>

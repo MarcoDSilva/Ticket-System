@@ -1,6 +1,7 @@
 ﻿body {
     /*padding-top: 50px;*/
     padding-bottom: 20px;
+    background-color: #FFFAFA;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -46,11 +47,11 @@ a[data-toggle="collapse"] {
     width:100%;
 }
 
+/* SIDE BAR CSS */
 
-#sidebar {
-    /* don't forget to add all the previously mentioned styles here too */
-    background: #4C1A55;
-    color: #E3C044;
+#sidebar {   
+    background: #5a2951;
+    color: #FFF;
     transition: all 0.3s;
     min-width: 225px;
     max-width: 225px;
@@ -65,15 +66,14 @@ a[data-toggle="collapse"] {
 
     #sidebar .sidebar-header {
         padding: 20px;
-        background: #4C1A55;
-
+        background: #5a2951;
     }
 
-    #sidebar ul.components {
+    /*#sidebar ul.components {
         padding: 20px 0;
-        border-bottom: 1px solid #E3C044;
-        color: #E3C044;
-    }
+        border-bottom: 1px solid #CC76BC;
+        color: #CC76BC;
+    }*/
 
     #sidebar ul p {
         color: #1b213b;
@@ -84,30 +84,31 @@ a[data-toggle="collapse"] {
         padding: 10px;
         font-size: 1.1em;
         display: block;
-        color: #E3C044;
+        color: #CC76BC;
     }
 
         #sidebar ul li a:hover {
             color: #fff;
-            background-color: #2F1135;
+            background-color: #A65D98;
         }
 
     #sidebar ul li.active > a, a[aria-expanded="true"] {
-        color: #E3C044;
-        background-color: #1b213b;
+        color: #CC76BC;
+        background-color: #401D39;
+        /*border-top: 1px solid #CC76BC;*/
+        border-bottom: 1px solid #CC76BC;
     }
 
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #6B2477;
+    background: #592950;
     color: #E3C044;
 }
 
 .navColor {
     width: 100%;
-    background-color: #4C1A55;
-
+    background-color: #592950;
 }
 
 
@@ -119,4 +120,32 @@ ul ul a {
         #sidebar.active {
             margin-left: 0;
         }
+}
+
+
+/** VIEWS **/
+
+#menuLogin {
+    padding-top:25vh;
+    margin: auto;
+    text-align: center;
+    background-color: #5a2951;
+    color: #FFF;
+    height: 100vh;
+    box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+}
+
+#menuLoginForm {
+
+    width:300px;
+}
+
+.loginForm {
+    border: 1px solid black;
+    display:block;
+}
+
+#ticketsIndex {
+    max-width:400px;
+    border: 1px solid black;
 }
