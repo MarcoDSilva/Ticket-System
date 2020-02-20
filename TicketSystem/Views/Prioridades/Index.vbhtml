@@ -6,7 +6,7 @@ End Code
 <h2>Listar Prioridades</h2>
 
 <table class="table table-hover table-sm">
-    <tr>
+    <tr class="thead-dark">
         <th>@Html.DisplayNameFor(Function(modelPrio) modelPrio.ID_prioridade)</th>
         <th>@Html.DisplayNameFor(Function(modelPrio) modelPrio.descricao)</th>
         <th>@Html.DisplayNameFor(Function(modelPrio) modelPrio.dat_hor)</th>

@@ -6,7 +6,7 @@ End Code
 <h2>Lista de Estados</h2>
 
 <table class="table table-hover table-sm">
-    <tr>
+    <tr class="thead-dark">
         <th>@Html.DisplayNameFor(Function(modelEst) modelEst.ID_estado)</th>
         <th>@Html.DisplayNameFor(Function(modelEst) modelEst.descricao)</th>
         <th>@Html.DisplayNameFor(Function(modelEst) modelEst.dat_hor)</th>

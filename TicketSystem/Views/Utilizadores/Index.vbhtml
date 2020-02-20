@@ -6,7 +6,7 @@ End Code
 <h2>Listagem Utilizadores</h2>
 
 <table class="table table-hover table-sm">
-    <tr>
+    <tr class="thead-dark">
         <th>@Html.DisplayNameFor(Function(modelUser) modelUser.ID_utilizador)</th>
         <th>@Html.DisplayNameFor(Function(modelUser) modelUser.nome)</th>
         <th>@Html.DisplayNameFor(Function(modelUser) modelUser.contacto)</th>

@@ -8,7 +8,8 @@ Namespace Controllers
         Private conectaBD As New Manipula_TTicket
 
         ' GET: Tickets
-        Function Index(ordem As String, ID_prioridade As String, ID_estado As String) As ActionResult
+        Function Index(ordem As String, ID_prioridade As String, ID_estado As String, ID_problema As String,
+                       ID_software As String, ID_cliente As String, ID_tecnico As String) As ActionResult
             BloqueiaUtilizadores()
             Dim query As String = "SELECT t.ID_ticket, tec.nome, sft.nome, cli.nome, prob.descricao, t.descricao, 
                                       t.dataAbertura, t.dataFecho, t.tempoPrevisto, t.tempoTotal, est.descricao,
@@ -23,16 +24,25 @@ Namespace Controllers
                                           AND prob.ID_problema = t.ID_problema
                                           AND est.ID_estado = t.ID_estado
                                           AND prio.ID_prioridade = t.ID_prioridade
-                                          AND ori.ID_origem = t.ID_origem
-                                    "
+                                          AND ori.ID_origem = t.ID_origem"
 
             CriaViewBags()
 
             Dim ordenaPorData = ""
-            Dim ordenaPorPrioridade = ""
-            Dim ordenaPorEstado = ""
 
-            If (String.IsNullOrEmpty(ordem)) And String.IsNullOrEmpty(ID_prioridade) And String.IsNullOrEmpty(ID_estado) Then
+            'adicionar os parametros um a um na lista, caso contrário o if fica gigantesco
+            Dim l As New List(Of String)
+            l.Add(ordem)
+            l.Add(ordem)
+            l.Add(ID_estado)
+            l.Add(ID_prioridade)
+            l.Add(ID_problema)
+            l.Add(ID_software)
+            l.Add(ID_cliente)
+            l.Add(ID_tecnico)
+
+            'função que se não encontrar nenhum elemento com valor, retorna true e podemos devolver à view uma query normal
+            If VerificaParams(l) = True Then
                 Return View(LeituraDados(query))
             End If
 
@@ -45,25 +55,30 @@ Namespace Controllers
                 ordenaPorData = " ORDER BY dataAbertura asc"
             End If
 
-            'filtrar a ordenação pelos níveis de prioridade
-            If (String.IsNullOrEmpty(ID_prioridade)) Then
-                ordenaPorPrioridade = ""
-            Else
-                ordenaPorPrioridade = " AND t.ID_prioridade = " + ID_prioridade
-            End If
+            'verificação se algum dos filtros foi ativos, e adiciona o resultado esperado por cada um à query
+            query += IIf(String.IsNullOrEmpty(ID_prioridade),
+                                    "", $" AND t.ID_prioridade = {ID_prioridade}")
 
-            'filtrar a ordenação pelos níveis de estado
-            If (String.IsNullOrEmpty(ID_estado)) Then
-                ordenaPorEstado = ""
-            Else
-                ordenaPorEstado = " AND t.ID_estado = " + ID_estado
-            End If
+            query += IIf(String.IsNullOrEmpty(ID_estado),
+                                    "", $" AND t.ID_estado = {ID_estado}")
 
-            Return View(LeituraDados(query + ordenaPorPrioridade + ordenaPorEstado + ordenaPorData))
+            query += IIf(String.IsNullOrEmpty(ID_problema),
+                                    "", $" AND t.ID_problema = {ID_problema}")
+
+            query += IIf(String.IsNullOrEmpty(ID_software),
+                                    "", $" AND t.ID_software = {ID_software}")
+
+            query += IIf(String.IsNullOrEmpty(ID_cliente),
+                                    "", $" AND t.ID_cliente = {ID_cliente}")
+
+            query += IIf(String.IsNullOrEmpty(ID_tecnico),
+                                    "", $" AND t.ID_tecnico = {ID_tecnico}")
+
+            query += ordenaPorData
+
+            Return View(LeituraDados(query))
 
         End Function
-
-
 
         'GET: Cria a view para criação de tickets. A mesma contém várias dropdownlists que estão a ser alimentadas por viewbags
         Function CriaTicket() As ActionResult
@@ -96,7 +111,6 @@ Namespace Controllers
 
             Return RedirectToAction("Index")
         End Function
-
 
         'GET:
         Function EditarTicket(ID_ticket As Integer?) As ActionResult
@@ -266,5 +280,25 @@ Namespace Controllers
                 Response.Redirect("~/Logins/Index")
             End If
         End Sub
+
+        ''' <summary>
+        ''' usada para verificar se a query normal é enviada para o ticket ou não, devido
+        ''' a haver imensos parametros
+        ''' </summary>
+        ''' <param name="lista"></param>
+        ''' <returns></returns>
+        Private Function VerificaParams(lista As List(Of String))
+
+            Dim flag As Boolean
+
+            For Each item In lista
+                If (String.IsNullOrEmpty(item)) Then
+                    flag = True
+                Else
+                    Return False
+                End If
+            Next
+            Return flag
+        End Function
     End Class
 End Namespace

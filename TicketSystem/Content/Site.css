@@ -2,18 +2,20 @@
     /*padding-top: 50px;*/
     /*padding-bottom: 20px;*/
     /*background-color: #FFFAFA;*/
-    box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);    
+    background-color: rgb(106, 74, 89);
+    box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
 }
 
 .background {
     display: block;
+
     /*position: relative;*/
 }
 
     .background::after {
         content: "";
         background-image: url("../img/bg_paper.png");
-        opacity: 0.66;
+        opacity:0.90;
         top: 0;
         left: 0;
         bottom: 0;
@@ -38,6 +40,16 @@
 .dl-horizontal dt {
     white-space: normal;
 }
+
+.logo {
+    color:wheat;
+    font-size:25px;
+    padding:25px;
+}
+
+    .logo:hover {
+        color: wheat;
+    }
 
 /* Set width on the form input elements since they're 100% wide by default */
 input,
@@ -72,13 +84,13 @@ a[data-toggle="collapse"] {
 /* SIDE BAR CSS */
 
 #sidebar {
-    background: #5a2951;
+    background: #55284d;
     color: #FFF;
     transition: all 0.3s;
     min-width: 225px;
     max-width: 225px;
     height: 100vh;
-    box-shadow: inset 0 0 5rem rgba(166, 93, 152, 0.43);
+    /*box-shadow: inset 0 0 5rem rgba(166, 93, 152, 0.43);*/
 }
 
     #sidebar.active {
@@ -86,7 +98,7 @@ a[data-toggle="collapse"] {
     }
 
     #sidebar .sidebar-header {
-        padding: 8px;
+        padding: 9px;
         background: #5a2951;
         box-shadow: inset 0 0 5rem rgba(166, 93, 152, 0.53) !important;
     }
@@ -129,7 +141,6 @@ ul ul a {
 }
 
 .navColor {
-    width: 100%;
     background-color: #592950;
     box-shadow: inset 0 0 5rem rgba(166, 93, 152, 0.53) !important; 
 }
@@ -147,8 +158,8 @@ ul ul a {
 /** VIEWS **/
 
 #menuLogin {
-    padding-top:25vh;
-    margin: auto;
+    padding-top: 25vh;
+    margin: auto !important;
     text-align: center;
     background-color: #5a2951;
     color: #FFF;
@@ -181,10 +192,10 @@ ul ul a {
 
 #tabelaTickets {
     margin-top: 30px;
-    background-color: rgba(166, 93, 152, 0.23);
+    background-color: rgb(186, 199, 174);
     border-radius: 10px;
     text-align: center;
-    /*width:auto*/;
+    width:auto;
 }
 
     /*#tabelaTickets td:nth-child(1) {
@@ -201,19 +212,15 @@ ul ul a {
 
     #tabelaTickets td:nth-child(5) {
         width: 15%;
-    }
+    }*/
 
     #tabelaTickets td:nth-child(6) {
         width: 20%;
     }
-
-    #tabelaTickets td:nth-child(7), #tabelaTickets td:nth-child(8) {
-        width: 50%;
+    #tabelaTickets td:nth-child(6) {
+        width: 15%;
     }
 
-    #tabelaTickets td:nth-child(11), #tabelaTickets td:nth-child(8) {
-        width: 50%;
-    }*/ 
 
 #tabelaEventos {
     margin-top: 30px;
@@ -258,3 +265,15 @@ ul ul a {
 /*#navbarBtn {
     right:0;
 }*/
+
+.filtros_ticket {
+    border: 1px solid gray;
+
+    display:block;
+}
+
+#criaTicket {
+    padding-top:20px;
+    margin:0 auto;
+   
+}

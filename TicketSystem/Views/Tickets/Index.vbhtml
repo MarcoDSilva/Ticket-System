@@ -2,38 +2,54 @@
 @Code
     ViewData("Title") = "Listagem tickets"
 End Code
-
-
-
 <h4>Listagem tickets</h4>
 
+
 @Using (Html.BeginForm())
-    @<div class="filtros_ticket form-group">
+    'filtros neste form para melhor leitura nos tickets
+    @<section class="filtros_ticket form-inline">
 
-        <label> Filtrar por data - </label>
-        @Html.RadioButton("ordem", "decrescente", False, htmlAttributes:=New With {.onchange = "this.form.submit();"}) <span> Decrescente :          </span>
-        @Html.RadioButton("ordem", "crescente", False, htmlAttributes:=New With {.onchange = "this.form.submit();"})<span> Crescente :       </span>
-        @Html.RadioButton("ordem", "", False, htmlAttributes:=New With {.onchange = "this.form.submit();"})<span> Ordem por ID :       </span>
-    </div>
+        <div class="form-check-inline">
+            @Html.RadioButton("ordem", "decrescente", False, htmlAttributes:=New With {.onchange = "this.form.submit();"}) <span>Decrescente</span>
+            @Html.RadioButton("ordem", "crescente", False, htmlAttributes:=New With {.onchange = "this.form.submit();"})<span>Crescente</span>
+            @Html.RadioButton("ordem", "", False, htmlAttributes:=New With {.onchange = "this.form.submit();"})<span>por ID</span>
+        </div>
 
-    @<div class="filtros_ticket form-group">
-        <label> Filtrar por prioridade - </label>
 
-        @For Each item In DirectCast(ViewBag.prioridade, SelectList)
-            @Html.RadioButton("ID_prioridade", item.Value.ToString(), False, htmlAttributes:=New With {.onchange = "this.form.submit();"}) @<span> @item.Text</span>
-        Next
-        @Html.RadioButton("ID_prioridade", "", False, htmlAttributes:=New With {.onchange = "this.form.submit();"}) <span> Todos</span>
+        <div class="form-check-inline">
+            <label> Filtrar por prioridade </label>
+            @Html.DropDownList("ID_prioridade", DirectCast(ViewBag.prioridade, SelectList), "",
+                  htmlAttributes:=New With {.class = "form-control", .onchange = "this.form.submit();"})
+        </div>
 
-    </div>
+        <div class="form-check-inline">
+            <label>Filtrar por estado:</label>
+            @Html.DropDownList("ID_estado", DirectCast(ViewBag.estado, SelectList), "",
+                                            htmlAttributes:=New With {.Class = "form-control", .onchange = "this.form.submit();"})
+        </div>
 
-    @<div>
-    <label>Filtrar por estado</label>
-    @For Each item In DirectCast(ViewBag.estado, SelectList)
-        @Html.RadioButton("ID_estado", item.Value.ToString(), False, htmlAttributes:=New With {.onchange = "this.form.submit();"}) @<span> @item.Text</span>
-    Next
-    @Html.RadioButton("ID_estado", "", False, htmlAttributes:=New With {.onchange = "this.form.submit();"}) <span> Todos</span>
+        <div class="form-check-inline">
+            <label>Filtrar por problema:</label>
+            @Html.DropDownList("ID_problema", DirectCast(ViewBag.problema, SelectList), "",
+                                            htmlAttributes:=New With {.class = "form-control", .onchange = "this.form.submit();"})
+        </div>
 
-</div>
+        <div class="form-check-inline">
+            <label>Filtrar por Software:</label>
+            @Html.DropDownList("ID_software", DirectCast(ViewBag.software, SelectList), "",
+                                            htmlAttributes:=New With {.class = "form-control", .onchange = "this.form.submit();"})
+        </div>
+        <div class="form-check-inline">
+            <label>Filtrar por Cliente:</label>
+            @Html.DropDownList("ID_cliente", DirectCast(ViewBag.cliente, SelectList), "",
+                                            htmlAttributes:=New With {.class = "form-control", .onchange = "this.form.submit();"})
+        </div>
+        <div class="form-check-inline">
+            <label>Filtrar por Tecnico:</label>
+            @Html.DropDownList("ID_tecnico", DirectCast(ViewBag.tecnico, SelectList), "",
+                                                         htmlAttributes:=New With {.class = "form-control", .onchange = "this.form.submit();"})
+        </div>
+    </section>
 End Using
 
 <table class="table table-hover table-sm table-responsive" id="tabelaTickets">

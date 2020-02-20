@@ -8,7 +8,7 @@ End Code
 
 
 <table class="table table-hover table-sm">
-    <tr>
+    <tr class="thead-dark">
         <th>@Html.DisplayNameFor(Function(model) model.ID_problema)</th>
         <th>@Html.DisplayNameFor(Function(model) model.descricao)</th>
         <th>@Html.DisplayNameFor(Function(model) model.dat_hor)</th>

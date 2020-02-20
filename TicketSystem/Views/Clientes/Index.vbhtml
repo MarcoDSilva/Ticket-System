@@ -6,7 +6,7 @@ End Code
 <h2>Listagem Clientes</h2>
 
 <table class="table table-hover table-sm">
-    <tr>
+    <tr class="thead-dark">
         <th>@Html.DisplayNameFor(Function(modelCli) modelCli.ID_cliente)</th>
         <th>@Html.DisplayNameFor(Function(modelCli) modelCli.nome)</th>
         <th>@Html.DisplayNameFor(Function(modelCli) modelCli.contacto)</th>

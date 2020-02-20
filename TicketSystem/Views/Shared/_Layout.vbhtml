@@ -52,7 +52,7 @@ End Code
                             <img src="~/img/table.svg" alt="" width="32" height="32" title="icon">
                             Tabelas
                         </a>
-                        <ul class="collapse list-unstyled" id="tabelasSubmenu">                            
+                        <ul class="collapse list-unstyled" id="tabelasSubmenu">
                             <li>
                                 @Html.ActionLink("Origens", "Index", "Origens")
                             </li>
@@ -64,6 +64,9 @@ End Code
                             </li>
                             <li>
                                 @Html.ActionLink("Prioridades", "Index", "Prioridades")
+                            </li>
+                            <li>
+                                @Html.ActionLink("Softwares", "Index", "Softwares")
                             </li>
                         </ul>
                     </li>
