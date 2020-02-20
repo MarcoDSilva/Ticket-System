@@ -1,38 +1,27 @@
-﻿@ModelType IEnumerable(Of TicketSystem.VM_EventoTecnico)
-
+﻿@ModelType IEnumerable(Of TicketSystem.Origem)
 @Code
-    ViewData("Title") = "Eventos"
+    ViewData("Title") = "Origem"
 End Code
 
-<h2>Listar eventos</h2>
+<h2>Listagem Origem</h2>
 
-<Table class="table table-hover table-sm">
+<table class="table table-hover table-sm">
     <tr>
-    <th>@Html.DisplayNameFor(Function(modelEv) modelEv.ID_evento)</th>
-        <th>@Html.DisplayNameFor(Function(modelEv) modelEv.descricao)</th>
-        <th>@Html.DisplayNameFor(Function(modelEv) modelEv.ID_tecnico)</th>
-        <th>@Html.DisplayNameFor(Function(modelEv) modelEv.dataAbertura)</th>
-        <th>@Html.DisplayNameFor(Function(modelEv) modelEv.dataFecho)</th>
-        <th>@Html.DisplayNameFor(Function(modelEv) modelEv.ID_ticket)</th>
-        <th>@Html.DisplayNameFor(Function(modelEv) modelEv.dat_hor)</th>
+        <th>@Html.DisplayNameFor(Function(modelOrig) modelOrig.ID_origem)</th>
+        <th>@Html.DisplayNameFor(Function(modelOrig) modelOrig.descricao)</th>
+        <th>@Html.DisplayNameFor(Function(modelOrig) modelOrig.dat_hor)</th>
     </tr>
 
-    @For Each evento In Model
+    @For Each origem In Model
         @<tr>
-            <td>@Html.DisplayFor(Function(modelEv) evento.ID_evento)</td>
-            <td>@Html.DisplayFor(Function(modelEv) evento.descricao)</td>
-            <td>@Html.DisplayFor(Function(modelEv) evento.ID_tecnico)</td>
-            <td>@Html.DisplayFor(Function(modelEv) evento.dataAbertura)</td>
-            <td>@Html.DisplayFor(Function(modelEv) evento.dataFecho)</td>
-            <td>@Html.DisplayFor(Function(modelEv) evento.ID_ticket)</td>
-            <td>@Html.DisplayFor(Function(modelEv) evento.dat_hor)</td>
-            <td>@Html.ActionLink("Detalhes", "EditarEvento", New With {.ID_evento = evento.ID_evento})</td>
+            <td>@Html.DisplayFor(Function(modelOrig) origem.ID_origem)</td>
+            <td>@Html.DisplayFor(Function(modelOrig) origem.descricao)</td>
+            <td>@Html.DisplayFor(Function(modelOrig) origem.dat_hor)</td>
+            <td>@Html.ActionLink("Detalhes", "EditarOrigem", New With {.ID_origem = origem.ID_origem})</td>
         </tr>
     Next
- </table>
+</table>
 
-<button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("CriaEvento", "Eventos")'">
+<button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("CriaOrigem", "Origens")'">
     Novo Registo
 </button>
-
-

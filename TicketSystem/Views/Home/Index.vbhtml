@@ -13,7 +13,7 @@
     End If
 End Code
 
-<div class="container container-fluid">
+
     <h2>@DateTime.Now.ToLongDateString()</h2>
     <p>@mensagem @Session("Nome")</p>
 
@@ -60,7 +60,4 @@ End Code
         </table>
 
     </div>
-
-</div>
-
 

@@ -8,9 +8,9 @@ Namespace Controllers
         Private conectaBD As New Manipula_TTicket
 
         ' GET: Tickets
-        Function Index() As ActionResult
+        Function Index(ordem As String, ID_prioridade As String, ID_estado As String) As ActionResult
             BloqueiaUtilizadores()
-            Return View(LeituraDados("SELECT t.ID_ticket, tec.nome, sft.nome, cli.nome, prob.descricao, t.descricao, 
+            Dim query As String = "SELECT t.ID_ticket, tec.nome, sft.nome, cli.nome, prob.descricao, t.descricao, 
                                       t.dataAbertura, t.dataFecho, t.tempoPrevisto, t.tempoTotal, est.descricao,
                                       prio.descricao, t.ID_utilizador, ori.descricao,t.dat_hor
 
@@ -24,8 +24,46 @@ Namespace Controllers
                                           AND est.ID_estado = t.ID_estado
                                           AND prio.ID_prioridade = t.ID_prioridade
                                           AND ori.ID_origem = t.ID_origem
-                                    "))
+                                    "
+
+            CriaViewBags()
+
+            Dim ordenaPorData = ""
+            Dim ordenaPorPrioridade = ""
+            Dim ordenaPorEstado = ""
+
+            If (String.IsNullOrEmpty(ordem)) And String.IsNullOrEmpty(ID_prioridade) And String.IsNullOrEmpty(ID_estado) Then
+                Return View(LeituraDados(query))
+            End If
+
+            'filtrar a ordenação para a query
+            If (String.IsNullOrEmpty(ordem)) Then
+                ordenaPorData = ""
+            ElseIf ordem.Equals("decrescente") Then
+                ordenaPorData = " ORDER BY dataAbertura desc"
+            ElseIf ordem.Equals("crescente") Then
+                ordenaPorData = " ORDER BY dataAbertura asc"
+            End If
+
+            'filtrar a ordenação pelos níveis de prioridade
+            If (String.IsNullOrEmpty(ID_prioridade)) Then
+                ordenaPorPrioridade = ""
+            Else
+                ordenaPorPrioridade = " AND t.ID_prioridade = " + ID_prioridade
+            End If
+
+            'filtrar a ordenação pelos níveis de estado
+            If (String.IsNullOrEmpty(ID_estado)) Then
+                ordenaPorEstado = ""
+            Else
+                ordenaPorEstado = " AND t.ID_estado = " + ID_estado
+            End If
+
+            Return View(LeituraDados(query + ordenaPorPrioridade + ordenaPorEstado + ordenaPorData))
+
         End Function
+
+
 
         'GET: Cria a view para criação de tickets. A mesma contém várias dropdownlists que estão a ser alimentadas por viewbags
         Function CriaTicket() As ActionResult

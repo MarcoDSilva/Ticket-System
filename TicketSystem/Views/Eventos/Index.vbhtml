@@ -10,7 +10,7 @@ End Code
         Novo Registo
     </button>
 
-    <table class="table table-hover table-sm" id="tabelaEventos">
+    <table class="table table-hover table-sm table-responsive" id="tabelaEventos">
         <tr class="thead-dark">
             <th scope="col">@Html.DisplayNameFor(Function(modelEv) modelEv.ID_evento)</th>
             <th scope="col">@Html.DisplayNameFor(Function(modelEv) modelEv.descricao)</th>

@@ -48,6 +48,7 @@ Namespace Controllers
                     Session("Email") = tecnicoLogado.email.ToString()
                     Session("Nome") = tecnicoLogado.nome.ToString()
                     Session("ID_tecnico") = tecnicoLogado.ID_tecnico
+                    Session.Timeout = 120
                 End If
             End If
 

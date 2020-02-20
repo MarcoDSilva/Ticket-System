@@ -27,8 +27,8 @@ End Code
         <!-- NAVBAR -->
         @If Not String.IsNullOrEmpty((Session("Nome"))) And Not Session("Inativo") = 1 Then
             @<nav id="sidebar">
-                <div class="sidebar-header">
-                    <h3>Menu lateral</h3>
+                <div class="sidebar-header">   
+                    <a onclick="location.href='@Url.Action("Index", "Home")'" class="logo" href="#">Ticket System</a>                            
                 </div>
 
                 <ul class="list-unstyled components">
@@ -52,10 +52,7 @@ End Code
                             <img src="~/img/table.svg" alt="" width="32" height="32" title="icon">
                             Tabelas
                         </a>
-                        <ul class="collapse list-unstyled" id="tabelasSubmenu">
-                            <li>
-                                @Html.ActionLink("Clientes", "Index", "Clientes")
-                            </li>
+                        <ul class="collapse list-unstyled" id="tabelasSubmenu">                            
                             <li>
                                 @Html.ActionLink("Origens", "Index", "Origens")
                             </li>
@@ -106,16 +103,12 @@ End Code
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    <a class="navbar-brand" href="#">
-                        @Html.ActionLink("Ticket System", "Index", "Home", New With {.area = ""}, New With {.class = "navbar-brand"})
-                    </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarBtn" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     @If Session("Login") = 1 And Session("LoginErrado") = 0 Then
-                        @<div class="container">
-                            <div class="collapse navbar-collapse" id="navbarBtn">
-                                <div class="text-white font-weight-bold">@mensagem, @Session("Nome") | @Session("Email")</div>
+                        @<div class="collapse navbar-collapse" id="navbarBtn">
+                                <p class="text-white font-weight-bold align-items-center">@mensagem, @Session("Nome") | @Session("Email")</p>
                                 <div class="btn-group-sm" role="group" style="margin-left:20px;float:right;">
                                     <button id="groupLogins" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Opções
@@ -125,18 +118,28 @@ End Code
                                         <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("Logout", "Logins")'">Logout</a>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                         </div>
                     End If
                 </nav>
             End If
             <!-- PÁGINA PARA RENDERIZAR DAS VIEWS-->
-            <div class="background">
-                @RenderBody()
-                @*<footer class="card-footer">
+            @If String.IsNullOrEmpty((Session("Nome"))) Then
+                @<div class="">
+                    @RenderBody()
+                    @*<footer class="card-footer">
                         <p>&copy; @DateTime.Now.Year - Ticket System by ms</p>
                     </footer>*@
-            </div>
+                </div>
+            Else
+                @<div class="container background">
+                    @RenderBody()
+                    @*<footer class="card-footer">
+                        <p>&copy; @DateTime.Now.Year - Ticket System by ms</p>
+                    </footer>*@
+                </div>
+            End If
+
+
         </div>
 
     </div>
