@@ -3,10 +3,9 @@
     ViewData("Title") = "Criação de utilizador"
 End Code
 
-<h2>Criação de Utilizador</h2>
+<div class="container">
+    <h4>Criação de Utilizador</h4>
 
-
-<div class="form-group">
     @Using (Html.BeginForm())
         @Html.AntiForgeryToken()
         @<div class="form-group">
@@ -33,8 +32,5 @@ End Code
                 Voltar
             </button>
         </div>
-
     End Using
-
-
 </div>

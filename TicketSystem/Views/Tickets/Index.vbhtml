@@ -5,6 +5,8 @@ End Code
 
 <div class="container">
 
+    <h4>Listagem tickets</h4>
+
     @Using (Html.BeginForm())
         @<div class="filtros_ticket">
             <label> Filtrar por data - </label>
@@ -13,20 +15,20 @@ End Code
         </div>
     End Using
 
-    <table class="table table-hover table-sm" id="tabelaTickets">
+    <table class="table table-hover table-sm table-responsive" id="tabelaTickets">
         <tr class="thead-dark">
-            <th>@Html.DisplayNameFor(Function(ticket) ticket.ID_ticket)</th>
-            <th>@Html.DisplayNameFor(Function(ticket) ticket.ID_tecnico)</th>
-            <th>@Html.DisplayNameFor(Function(ticket) ticket.ID_software)</th>
-            <th>@Html.DisplayNameFor(Function(ticket) ticket.ID_cliente)</th>
-            <th>@Html.DisplayNameFor(Function(ticket) ticket.ID_problema)</th>
-            <th>@Html.DisplayNameFor(Function(ticket) ticket.descricao)</th>
-            <th>@Html.DisplayNameFor(Function(ticket) ticket.dataAbertura)</th>
-            <th>@Html.DisplayNameFor(Function(ticket) ticket.dataFecho)</th>
-            <th>@Html.DisplayNameFor(Function(ticket) ticket.ID_estado)</th>
-            <th>@Html.DisplayNameFor(Function(ticket) ticket.ID_prioridade)</th>
-            <th>@Html.DisplayNameFor(Function(ticket) ticket.ID_origem)</th>
-            <th>@Html.DisplayNameFor(Function(ticket) ticket.dat_hor)</th>
+            <th  scope="col">@Html.DisplayNameFor(Function(ticket) ticket.ID_ticket)</th>
+            <th  scope="col">@Html.DisplayNameFor(Function(ticket) ticket.ID_tecnico)</th>
+            <th  scope="col">@Html.DisplayNameFor(Function(ticket) ticket.ID_software)</th>
+            <th  scope="col">@Html.DisplayNameFor(Function(ticket) ticket.ID_cliente)</th>
+            <th  scope="col">@Html.DisplayNameFor(Function(ticket) ticket.ID_problema)</th>
+            <th  scope="col">@Html.DisplayNameFor(Function(ticket) ticket.descricao)</th>
+            <th  scope="col">@Html.DisplayNameFor(Function(ticket) ticket.dataAbertura)</th>
+            <th  scope="col">@Html.DisplayNameFor(Function(ticket) ticket.dataFecho)</th>
+            <th  scope="col">@Html.DisplayNameFor(Function(ticket) ticket.ID_estado)</th>
+            <th  scope="col">@Html.DisplayNameFor(Function(ticket) ticket.ID_prioridade)</th>
+            <th  scope="col">@Html.DisplayNameFor(Function(ticket) ticket.ID_origem)</th>
+            <th  scope="col">@Html.DisplayNameFor(Function(ticket) ticket.dat_hor)</th>
 
             @*<th>@Html.DisplayNameFor(Function(ticket) ticket.ID_utilizador)</th>*@
             @*<th>@Html.DisplayNameFor(Function(ticket) ticket.tempoPrevisto)</th>

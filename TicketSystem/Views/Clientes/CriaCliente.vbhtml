@@ -3,9 +3,10 @@
     ViewData("Title") = "Criação De Cliente"
 End Code
 
-<h2>Criação de cliente</h2>
 
-<div class="form-group">
+
+<div class="container">
+    <h4>Criação de cliente</h4>
     @Using (Html.BeginForm())
         @Html.AntiForgeryToken()
         @<div class="form-group">

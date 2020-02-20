@@ -4,9 +4,10 @@
     ViewData("Title") = "Criação de técnico"
 End Code
 
-<h2>Adicionar novo Tecnico</h2>
 
-<div class="form-horizontal">
+
+<div class="container">
+    <h4>Adicionar novo Tecnico</h4>
     @Using (Html.BeginForm())
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(True, "", New With {.class = "text-danger"})

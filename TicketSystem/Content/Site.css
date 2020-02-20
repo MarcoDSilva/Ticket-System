@@ -183,16 +183,73 @@ ul ul a {
     margin-top: 30px;
     background-color: rgba(166, 93, 152, 0.23);
     border-radius: 10px;
-    width: 400px;
+    text-align: center;
+    /*width:auto*/;
 }
+
+    /*#tabelaTickets td:nth-child(1) {
+        width: 5%;
+    }
+
+    #tabelaTickets td:nth-child(2), #tabelaTickets td:nth-child(3) {
+        width: 9%;
+    }
+
+    #tabelaTickets td:nth-child(4) {
+        width: 7%;
+    }
+
+    #tabelaTickets td:nth-child(5) {
+        width: 15%;
+    }
+
+    #tabelaTickets td:nth-child(6) {
+        width: 20%;
+    }
+
+    #tabelaTickets td:nth-child(7), #tabelaTickets td:nth-child(8) {
+        width: 50%;
+    }
+
+    #tabelaTickets td:nth-child(11), #tabelaTickets td:nth-child(8) {
+        width: 50%;
+    }*/ 
+
+#tabelaEventos {
+    margin-top: 30px;
+    background-color: rgba(166, 93, 152, 0.20);
+    border-radius: 10px;
+    text-align: center;
+    width:auto;
+}
+
+    #tabelaEventos td:nth-child(1), #tabelaEventos td:nth-child(6) {
+        width: 5%;
+    }
+
+    #tabelaEventos td:nth-child(2) {
+        width: 20%;
+    }
+
+    #tabelaEventos td:nth-child(3) {
+        width: 10%;
+    }
+
+    #tabelaEventos td:nth-child(4), #tabelaEventos td:nth-child(5) {
+        width: 15%;
+    }
+
+    #tabelaEventos td:nth-child(7) {
+        width: 15%;
+    }
+
 
 .clickableCell {
-
 }
 
-.clickableCell:hover {
-    cursor:pointer;
-}
+    .clickableCell:hover {
+        cursor: pointer;
+    }
 
 .btnHamburguer {
     background-color: rgba(166, 93, 152, 0.53);

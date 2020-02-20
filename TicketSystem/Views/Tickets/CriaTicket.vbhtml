@@ -11,9 +11,8 @@ End Code
     @Using (Html.BeginForm())
         @Html.AntiForgeryToken()
 
-
         @<div class="form-group">
-            <h2>Criação de ticket</h2>
+            <h4>Criação de ticket</h4>
    
             @Html.HiddenFor(Function(ticket) ticket.ID_ticket)
             <div class="col-md-12">               
