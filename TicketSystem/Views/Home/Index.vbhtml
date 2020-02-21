@@ -27,13 +27,39 @@ End If
     @<p>A sua conta esta desactivada de momento. Por favor contacte o administrador do software.</p>
 End If
 
-<p>Número de tickets abertos: x</p>
-<p>Número de tickets novos: y</p>
-<p>Número de tickets totais: z</p>
-<p>Número de tickets fechados: x</p>
+<div id="estatisticasBasicasTickets" class="container">
+    <div class="row">
+        <div class="col-md-4 col-sm-2">
+            <div class="icones_estatisticas">
+                <img src="~/img/folder.svg" alt="" width="32" height="32" title="icon">
+            </div>
+            <div class="texto_estatistica">
+                <label>Tickets totais: x</label>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-2">
+            <p>Número de tickets por concluir: x</p>
+        </div>
+        <div class="col-md-4 col-sm-2">
+            <p>Número de tickets do mes actual: x</p>
+        </div>
+    </div>
 
-<div id="ticketsIndex" class="jumbotron">
-    <table class="table table-sm table-striped table-hover">
+    <div class="row">
+        <div class="col-md-4  col-sm-2">
+            <p>Número de tickets finalizados: x</p>
+        </div>
+        <div class="col-md-4 col-sm-2">
+            <p>Número de tickets do ano actual: x</p>
+        </div>
+        <div class="col-md-4 col-sm-2">
+            <p>Número de tickets novos: x</p>
+        </div>
+    </div>
+</div>
+
+<div id="ticketsIndex">
+    <table class="table table-sm table-striped table-hover table-responsive">
         <tr class="thead-dark">
             <th>ID</th>
             <th>Tecnico</th>

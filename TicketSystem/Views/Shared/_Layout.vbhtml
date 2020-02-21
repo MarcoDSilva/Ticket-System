@@ -27,8 +27,8 @@ End Code
         <!-- NAVBAR -->
         @If Not String.IsNullOrEmpty((Session("Nome"))) And Not Session("Inativo") = 1 Then
             @<nav id="sidebar">
-                <div class="sidebar-header">   
-                    <a onclick="location.href='@Url.Action("Index", "Home")'" class="logo" href="#">Ticket System</a>                            
+                <div class="sidebar-header">
+                    <a onclick="location.href='@Url.Action("Index", "Home")'" class="logo" href="#">Ticket System</a>
                 </div>
 
                 <ul class="list-unstyled components">
@@ -59,9 +59,11 @@ End Code
                             <li>
                                 @Html.ActionLink("Problemas", "Index", "Problemas")
                             </li>
-                            <li>
-                                @Html.ActionLink("Estados", "Index", "Estados")
-                            </li>
+                            @If Session("Administrador") = 1 Then
+                                @<li>
+                                    @Html.ActionLink("Estados", "Index", "Estados")
+                                </li>
+                            End If
                             <li>
                                 @Html.ActionLink("Prioridades", "Index", "Prioridades")
                             </li>
@@ -101,8 +103,8 @@ End Code
             @If Not String.IsNullOrEmpty((Session("Nome"))) Then
 
                 @<nav class="navbar navbar-dark shadow-sm navbar-expand-lg navColor">
-                    <button type="button" id="sidebarCollapse" class="btn btnHamburguer">
-                        <i class="fas fa-align-left"></i>
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-sm btnHamburguer">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
@@ -111,17 +113,17 @@ End Code
                     </button>
                     @If Session("Login") = 1 And Session("LoginErrado") = 0 Then
                         @<div class="collapse navbar-collapse" id="navbarBtn">
-                                <p class="text-white font-weight-bold align-items-center">@mensagem, @Session("Nome") | @Session("Email")</p>
-                                <div class="btn-group-sm" role="group" style="margin-left:20px;float:right;">
-                                    <button id="groupLogins" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Opções
-                                    </button>
-                                    <div class="dropdown-menu align-content-end" aria-labelledby="groupLogins">
-                                        <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("AlterarPassword", "Logins", New With {.ID_tecnico = Session("ID_tecnico")})'">Alterar Password</a>
-                                        <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("Logout", "Logins")'">Logout</a>
-                                    </div>
+                            <p class="text-white font-weight-bold align-items-center">@mensagem, @Session("Nome") | @Session("Email")</p>
+                            <div class="btn-group-sm" role="group" style="margin-left:20px;float:right;">
+                                <button id="groupLogins" type="button" class="btn btnOpcoesMenu dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Opções
+                                </button>
+                                <div class="dropdown-menu align-content-end" aria-labelledby="groupLogins">
+                                    <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("AlterarPassword", "Logins", New With {.ID_tecnico = Session("ID_tecnico")})'">Alterar Password</a>
+                                    <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("Logout", "Logins")'">Logout</a>
                                 </div>
-                         </div>
+                            </div>
+                        </div>
                     End If
                 </nav>
             End If
@@ -130,15 +132,15 @@ End Code
                 @<div class="">
                     @RenderBody()
                     @*<footer class="card-footer">
-                        <p>&copy; @DateTime.Now.Year - Ticket System by ms</p>
-                    </footer>*@
+                            <p>&copy; @DateTime.Now.Year - Ticket System by ms</p>
+                        </footer>*@
                 </div>
             Else
                 @<div class="container background">
                     @RenderBody()
                     @*<footer class="card-footer">
-                        <p>&copy; @DateTime.Now.Year - Ticket System by ms</p>
-                    </footer>*@
+                            <p>&copy; @DateTime.Now.Year - Ticket System by ms</p>
+                        </footer>*@
                 </div>
             End If
 

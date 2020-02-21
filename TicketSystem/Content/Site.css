@@ -178,7 +178,8 @@ ul ul a {
 
 #ticketsIndex {
     /*max-width:400px;*/
-    border: 1px groove black;
+    /*border: 1px groove black;*/
+    width:100vw;
 }
 
 #editaPasswordForm {  
@@ -260,6 +261,7 @@ ul ul a {
 
 .btnHamburguer {
     background-color: rgba(166, 93, 152, 0.53);
+   
 }
 
 /*#navbarBtn {
@@ -268,7 +270,6 @@ ul ul a {
 
 .filtros_ticket {
     border: 1px solid gray;
-
     display:block;
 }
 
@@ -292,4 +293,18 @@ ul ul a {
 #btnsEditarTickets {
     margin-top:20px;
     padding-top:20px;
+}
+
+.btnOpcoesMenu {
+    background-color: rgba(166, 93, 152, 0.53);
+    color: #fff;
+}
+
+    .btnOpcoesMenu:hover {
+        color: wheat;
+    }
+
+#estatisticasBasicasTickets .row .col{
+       border:1px solid black;
+       margin:4px;
 }

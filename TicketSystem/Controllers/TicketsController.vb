@@ -33,9 +33,8 @@ Namespace Controllers
             'adicionar os parametros um a um na lista, caso contrário o if fica gigantesco
             Dim l As New List(Of String)
             l.Add(ordem)
-            l.Add(ordem)
-            l.Add(ID_estado)
             l.Add(ID_prioridade)
+            l.Add(ID_estado)
             l.Add(ID_problema)
             l.Add(ID_software)
             l.Add(ID_cliente)
