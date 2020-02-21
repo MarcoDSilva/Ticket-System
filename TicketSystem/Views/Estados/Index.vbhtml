@@ -3,25 +3,29 @@
     ViewData("Title") = "Estados"
 End Code
 
-<h2>Lista de Estados</h2>
+<div class="container">
 
-<table class="table table-hover table-sm table-responsive">
-    <tr class="thead-dark">
-        <th>@Html.DisplayNameFor(Function(modelEst) modelEst.ID_estado)</th>
-        <th>@Html.DisplayNameFor(Function(modelEst) modelEst.descricao)</th>
-        <th>@Html.DisplayNameFor(Function(modelEst) modelEst.dat_hor)</th>
-    </tr>
+    <h2>Lista de Estados</h2>
 
-    @For Each estado In Model
-        @<tr>
-            <td>@Html.DisplayFor(Function(modelestado) estado.ID_estado)</td>
-            <td>@Html.DisplayFor(Function(modelestado) estado.descricao)</td>
-            <td>@Html.DisplayFor(Function(modelestado) estado.dat_hor)</td>
-            <td>@Html.ActionLink("Detalhes", "EditarEstado", New With {.ID_estado = estado.ID_estado})</td>
+    <table class="table table-hover table-sm table-responsive">
+        <tr class="thead-dark">
+            <th>@Html.DisplayNameFor(Function(modelEst) modelEst.ID_estado)</th>
+            <th>@Html.DisplayNameFor(Function(modelEst) modelEst.descricao)</th>
+            <th>@Html.DisplayNameFor(Function(modelEst) modelEst.dat_hor)</th>
         </tr>
-    Next
-</table>
 
-<button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("CriaEstado", "Estados")'">
-    Novo Registo
-</button>
+        @For Each estado In Model
+            @<tr>
+                <td>@Html.DisplayFor(Function(modelestado) estado.ID_estado)</td>
+                <td>@Html.DisplayFor(Function(modelestado) estado.descricao)</td>
+                <td>@Html.DisplayFor(Function(modelestado) estado.dat_hor)</td>
+                <td>@Html.ActionLink("Detalhes", "EditarEstado", New With {.ID_estado = estado.ID_estado})</td>
+            </tr>
+        Next
+    </table>
+
+    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("CriaEstado", "Estados")'">
+        Novo Registo
+    </button>
+
+</div>

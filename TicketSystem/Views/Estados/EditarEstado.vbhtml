@@ -4,13 +4,14 @@
     Dim idParaApagar = Model.ID_estado
 End Code
 
-<h2>Editar o tipo do estado</h2>
 
 @Using (Html.BeginForm())
     @Html.AntiForgeryToken()
 
 
-    @<div class="form-horizontal">
+    @<div class="container">
+        <h2>Editar o tipo do estado</h2>
+
         <h4>Modo de edição</h4>
         @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
         @Html.HiddenFor(Function(modelEst) modelEst.ID_estado)

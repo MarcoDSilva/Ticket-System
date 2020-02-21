@@ -4,13 +4,14 @@
     Dim idParaApagar = Model.ID_software
 End Code
 
-<h2>Modo de edição - software</h2>
 
 @Using (Html.BeginForm())
     @Html.AntiForgeryToken()
 
     'form da view abaixo desta div
-    @<div class="form-horizontal">
+    @<div class="container">
+        <h2>Modo de edição - software</h2>
+
         <h4>Editar software.</h4>
         @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
         @Html.HiddenFor(Function(modelSoft) modelSoft.ID_software)

@@ -4,13 +4,14 @@
     Dim idParaApagar = Model.ID_problema
 End Code
 
-<h2>Tipos de Problema</h2>
+
 
 @Using (Html.BeginForm())
     @Html.AntiForgeryToken()
 
     'form da view fica abaixo desta div
-    @<div class="form-horizontal">
+    @<div class="container">
+        <h2>Tipos de Problema</h2>
         <h4>Modo de edição: </h4>
         @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
         @Html.HiddenFor(Function(Modelprob) Modelprob.ID_problema)

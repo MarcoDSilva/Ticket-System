@@ -3,9 +3,10 @@
     ViewData("Title") = "Edição de Utilizador"
 End Code
 
-<h2>Editar Utilizador</h2>
 
-<div class="form-group">
+
+<div class="container">
+    <h2>Editar Utilizador</h2>
     @Using (Html.BeginForm())
         @Html.AntiForgeryToken()
 

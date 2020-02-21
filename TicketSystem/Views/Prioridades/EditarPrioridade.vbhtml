@@ -4,13 +4,14 @@
     Dim idParaApagar = Model.ID_prioridade
 End Code
 
-<h2>Editar prioridade</h2>
+
 
 @Using (Html.BeginForm)
     @Html.AntiForgeryToken()
 
     'form da view
-    @<div class="form-horizontal">
+    @<div class="container">
+
     <h4>Modo de edição:</h4>
     @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
     @Html.HiddenFor(Function(modelPrio) modelPrio.ID_prioridade)
