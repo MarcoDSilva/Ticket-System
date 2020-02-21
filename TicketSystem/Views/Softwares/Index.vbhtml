@@ -5,7 +5,7 @@ End Code
 
 <h2>Listagem softwares</h2>
 
-<table class="table table-hover table-sm">
+<table class="table table-hover table-sm table-responsive">
     <tr class="thead-dark">
         <th>@Html.DisplayNameFor(Function(modelSoft) modelSoft.ID_software)</th>
         <th>@Html.DisplayNameFor(Function(modelSoft) modelSoft.nome)</th>

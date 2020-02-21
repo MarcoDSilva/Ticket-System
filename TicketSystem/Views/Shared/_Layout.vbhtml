@@ -18,6 +18,7 @@ End Code
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ticket System - @ViewBag.Title</title>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,500i,800&display=swap" rel="stylesheet">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -103,7 +104,6 @@ End Code
             @If Not String.IsNullOrEmpty((Session("Nome"))) Then
 
                 @<nav class="navbar navbar-dark shadow-sm navbar-expand-lg navColor">
-
                     <button type="button" id="sidebarCollapse" class="btn btn-sm btnHamburguer">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -113,12 +113,12 @@ End Code
                     </button>
                     @If Session("Login") = 1 And Session("LoginErrado") = 0 Then
                         @<div class="collapse navbar-collapse" id="navbarBtn">
-                            <p class="text-white font-weight-bold align-items-center">@mensagem, @Session("Nome") | @Session("Email")</p>
+                            <p class="text-white font-weight-bold" style="margin-left:10em;">@mensagem, @Session("Nome") | @Session("Email")</p>
                             <div class="btn-group-sm" role="group" style="margin-left:20px;float:right;">
                                 <button id="groupLogins" type="button" class="btn btnOpcoesMenu dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Opções
                                 </button>
-                                <div class="dropdown-menu align-content-end" aria-labelledby="groupLogins">
+                                <div class="dropdown-menu" aria-labelledby="groupLogins">
                                     <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("AlterarPassword", "Logins", New With {.ID_tecnico = Session("ID_tecnico")})'">Alterar Password</a>
                                     <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("Logout", "Logins")'">Logout</a>
                                 </div>
@@ -136,7 +136,7 @@ End Code
                         </footer>*@
                 </div>
             Else
-                @<div class="container background">
+                @<div class="background">
                     @RenderBody()
                     @*<footer class="card-footer">
                             <p>&copy; @DateTime.Now.Year - Ticket System by ms</p>

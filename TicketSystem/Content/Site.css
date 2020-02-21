@@ -4,12 +4,13 @@
     /*background-color: #FFFAFA;*/
     background-color: rgb(106, 74, 89);
     box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+    font-family: 'Raleway',Arial, Helvetica, sans-serif;
 }
+
 
 .background {
     display: block;
-
-    /*position: relative;*/
+    position: relative;    
 }
 
     .background::after {
@@ -20,11 +21,9 @@
         left: 0;
         bottom: 0;
         right: 0;
-        height: 100vh;
-        width: 100%;
+        min-height: 94vh;
         position: absolute;
         background-repeat:repeat;
-
         z-index: -1;
     }
 
@@ -43,7 +42,7 @@
 
 .logo {
     color:wheat;
-    font-size:25px;
+    font-size:20px;
     padding:25px;
 }
 
@@ -98,7 +97,7 @@ a[data-toggle="collapse"] {
     }
 
     #sidebar .sidebar-header {
-        padding: 9px;
+        padding: 13px;
         background: #5a2951;
         box-shadow: inset 0 0 5rem rgba(166, 93, 152, 0.53) !important;
     }
@@ -179,7 +178,8 @@ ul ul a {
 #ticketsIndex {
     /*max-width:400px;*/
     /*border: 1px groove black;*/
-    width:100vw;
+
+    margin-top:20px;
 }
 
 #editaPasswordForm {  
@@ -198,22 +198,6 @@ ul ul a {
     text-align: center;
     width:auto;
 }
-
-    /*#tabelaTickets td:nth-child(1) {
-        width: 5%;
-    }
-
-    #tabelaTickets td:nth-child(2), #tabelaTickets td:nth-child(3) {
-        width: 9%;
-    }
-
-    #tabelaTickets td:nth-child(4) {
-        width: 7%;
-    }
-
-    #tabelaTickets td:nth-child(5) {
-        width: 15%;
-    }*/
 
     #tabelaTickets td:nth-child(6) {
         width: 20%;
@@ -264,9 +248,13 @@ ul ul a {
    
 }
 
-/*#navbarBtn {
-    right:0;
-}*/
+#navbarBtn {
+    display:flex;
+    flex-flow:row wrap;
+    justify-content:flex-end;
+}
+
+
 
 .filtros_ticket {
     border: 1px solid gray;
@@ -307,4 +295,29 @@ ul ul a {
 #estatisticasBasicasTickets .row .col{
        border:1px solid black;
        margin:4px;
+}
+estatisticasBasicasTickets
+
+.caixaPr {
+    width:50px;
+}
+
+#estatisticasBasicasTickets {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    padding: 0;
+    margin: 0;
+}
+
+.estatisticasFlexItem {
+    background: tomato;
+    padding: 10px;
+    width: 150px;
+    height: 150px;
+    color: white;
+    text-align: center;
+    font-weight:500;
+    font-size:19px;
+    margin: 10px;
 }

@@ -5,7 +5,7 @@ End Code
 
 <h2>Lista de Estados</h2>
 
-<table class="table table-hover table-sm">
+<table class="table table-hover table-sm table-responsive">
     <tr class="thead-dark">
         <th>@Html.DisplayNameFor(Function(modelEst) modelEst.ID_estado)</th>
         <th>@Html.DisplayNameFor(Function(modelEst) modelEst.descricao)</th>

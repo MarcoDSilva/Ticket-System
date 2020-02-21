@@ -5,7 +5,7 @@ End Code
 
 <div class="container">
     <h2>Listagem Tecnicos</h2>
-    <table class="table table-hover table-sm">
+    <table class="table table-hover table-sm table-responsive">
         <tr class="thead-dark">
             <th>@Html.DisplayNameFor(Function(modelTec) modelTec.ID_tecnico)
             <th>@Html.DisplayNameFor(Function(modelTec) modelTec.nome)</th>
