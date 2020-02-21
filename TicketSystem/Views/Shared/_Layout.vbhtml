@@ -108,13 +108,13 @@ End Code
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarBtn" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
                     @If Session("Login") = 1 And Session("LoginErrado") = 0 Then
+                        @<Button Class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarBtn" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span Class="navbar-toggler-icon"></span>
+                        </Button>
                         @<div class="collapse navbar-collapse" id="navbarBtn">
-                            <p class="text-white font-weight-bold" style="margin-left:10em;">@mensagem, @Session("Nome") | @Session("Email")</p>
-                            <div class="btn-group-sm" role="group" style="margin-left:20px;float:right;">
+                            <p class="text-white font-weight-bold">@mensagem, @Session("Nome") | @Session("Email")</p>
+                            <div class="btn-group-sm" role="group" style="margin-left:20px;">
                                 <button id="groupLogins" type="button" class="btn btnOpcoesMenu dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Opções
                                 </button>
@@ -143,8 +143,6 @@ End Code
                         </footer>*@
                 </div>
             End If
-
-
         </div>
 
     </div>

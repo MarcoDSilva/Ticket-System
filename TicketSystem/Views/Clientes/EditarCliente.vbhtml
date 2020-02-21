@@ -3,9 +3,10 @@
     ViewData("Title") = "Edição de clientes"
 End Code
 
-<h2>Edição de cliente</h2>
 
-<div class="form-group">
+<div class="container">
+    <h2>Edição de cliente</h2>
+
     @Using (Html.BeginForm())
         @Html.AntiForgeryToken()
 
@@ -62,7 +63,7 @@ End Code
 
             <!-- butões com as operações respectivas do formulário de edição -->
             <div id="editaEvento" class="form-group">
-               
+
                 <!-- Opções do Modal para confirmação do apagamento do registo -->
                 <div class="modal fade" id="verificaModal" tabindex="-1" role="dialog" aria-labelledby="modalApagar" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">

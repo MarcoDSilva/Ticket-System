@@ -10,7 +10,7 @@ End Code
 @Using (Html.BeginForm())
     @Html.AntiForgeryToken()
 
-    @<div class="form-group" id="criaTicket">
+    @<div class="container" id="criaTicket">
         <h4>Criação de ticket</h4>
 
         @Html.HiddenFor(Function(ticket) ticket.ID_ticket)
