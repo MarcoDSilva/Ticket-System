@@ -6,7 +6,6 @@ End Code
 <div class="container">
     <h2>Listagem Clientes</h2>
 
-
     <table class="table table-hover table-sm table-responsive">
         <tr class="thead-dark">
             <th>@Html.DisplayNameFor(Function(modelCli) modelCli.ID_cliente)</th>

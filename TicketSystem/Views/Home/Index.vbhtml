@@ -29,39 +29,44 @@ End Code
     @<p>A sua conta esta desactivada de momento. Por favor contacte o administrador do software.</p>
 Else
     @<div class="container">
-        <div id="estatisticasBasicasTickets">
+         <div id="estatisticasBasicasTickets">
 
-            <div class="estatisticasFlexItem">
-                <img src="~/img/folder.svg" alt="" width="32" height="32" title="icon">
-                <Label> Total de tickets: @ViewBag.totalTickets</Label>
-            </div>
+             <section class="estatisticasFlexItem">
+                 <img src="~/img/folder.svg" alt="" width="32" height="32" title="icon">
+                 <Label> Total de tickets: @ViewBag.totalTickets</Label>
+             </section>
 
-            <div class="estatisticasFlexItem">
-                <img src="~/img/alert-square.svg" alt="" width="32" height="32" title="icon">
-                <p> Tickets não finalizados: @ViewBag.ticketsNaoConcluidos</p>
-            </div>
+             <section class="estatisticasFlexItem">
+                 <img src="~/img/alert-square.svg" alt="" width="32" height="32" title="icon">
+                 <p> Tickets não finalizados: @ViewBag.ticketsNaoConcluidos</p>
+             </section>
 
-            <div class="estatisticasFlexItem">
-                <img src="~/img/envelope-open.svg" alt="" width="32" height="32" title="icon">
-                <p> Abertos no Mês corrente: @ViewBag.ticketsAnoActual</p>
-            </div>
+             <section class="estatisticasFlexItem">
+                 <img src="~/img/envelope-open.svg" alt="" width="32" height="32" title="icon">
+                 <p> Abertos no Mês corrente: @ViewBag.ticketsAnoActual</p>
+             </section>
 
-            <div class="estatisticasFlexItem">
-                <img src="~/img/envelope.svg" alt="" width="32" height="32" title="icon">
-                <p> Tickets Resolvidos: @ViewBag.ticketsConcluidos</p>
-            </div>
+             <section class="estatisticasFlexItem">
+                 <img src="~/img/envelope.svg" alt="" width="32" height="32" title="icon">
+                 <p> Tickets Resolvidos: @ViewBag.ticketsConcluidos</p>
+             </section>
 
-            <div class="estatisticasFlexItem">
-                <img src="~/img/inbox-fill.svg" alt="" width="32" height="32" title="icon">
-                <p> Tickets do ano corrente: @ViewBag.ticketsAnoActual</p>
-            </div>
+             <section class="estatisticasFlexItem">
+                 <img src="~/img/inbox-fill.svg" alt="" width="32" height="32" title="icon">
+                 <p> Tickets do ano corrente: @ViewBag.ticketsAnoActual</p>
+             </section>
 
-            <div class="estatisticasFlexItem">
-                <img src="~/img/info.svg" alt="" width="32" height="32" title="icon">
-                <p> Número de tickets novos: @ViewBag.ticketsNovos</p>
-            </div>
+             <section class="estatisticasFlexItem">
+                 <img src="~/img/info.svg" alt="" width="32" height="32" title="icon">
+                 <p> Número de tickets novos: @ViewBag.ticketsNovos</p>
+             </section>
 
-        </div>
+             <section class="estatisticasFlexItem">
+                 <img src="~/img/info.svg" alt="" width="32" height="32" title="icon">
+                 <p> Eventos para o técnico: @ViewBag.eventosAtribuidos</p>
+             </section>
+
+         </div>
 
         <!--tickets abertos -->
         <div id="ticketsIndex">

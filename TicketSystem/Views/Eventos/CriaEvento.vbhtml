@@ -32,18 +32,22 @@ End Code
                                        .placeHolder = "Insira a descrição aqui"})
                 @Html.ValidationMessageFor(Function(modelEve) modelEve.descricao)
             </section>
+
             <section>
                 @Html.LabelFor(Function(modelEve) modelEve.ID_tecnico, New With {.class = "form-check-label"})
                 @Html.DropDownList("ID_tecnico", DirectCast(ViewBag.tecnico, SelectList), New With {.class = "form-control"})
             </section>
+
             <section>
                 @Html.LabelFor(Function(modelEve) modelEve.dataAbertura, New With {.class = "form-check-label"})
                 <input type="date" name="dataAbertura" value="dataAbertura" id="dataAbertura" class="form-control" />
             </section>
+
             <section>
                 @Html.LabelFor(Function(modelEve) modelEve.dataFecho, New With {.class = "form-check-label"})
                 <input type="date" name="dataFecho" value="dataFecho" id="dataFecho" class="form-control" />
             </section>
+
             <section>
                 @Html.LabelFor(Function(modelEve) modelEve.ID_ticket, New With {.class = "form-check-label"})
 
@@ -52,8 +56,8 @@ End Code
                 Else
                     @Html.DropDownList("ID_ticket", DirectCast(ViewBag.tickets, SelectList), New With {.class = "form-control"})
                 End If
-
             </section>
+
         </div>
 
         <div style="margin:20px;">

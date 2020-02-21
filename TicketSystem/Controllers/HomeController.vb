@@ -30,6 +30,10 @@
                                                             WHERE Year(t.dataAbertura) = '{DateTime.Now.Month.ToString()}';").
                                                             AsEnumerable().First().Item(0)
 
+        ViewBag.eventosAtribuidos = conectaBD.LeituraTabela($"SELECT COUNT(*) FROM 
+                                                            evento e WHERE e.dataFecho IS NULL
+                                                            AND e.ID_tecnico = {Session("ID_tecnico")}").AsEnumerable().First().Item(0)
+
         Return View()
     End Function
 

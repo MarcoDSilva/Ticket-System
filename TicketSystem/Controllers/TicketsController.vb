@@ -9,7 +9,7 @@ Namespace Controllers
 
         ' GET: Tickets
         Function Index(ordem As String, ID_prioridade As String, ID_estado As String, ID_problema As String,
-                       ID_software As String, ID_cliente As String, ID_tecnico As String) As ActionResult
+                       ID_software As String, ID_cliente As String, ID_tecnico As String, ID_origem As String) As ActionResult
             BloqueiaUtilizadores()
             Dim query As String = "SELECT t.ID_ticket, tec.nome, sft.nome, cli.nome, prob.descricao, t.descricao, 
                                       t.dataAbertura, t.dataFecho, t.tempoPrevisto, t.tempoTotal, est.descricao,
@@ -39,6 +39,7 @@ Namespace Controllers
             l.Add(ID_software)
             l.Add(ID_cliente)
             l.Add(ID_tecnico)
+            l.Add(ID_origem)
 
             'função que se não encontrar nenhum elemento com valor, retorna true e podemos devolver à view uma query normal
             If VerificaParams(l) = True Then
@@ -72,6 +73,10 @@ Namespace Controllers
 
             query += IIf(String.IsNullOrEmpty(ID_tecnico),
                                     "", $" AND t.ID_tecnico = {ID_tecnico}")
+
+            query += IIf(String.IsNullOrEmpty(ID_origem),
+                                    "", $" AND t.ID_origem = {ID_origem}")
+
 
             query += ordenaPorData
 
