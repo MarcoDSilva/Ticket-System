@@ -27,7 +27,7 @@ Namespace Controllers
                                           AND ori.ID_origem = t.ID_origem"
 
             CriaViewBags()
-            Return View(LeituraDados(query))
+            Return View(LeituraDadosTicket(query))
 
         End Function
 
@@ -73,7 +73,7 @@ Namespace Controllers
 
             'função que se não encontrar nenhum elemento com valor, retorna true e podemos devolver à view uma query normal
             If VerificaParams(listaDeFiltros) = True Then
-                Return View(LeituraDados(query))
+                Return View(LeituraDadosTicket(query))
             End If
 
             'filtrar a ordenação para a query
@@ -117,7 +117,7 @@ Namespace Controllers
 
             query += ordenaPorData
 
-            Return View(LeituraDados(query))
+            Return View(LeituraDadosTicket(query))
         End Function
 
 
@@ -160,8 +160,15 @@ Namespace Controllers
                 Return New HttpStatusCodeResult(HttpStatusCode.Forbidden)
             Else
                 CriaViewBags()
+                Dim viewModel As New VM_TicketEventosHomePage
+                viewModel.Ticket = LeituraDadosTicket($"Select * from Ticket where ID_ticket = {ID_ticket}").ToList()
+                viewModel.Evento = LeituraDadosEvento($"SELECT e.ID_evento, e.descricao,t.nome, 
+                                            e.dataAbertura, e.dataFecho, e.ID_ticket, e.dat_hor 
+                                            FROM Evento e, Tecnico t
+                                            WHERE e.ID_tecnico = t.ID_tecnico
+                                            AND e.ID_ticket = {ID_ticket};").ToList()
 
-                Return View(LeituraDados($"Select * from Ticket where ID_ticket = {ID_ticket}").First())
+                Return View(viewModel)
             End If
         End Function
 
@@ -173,7 +180,7 @@ Namespace Controllers
             If IsNothing(ticketParams.ID_ticket) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.Forbidden)
             Else
-                Dim queryTicket = LeituraDados($"SELECT * FROM Ticket WHERE ID_Ticket = {ticketParams.ID_ticket}").First()
+                Dim queryTicket = LeituraDadosTicket($"SELECT * FROM Ticket WHERE ID_Ticket = {ticketParams.ID_ticket}").First()
 
                 'variaveis para serem atribuidos valores para a query
                 Dim tempoPrevisto, tempoTotal As Integer
@@ -189,7 +196,7 @@ Namespace Controllers
 
                 conectaBD.EditaTicket(Session("ID_tecnico"), ticketParams.ID_software, ticketParams.ID_cliente,
                                       ticketParams.ID_problema, ticketParams.descricao, dataAberturaConvertida, dataFechoConvertida,
-                                      tempoPrevisto, tempoTotal, ticketParams.ID_estado, ticketParams.ID_prioridade, ticketParams.ID_utilizador,
+                                      tempoPrevisto, tempoTotal, ticketParams.ID_estado, ticketParams.ID_prioridade, 0,
                                       ticketParams.ID_origem, ticketParams.ID_ticket)
             End If
 
@@ -214,7 +221,7 @@ Namespace Controllers
         ''' </summary>
         ''' <param name="query"></param>
         ''' <returns></returns>
-        Private Function LeituraDados(query As String) As List(Of VM_Ticket)
+        Private Function LeituraDadosTicket(query As String) As List(Of VM_Ticket)
 
             Dim tabelaDados As DataTable = conectaBD.LeituraTabela(query)
             Dim listagemTickets As New List(Of VM_Ticket)
@@ -340,6 +347,43 @@ Namespace Controllers
                 End If
             Next
             Return flag
+        End Function
+
+
+        ''' <summary>
+        ''' Método interno utilizado para ler dados da bd
+        ''' </summary>
+        ''' <param name="query"></param>
+        ''' <returns></returns>
+        Private Function LeituraDadosEvento(query As String) As List(Of VM_EventoTecnico)
+
+            Dim tabelaDados As DataTable = conectaBD.LeituraTabela(query)
+            Dim listagemEventos As New List(Of VM_EventoTecnico)
+
+            'fazemos um ciclo, que vai iterar por cada elemento que recebenos da base de dados
+            'criamos um novo objecto do tipo Evento, onde atribuimos os dados da iteração actual
+            'e no fim após a atribuição desses dados, inserimos numa List(a) de Eventos, o qual usamos para retornar os dados
+            For Each item In tabelaDados.AsEnumerable
+                Dim ev As New VM_EventoTecnico()
+
+                ev.ID_evento = item(0)
+                ev.descricao = item(1)
+                ev.ID_tecnico = item(2)
+                ev.dataAbertura = item(3)
+
+                If item(4).Equals(DBNull.Value) Then
+                    ev.dataFecho = Nothing
+                Else
+                    ev.dataFecho = item(4)
+                End If
+
+                ev.ID_ticket = item(5)
+                ev.dat_hor = item(6)
+
+                listagemEventos.Add(ev)
+            Next
+
+            Return listagemEventos
         End Function
     End Class
 End Namespace

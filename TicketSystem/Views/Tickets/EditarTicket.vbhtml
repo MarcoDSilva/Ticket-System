@@ -1,24 +1,24 @@
-﻿@ModelType TicketSystem.VM_Ticket
+﻿@ModelType TicketSystem.VM_TicketEventosHomePage
 @Code
     ViewData("Title") = "Edição de Ticket"
 
     Dim eventoNovo As New Evento
 
     Dim dataFinal As String
-    Dim dataInicial = Model.dataAbertura.ToString("yyyy-MM-dd")
-    Dim ticketID = Model.ID_ticket
+    Dim dataInicial = Model.Ticket.First.dataAbertura.ToString("yyyy-MM-dd")
+    Dim ticketID = Model.Ticket.First.ID_ticket
 
-    If IsNothing(Model.dataFecho) Then
+    If IsNothing(Model.Ticket.First.dataFecho) Then
         dataFinal = ""
     Else
-        dataFinal = Model.dataFecho.Value.ToString("yyyy-MM-dd")
+        dataFinal = Model.Ticket.First.dataFecho.Value.ToString("yyyy-MM-dd")
     End If
 End Code
 
 @Using (Html.BeginForm("EditarTicket", "Tickets"))
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
-    @Html.HiddenFor(Function(ticket) ticket.ID_ticket)
+    @Html.HiddenFor(Function(ticket) ticket.Ticket.First.ID_ticket)
     'form edição
 
     @<div class="container">
@@ -43,53 +43,53 @@ End Code
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="detalhes" role="tabpanel" aria-labelledby="detalhes-tab">
                         <div>
-                            @Html.LabelFor(Function(ticket) ticket.ID_software, New With {.class = "form-check-label"})
+                            @Html.LabelFor(Function(ticket) ticket.Ticket.First.ID_software, New With {.class = "form-check-label"})
                             @Html.DropDownList("ID_software", DirectCast(ViewBag.software, SelectList), New With {.class = "form-control"})
                         </div>
                         <div>
-                            @Html.LabelFor(Function(ticket) ticket.ID_cliente, New With {.class = "form-check-label"})
+                            @Html.LabelFor(Function(ticket) ticket.Ticket.First.ID_cliente, New With {.class = "form-check-label"})
                             @Html.DropDownList("ID_cliente", DirectCast(ViewBag.cliente, SelectList), New With {.class = "form-control"})
                         </div>
                         <div>
-                            @Html.LabelFor(Function(ticket) ticket.ID_problema, New With {.class = "form-check-label"})
+                            @Html.LabelFor(Function(ticket) ticket.Ticket.First.ID_problema, New With {.class = "form-check-label"})
                             @Html.DropDownList("ID_problema", DirectCast(ViewBag.problema, SelectList), New With {.class = "form-control"})
                         </div>
                         <div>
-                            @Html.LabelFor(Function(ticket) ticket.descricao, New With {.class = "form-check-label"})
-                            @Html.TextAreaFor(Function(ticket) ticket.descricao, 10, 100, New With {.class = "form-control descricaoTicket"})
+                            @Html.LabelFor(Function(ticket) ticket.Ticket.First.descricao, New With {.class = "form-check-label"})
+                            @Html.TextAreaFor(Function(ticket) ticket.Ticket.First.descricao, 10, 100, New With {.class = "form-control descricaoTicket"})
                         </div>
                     </div>
 
                     <section class="tab-pane fade" id="datas" role="tabpanel" aria-labelledby="datas-tab">
                         <div>
-                            @Html.LabelFor(Function(ticket) ticket.dataAbertura, New With {.class = "form-check-label"})
-                            <input type="date" name="dataAbertura" value="@dataInicial" id="@Model.dataAbertura" class="form-control" />
-                            @Html.LabelFor(Function(ticket) ticket.dataFecho, New With {.class = "form-check-label"})
+                            @Html.LabelFor(Function(ticket) ticket.Ticket.First.dataAbertura, New With {.class = "form-check-label"})
+                            <input type="date" name="dataAbertura" value="@dataInicial" id="@Model.Ticket.First.dataAbertura" class="form-control" />
+                            @Html.LabelFor(Function(ticket) ticket.Ticket.First.dataFecho, New With {.class = "form-check-label"})
                             <input type="date" name="dataFecho" value="@dataFinal" id="dataFecho" class="form-control" />
                         </div>
 
                         <div>
-                            @Html.LabelFor(Function(ticket) ticket.tempoPrevisto, New With {.class = "form-check-label"})
-                            @Html.TextBoxFor(Function(ticket) ticket.tempoPrevisto, New With {.class = "form-control"})
+                            @Html.LabelFor(Function(ticket) ticket.Ticket.First.tempoPrevisto, New With {.class = "form-check-label"})
+                            @Html.TextBoxFor(Function(ticket) ticket.Ticket.First.tempoPrevisto, New With {.class = "form-control"})
                         </div>
                         <div>
-                            @Html.LabelFor(Function(ticket) ticket.tempoTotal, New With {.class = "form-check-label"})
-                            @Html.TextBoxFor(Function(ticket) ticket.tempoTotal, New With {.class = "form-control"})
+                            @Html.LabelFor(Function(ticket) ticket.Ticket.First.tempoTotal, New With {.class = "form-check-label"})
+                            @Html.TextBoxFor(Function(ticket) ticket.Ticket.First.tempoTotal, New With {.class = "form-control"})
                         </div>
                     </section>
 
                     <section class="tab-pane fade " id="contact" role="tabpanel" aria-labelledby="contact-tab">
                         <div>
-                            @Html.LabelFor(Function(ticket) ticket.ID_estado, New With {.class = "form-check-label"})
+                            @Html.LabelFor(Function(ticket) ticket.Ticket.First.ID_estado, New With {.class = "form-check-label"})
                             @Html.DropDownList("ID_estado", DirectCast(ViewBag.estado, SelectList), New With {.class = "form-control"})
                         </div>
                         <div>
-                            @Html.LabelFor(Function(ticket) ticket.ID_prioridade, New With {.class = "form-check-label"})
+                            @Html.LabelFor(Function(ticket) ticket.Ticket.First.ID_prioridade, New With {.class = "form-check-label"})
                             @Html.DropDownList("ID_prioridade", DirectCast(ViewBag.prioridade, SelectList), New With {.class = "form-control"})
                         </div>
 
                         <div>
-                            @Html.LabelFor(Function(ticket) ticket.ID_origem, New With {.class = "form-check-label"})
+                            @Html.LabelFor(Function(ticket) ticket.Ticket.First.ID_origem, New With {.class = "form-check-label"})
                             @Html.DropDownList("ID_origem", DirectCast(ViewBag.origem, SelectList), New With {.class = "form-control"})
                         </div>
                     </section>
@@ -97,8 +97,6 @@ End Code
             </div>
 
             <div id="btnsEditarTickets" class="col">
-            
-
                 <ul class="listaBtns">
                     <li><h4>Edição:</h4></li>
                     <li>
@@ -126,6 +124,33 @@ End Code
                     </li>
                 </ul>
             </div>
+
+        </div>
+        <!--eventos atribuidos-->
+        <div class="row">
+            
+            <div id="ticketsIndex" class="col">
+                <h3>Eventos associados. </h3>
+                <table class="table table-striped table-hover table-sm table-responsive">
+                    <tr class="thead-dark">
+                        <th>@Html.LabelFor(Function(model) model.Evento.First.ID_evento)</th>
+                        <th> @Html.LabelFor(Function(model) model.Evento.First.ID_tecnico)</th>
+                        <th> @Html.LabelFor(Function(model) model.Evento.First.descricao)</th>
+                        <th> @Html.LabelFor(Function(model) model.Evento.First.ID_ticket)</th>
+                        <th> @Html.LabelFor(Function(model) model.Evento.First.dataAbertura)</th>
+                    </tr>
+                    @For Each evento In Model.Evento
+                        @<tr>
+                            <td>@Html.DisplayFor(Function(model) evento.ID_evento)</td>
+                            <td>@Html.DisplayFor(Function(model) evento.ID_tecnico)</td>
+                            <td>@Html.DisplayFor(Function(model) evento.descricao)</td>
+                            <td>@Html.DisplayFor(Function(model) evento.ID_ticket)</td>
+                            <td>@Html.DisplayFor(Function(model) evento.dataAbertura)</td>
+                        </tr>
+                    Next
+                    <caption>Eventos correspondentes ao ticket</caption>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -145,7 +170,7 @@ End Code
                     <div class="modal-body">Pretende mesmo apagar este problema? Esta operação não é reversivel!</div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                onclick="location.href ='@Url.Action("ApagarTicket", "Tickets", New With {.ID_ticket = Model.ID_ticket})'">
+                                onclick="location.href ='@Url.Action("ApagarTicket", "Tickets", New With {.ID_ticket = ticketID})'">
                             Apagar
                         </button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
