@@ -3,8 +3,6 @@
     ViewData("Title") = "Listagem tickets"
 End Code
 
-
-
 @Using (Html.BeginForm())
     'filtros neste form para melhor leitura nos tickets
     @Html.AntiForgeryToken()
@@ -17,7 +15,7 @@ End Code
         </div>
 
         <div class="form-check-inline">
-            <label>Filtrar por prioridade </label>
+            <label>Filtrar por prioridad    e </label>
             @Html.DropDownList("ID_prioridade", DirectCast(ViewBag.prioridade, SelectList), "",
                             htmlAttributes:=New With {.class = "form-control", .onchange = "this.form.submit();"})
         </div>
@@ -34,9 +32,7 @@ End Using
 <div class="container container-fluid container-md">
     <table class="table table-hover table-sm table-responsive" id="tabelaTickets">
         <tr class="thead-dark">
-            <th scope="col">
-                @Html.DisplayNameFor(Function(ticket) ticket.ID_ticket)
-            </th>
+            <th scope="col">@Html.DisplayNameFor(Function(ticket) ticket.ID_ticket)</th>
             <th scope="col">@Html.DisplayNameFor(Function(ticket) ticket.ID_tecnico)</th>
             <th scope="col">@Html.DisplayNameFor(Function(ticket) ticket.ID_software)</th>
             <th scope="col">@Html.DisplayNameFor(Function(ticket) ticket.ID_cliente)</th>

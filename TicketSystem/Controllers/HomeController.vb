@@ -10,11 +10,34 @@
             Response.Redirect("~/Logins/Index")
         End If
 
+        Dim queryTicket = $"SELECT t.ID_ticket, tec.nome, sft.nome, cli.nome, prob.descricao, t.descricao, 
+                                      t.dataAbertura, est.descricao, prio.descricao 
+
+                                      FROM Ticket t,Tecnico tec, Software sft, Cliente cli, 
+                                      Problema prob, Estado est, Prioridade prio, Evento e
+
+                                      WHERE t.ID_tecnico = tec.ID_tecnico
+                                          AND sft.ID_software = t.ID_software
+                                          AND cli.ID_cliente = t.ID_cliente
+                                          AND prob.ID_problema = t.ID_problema
+                                          AND est.ID_estado = t.ID_estado
+                                          AND prio.ID_prioridade = t.ID_prioridade
+                                          AND e.dataFecho IS NULL
+                                          AND e.ID_tecnico = {Session("ID_tecnico")}
+                                          AND t.ID_estado <> 6;"
+
+        Dim queryEvento = $"SELECT e.ID_evento, e.descricao,t.nome, 
+                                            e.dataAbertura, e.dataFecho, e.ID_ticket, e.dat_hor 
+                                            FROM Evento e, Tecnico t
+                                            WHERE e.ID_tecnico = t.ID_tecnico
+                                            AND e.dataFecho IS NULL
+                                            AND e.ID_tecnico = {Session("ID_tecnico")};"
+
         CriaViewBags()
+
         Dim viewModel As New VM_TicketEventosHomePage With {
-            .Evento = LeituraDadosEvento($"SELECT * FROM evento e WHERE e.dataFecho IS NULL
-                                                            AND e.ID_tecnico = {Session("ID_tecnico")}").ToList(),
-            .Ticket = LeituraDadosTicket($"SELECT * FROM Ticket t WHERE t.ID_estado = 2 ").ToList()
+            .Evento = LeituraDadosEvento(queryEvento).ToList(),
+            .Ticket = LeituraDadosTicket(queryTicket).ToList()
         }
 
         Return View(viewModel)
@@ -72,29 +95,8 @@
             tick.ID_problema = item(4)
             tick.descricao = item(5)
             tick.dataAbertura = item(6)
-
-            'prevê o caso da data ser nula
-            If item(7).Equals(DBNull.Value) Then
-                tick.dataFecho = Nothing
-            Else
-                tick.dataFecho = item(7)
-            End If
-
-            tick.tempoPrevisto = item(8)
-            tick.tempoTotal = item(9)
-            tick.ID_estado = item(10)
-            tick.ID_prioridade = item(11)
-
-            'prever o caso do utilizador ser não existente
-            If item(12).Equals(DBNull.Value) Then
-                tick.ID_utilizador = Nothing
-            Else
-                tick.ID_utilizador = item(12)
-            End If
-
-            tick.ID_origem = item(13)
-            tick.dat_hor = item(14)
-
+            tick.ID_estado = item(7)
+            tick.ID_prioridade = item(8)
             listagemTickets.Add(tick)
         Next
 
