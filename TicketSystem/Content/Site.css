@@ -258,8 +258,7 @@ ul ul a {
 
 
 .filtros_ticket {
-    border: 1px solid gray;
-    display:block;
+    margin:0 auto;
 }
 
 #criaTicket {
@@ -339,4 +338,8 @@ ul ul a {
 
 #btnsEditarTickets {
    
+}
+
+.borderForm {
+    border: 1px solid gray;
 }

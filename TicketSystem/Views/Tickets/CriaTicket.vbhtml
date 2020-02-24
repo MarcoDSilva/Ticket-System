@@ -45,7 +45,7 @@ End Code
                      @Html.DropDownList("ID_problema", DirectCast(ViewBag.problema, SelectList), New With {.class = "form-control"})
                  </section>
                  <section id="descricaoTicket">
-                     <div class="col-sm-8">
+                     <div>
                          @Html.LabelFor(Function(ticket) ticket.descricao, New With {.class = "form-check-label"})
                          @Html.TextAreaFor(Function(ticket) ticket.descricao, 10, 100, New With {.Class = "form-control descricaoTicket", .placeholder = "Insira a descrição aqui"})
                      </div>

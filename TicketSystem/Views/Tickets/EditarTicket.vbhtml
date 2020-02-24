@@ -94,39 +94,33 @@ End Code
                 </div>
             </div>
 
-            <div id="btnsEditarTickets">
+            <div id="btnsEditarTickets" class="form-group">
                 <h3>Edição:</h3>
 
-                <section class="btnEditarTicket">
-                    <input type="submit" class="btn btn-success" value="Guardar" name="Enviar" />
-                </section>
+                <ul>
+                    <li>
+                        <input type="submit" class="btn btn-success" value="Guardar" name="Enviar" />
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#modalApagarRegisto">
+                            Apagar
+                        </button>
 
-                <section class="btnEditarTicket">
-                    <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#modalApagarRegisto">
-                        Apagar
-                    </button>
-                </section>
+                    </li>
+                </ul>
+                
+                <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaTicket", "Tickets")'">
+                    Novo Ticket
+                </button>
 
-                <section class="btnEditarTicket">
-                    <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaTicket", "Tickets")'">
-                        Novo Ticket
-                    </button>
-                </section>
+                <button type="button" class="btn btn-primary btn-warning" data-toggle="modal" data-target="#modalNovoEvento">
+                    Eventos
+                </button>
 
-                <section class="btnEditarTicket">
-                    <button type="button" class="btn btn-primary btn-warning" data-toggle="modal" data-target="#modalNovoEvento">
-                        Eventos
-                    </button>
-
-                </section>
-
-                <section class="btnEditarTicket">
-                    <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Tickets")'">
-                        Voltar
-                    </button>
-                </section>
+                <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Tickets")'">
+                    Voltar
+                </button>
             </div>
-  
 </div>
 
 

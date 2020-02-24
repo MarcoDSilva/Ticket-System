@@ -3,17 +3,17 @@
     ViewData("Title") = "Listagem tickets"
 End Code
 
-<h4>Listagem tickets</h4>
+
 
 @Using (Html.BeginForm())
     'filtros neste form para melhor leitura nos tickets
     @Html.AntiForgeryToken()
-    @<section class="filtros_ticket form-inline container container-fluid container-md">
-
-        <div class="form-check-inline">
-            @Html.RadioButton("ordem", "decrescente", False, htmlAttributes:=New With {.onchange = "this.form.submit();"}) <span>Decrescente</span>
-            @Html.RadioButton("ordem", "crescente", False, htmlAttributes:=New With {.onchange = "this.form.submit();"})<span>Crescente</span>
-            @Html.RadioButton("ordem", "", False, htmlAttributes:=New With {.onchange = "this.form.submit();"})<span>por ID</span>
+    @<section class="filtros_ticket container container-fluid container-md">
+        <h4>Listagem tickets</h4>
+        <div>
+            @Html.RadioButton("ordem", "decrescente", False, htmlAttributes:=New With {.onchange = "this.form.submit();"}) <label>Data Abertura Decrescente</label>
+            @Html.RadioButton("ordem", "crescente", False, htmlAttributes:=New With {.onchange = "this.form.submit();"}) <label> Data Abertura Crescente</label>
+            @Html.RadioButton("ordem", "", False, htmlAttributes:=New With {.onchange = "this.form.submit();"}) <label>por ID crescente</label>
         </div>
 
         <div class="form-check-inline">
@@ -51,17 +51,17 @@ End Using
         </tr>
         @Using (Html.BeginForm())
             @<tr class="camposPesquisaTicket">
-                <td>@Html.TextBox("ID_ticket", "", htmlAttributes:=New With {.style = "max-width:35px;", .onchange = "this.form.submit();"})</td>
-                <td>@Html.TextBox("nome_tecnico", "", htmlAttributes:=New With {.style = "max-width:60px;", .onchange = "this.form.submit();"})</td>
-                <td>@Html.TextBox("nome_software", "", htmlAttributes:=New With {.style = "max-width:60px;", .onchange = "this.form.submit();"})</td>
-                <td>@Html.TextBox("nome_cliente", "", htmlAttributes:=New With {.style = "max-width:60px;", .onchange = "this.form.submit();"})</td>
-                <td>@Html.TextBox("desc_problema", "", htmlAttributes:=New With {.style = "max-width:60px;", .onchange = "this.form.submit();"})</td>
-                <td>@Html.TextBox("descricao", "", htmlAttributes:=New With {.style = "max-width:140px;", .onchange = "this.form.submit();"})</td>
-                <td></td>
-                <td>calendario</td>
+                <td>@Html.TextBox("ID_ticket", "", htmlAttributes:=New With {.style = "max-width:35px;", .class = "form-control borderForm", .onchange = "this.form.submit();"})</td>
+                <td>@Html.TextBox("nome_tecnico", "", htmlAttributes:=New With {.style = "max-width:60px;", .class = "form-control borderForm", .onchange = "this.form.submit();"})</td>
+                <td>@Html.TextBox("nome_software", "", htmlAttributes:=New With {.style = "max-width:60px;", .class = "form-control borderForm", .onchange = "this.form.submit();"})</td>
+                <td>@Html.TextBox("nome_cliente", "", htmlAttributes:=New With {.style = "max-width:60px;", .class = "form-control borderForm", .onchange = "this.form.submit();"})</td>
+                <td>@Html.TextBox("desc_problema", "", htmlAttributes:=New With {.style = "max-width:60px;", .class = "form-control borderForm", .onchange = "this.form.submit();"})</td>
+                <td>@Html.TextBox("descricao", "", htmlAttributes:=New With {.style = "max-width:140px;", .class = "form-control borderForm", .onchange = "this.form.submit();"})</td>
                 <td></td>
                 <td></td>
-                <td>@Html.TextBox("origem", "", htmlAttributes:=New With {.style = "max-width:60px;", .onchange = "this.form.submit();"})</td>
+                <td></td>
+                <td></td>
+                <td>@Html.TextBox("origem", "", htmlAttributes:=New With {.style = "max-width:60px;", .class = "form-control borderForm", .onchange = "this.form.submit();"})</td>
                 <td></td>
             </tr>
         End Using
@@ -126,9 +126,8 @@ End Using
             </tr>
         Next
     </table>
+    <button type="button" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("CriaTicket", "Tickets")'">
+        Novo Registo
+    </button>
 </div>
-
-<button type="button" class="btn btn-success btn-sm" onclick="location.href='@Url.Action("CriaTicket", "Tickets")'">
-    Novo Registo
-</button>
 

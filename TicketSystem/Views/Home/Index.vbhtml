@@ -1,4 +1,5 @@
-﻿@Code
+﻿@ModelType TicketSystem.VM_TicketEventosHomePage
+@Code
     ViewData("Title") = "Menu principal"
     Dim dataDia = DateTime.Now.Hour
     Dim mensagem As String
@@ -72,66 +73,51 @@ Else
         <div id="ticketsIndex">
             <table class="table table-striped table-hover table-sm table-responsive">
                 <tr class="thead-dark">
-                    <th>ID</th>
-                    <th>Tecnico</th>
-                    <th>cliente</th>
-                    <th>software</th>
-                    <th>problema</th>
-                    <th>descrição</th>
-                    <th>estado</th>
+                    <th>
+                        @Html.LabelFor(Function(model) model.Ticket.First.ID_ticket)
+                    </th>
+                    <th>@Html.LabelFor(Function(model) model.Ticket.First.ID_tecnico)</th>
+                    <th>@Html.LabelFor(Function(model) model.Ticket.First.ID_cliente)</th>
+                    <th>@Html.LabelFor(Function(model) model.Ticket.First.ID_software)</th>
+                    <th>@Html.LabelFor(Function(model) model.Ticket.First.ID_problema)</th>
+                    <th>@Html.LabelFor(Function(model) model.Ticket.First.descricao)</th>
+                    <th>@Html.LabelFor(Function(model) model.Ticket.First.ID_estado)</th>
                 </tr>
-                <tr>
-                    <td>11</td>
-                    <td>Lorem </td>
-                    <td>ipsum </td>
-                    <td>dolore</td>
-                    <td>sit</td>
-                    <td>amet</td>
-                    <td>consectetur</td>
-                </tr>
-                <tr>
-                    <td>411</td>
-                    <td>Lorem </td>
-                    <td>ipsum </td>
-                    <td>dolore</td>
-                    <td>sit</td>
-                    <td>amet</td>
-                    <td>consectetur</td>
-                </tr>
+                @For Each ticket In Model.Ticket
+                    @<tr>
+                        <td>@Html.DisplayFor(Function(model) ticket.ID_ticket)</td>
+                        <td>@Html.DisplayFor(Function(model) ticket.ID_tecnico)</td>
+                        <td>@Html.DisplayFor(Function(model) ticket.ID_cliente)</td>
+                        <td>@Html.DisplayFor(Function(model) ticket.ID_software)</td>
+                        <td>@Html.DisplayFor(Function(model) ticket.ID_problema)</td>
+                        <td>@Html.DisplayFor(Function(model) ticket.descricao)</td>
+                        <td>@Html.DisplayFor(Function(model) ticket.ID_estado)</td>
+                    </tr>
+                Next
                 <caption>Tickets Abertos</caption>
             </table>
         </div>
 
         <!--eventos atribuidos-->
-        <div id="ticketsIndex">
+        <div id = "ticketsIndex" >
             <table class="table table-striped table-hover table-sm table-responsive">
                 <tr class="thead-dark">
-                    <th>ID</th>
-                    <th>Tecnico</th>
-                    <th>cliente</th>
-                    <th>software</th>
-                    <th>problema</th>
-                    <th>descrição</th>
-                    <th>estado</th>
+                    <th>@Html.LabelFor(Function(model) model.Evento.First.ID_evento)</th>
+                    <th> @Html.LabelFor(Function(model) model.Evento.First.ID_tecnico)</th>
+                    <th> @Html.LabelFor(Function(model) model.Evento.First.descricao)</th>
+                    <th> @Html.LabelFor(Function(model) model.Evento.First.ID_ticket)</th>
+                    <th> @Html.LabelFor(Function(model) model.Evento.First.dataAbertura)</th>
                 </tr>
-                <tr>
-                    <td>11</td>
-                    <td>Lorem </td>
-                    <td>ipsum </td>
-                    <td>dolore</td>
-                    <td>sit</td>
-                    <td>amet</td>
-                    <td>consectetur</td>
-                </tr>
-                <tr>
-                    <td>411</td>
-                    <td>Lorem </td>
-                    <td>ipsum </td>
-                    <td>dolore</td>
-                    <td>sit</td>
-                    <td>amet</td>
-                    <td>consectetur</td>
-                </tr>
+                @For Each evento In Model.Evento
+                    @<tr>
+                        <td>@Html.DisplayFor(Function(model) evento.ID_evento)</td>
+                        <td>@Html.DisplayFor(Function(model) evento.ID_tecnico)</td>
+                        <td>@Html.DisplayFor(Function(model) evento.descricao)</td>
+                        <td>@Html.DisplayFor(Function(model) evento.ID_ticket)</td>
+                        <td>@Html.DisplayFor(Function(model) evento.dataAbertura)</td>
+                    </tr>
+                Next
+
                 <caption>Eventos atribuidos ao utilizador</caption>
             </table>
 
