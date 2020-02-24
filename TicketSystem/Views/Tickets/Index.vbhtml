@@ -73,8 +73,7 @@ End Using
 
                 <!-- substrings na descrição para evitar mais que X elementos na descrição -->
                 @If ticket.descricao.Length > 24 Then
-                    Dim descCortada = ticket.descricao.Substring(0, 22)
-
+                    Dim descCortada = ticket.descricao.Substring(0, 22).Insert(22, "...")
                     @<td>@descCortada</td>
                 Else
                     @<td>@Html.DisplayFor(Function(modelT) ticket.descricao)</td>

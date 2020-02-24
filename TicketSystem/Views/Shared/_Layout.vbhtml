@@ -108,21 +108,24 @@ End Code
                     </button>
 
                     @If Session("Login") = 1 And Session("LoginErrado") = 0 Then
-                        @<Button Class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarBtn" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                            <span Class="navbar-toggler-icon"></span>
-                        </Button>
-                        @<div class="collapse navbar-collapse" id="navbarBtn">
-                            <p class="text-white font-weight-bold">@mensagem, @Session("Nome") | @Session("Email")</p>
-                            <div class="btn-group-sm" role="group" style="margin-left:20px;">
-                                <button id="groupLogins" type="button" class="btn btnOpcoesMenu dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Opções
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="groupLogins">
-                                    <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("AlterarPassword", "Logins", New With {.ID_tecnico = Session("ID_tecnico")})'">Alterar Password</a>
-                                    <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("Logout", "Logins")'">Logout</a>
+                        @<div class="dropdown">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarBtn" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarBtn">
+                                <span class="text-white font-weight-bold">@mensagem, @Session("Nome") | @Session("Email")</span>
+                                <div class="btn-group-sm" role="group">
+                                    <button id="groupLogins" type="button" class="btn btnOpcoesMenu dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Opções
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="groupLogins">
+                                        <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("AlterarPassword", "Logins", New With {.ID_tecnico = Session("ID_tecnico")})'">Alterar Password</a>
+                                        <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("Logout", "Logins")'">Logout</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
                     End If
                 </nav>
             End If

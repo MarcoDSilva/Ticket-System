@@ -336,8 +336,15 @@ ul ul a {
     text-align: center;
 }
 
-#btnsEditarTickets {
-   
+#btnsEditarTickets ul li button, #btnsEditarTickets ul li input {
+    width: 200px;
+    height: 40px;
+}
+
+#btnsEditarTickets ul li {
+   list-style:none;
+   padding:5px;
+   text-align:center;
 }
 
 .borderForm {

@@ -22,10 +22,12 @@ End Code
     'form edição
 
     @<div class="container">
-            <h2>Edição Ticket</h2>
-            <div>
+        <h2>Ticket</h2>
+
+        <div class="row">
+            <div class="col">
                 <section>
-                    <ul class="nav nav-tabs col-sm-12" id="myTab" role="tablist">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active btn" id="detalhes-tab" data-toggle="tab" href="#detalhes" role="tab" aria-controls="detalhes" aria-selected="true">Detalhes do ticket</a>
                         </li>
@@ -40,53 +42,53 @@ End Code
 
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="detalhes" role="tabpanel" aria-labelledby="detalhes-tab">
-                        <div class="col-sm-4">
+                        <div>
                             @Html.LabelFor(Function(ticket) ticket.ID_software, New With {.class = "form-check-label"})
                             @Html.DropDownList("ID_software", DirectCast(ViewBag.software, SelectList), New With {.class = "form-control"})
                         </div>
-                        <div class="col-sm-4">
+                        <div>
                             @Html.LabelFor(Function(ticket) ticket.ID_cliente, New With {.class = "form-check-label"})
                             @Html.DropDownList("ID_cliente", DirectCast(ViewBag.cliente, SelectList), New With {.class = "form-control"})
                         </div>
-                        <div class="col-sm-4">
+                        <div>
                             @Html.LabelFor(Function(ticket) ticket.ID_problema, New With {.class = "form-check-label"})
                             @Html.DropDownList("ID_problema", DirectCast(ViewBag.problema, SelectList), New With {.class = "form-control"})
                         </div>
-                        <div class="col-sm-8">
+                        <div>
                             @Html.LabelFor(Function(ticket) ticket.descricao, New With {.class = "form-check-label"})
                             @Html.TextAreaFor(Function(ticket) ticket.descricao, 10, 100, New With {.class = "form-control descricaoTicket"})
                         </div>
                     </div>
 
                     <section class="tab-pane fade" id="datas" role="tabpanel" aria-labelledby="datas-tab">
-                        <div class="col-sm-4">
+                        <div>
                             @Html.LabelFor(Function(ticket) ticket.dataAbertura, New With {.class = "form-check-label"})
                             <input type="date" name="dataAbertura" value="@dataInicial" id="@Model.dataAbertura" class="form-control" />
                             @Html.LabelFor(Function(ticket) ticket.dataFecho, New With {.class = "form-check-label"})
                             <input type="date" name="dataFecho" value="@dataFinal" id="dataFecho" class="form-control" />
                         </div>
 
-                        <div class="col-sm-4">
+                        <div>
                             @Html.LabelFor(Function(ticket) ticket.tempoPrevisto, New With {.class = "form-check-label"})
                             @Html.TextBoxFor(Function(ticket) ticket.tempoPrevisto, New With {.class = "form-control"})
                         </div>
-                        <div class="col-sm-4">
+                        <div>
                             @Html.LabelFor(Function(ticket) ticket.tempoTotal, New With {.class = "form-check-label"})
                             @Html.TextBoxFor(Function(ticket) ticket.tempoTotal, New With {.class = "form-control"})
                         </div>
                     </section>
-                    <section class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
 
-                        <div class="col-sm-4">
+                    <section class="tab-pane fade " id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                        <div>
                             @Html.LabelFor(Function(ticket) ticket.ID_estado, New With {.class = "form-check-label"})
                             @Html.DropDownList("ID_estado", DirectCast(ViewBag.estado, SelectList), New With {.class = "form-control"})
                         </div>
-                        <div class="col-sm-4">
+                        <div>
                             @Html.LabelFor(Function(ticket) ticket.ID_prioridade, New With {.class = "form-check-label"})
                             @Html.DropDownList("ID_prioridade", DirectCast(ViewBag.prioridade, SelectList), New With {.class = "form-control"})
                         </div>
 
-                        <div class="col-sm-4">
+                        <div>
                             @Html.LabelFor(Function(ticket) ticket.ID_origem, New With {.class = "form-check-label"})
                             @Html.DropDownList("ID_origem", DirectCast(ViewBag.origem, SelectList), New With {.class = "form-control"})
                         </div>
@@ -94,34 +96,38 @@ End Code
                 </div>
             </div>
 
-            <div id="btnsEditarTickets" class="form-group">
-                <h3>Edição:</h3>
+            <div id="btnsEditarTickets" class="col">
+            
 
-                <ul>
+                <ul class="listaBtns">
+                    <li><h4>Edição:</h4></li>
                     <li>
-                        <input type="submit" class="btn btn-success" value="Guardar" name="Enviar" />
+                        <input type="submit" class="btn btn-success btn-sm" value="Guardar" name="Enviar" />
                     </li>
                     <li>
-                        <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#modalApagarRegisto">
+                        <button type="button" class="btn btn-primary btn-danger btn-sm" data-toggle="modal" data-target="#modalApagarRegisto">
                             Apagar
                         </button>
-
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-info btn-sm" onclick="location.href='@Url.Action("CriaTicket", "Tickets")'">
+                            Novo Ticket
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-primary btn-warning btn-sm" data-toggle="modal" data-target="#modalNovoEvento">
+                            Eventos
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='@Url.Action("Index", "Tickets")'">
+                            Voltar
+                        </button>
                     </li>
                 </ul>
-                
-                <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaTicket", "Tickets")'">
-                    Novo Ticket
-                </button>
-
-                <button type="button" class="btn btn-primary btn-warning" data-toggle="modal" data-target="#modalNovoEvento">
-                    Eventos
-                </button>
-
-                <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Tickets")'">
-                    Voltar
-                </button>
             </div>
-</div>
+        </div>
+    </div>
 
 
     'butões com as operações respectivas do formulário de edição
