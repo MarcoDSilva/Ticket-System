@@ -8,7 +8,7 @@ End Code
 @Using (Html.BeginForm())
     'filtros neste form para melhor leitura nos tickets
     @Html.AntiForgeryToken()
-    @<section class="filtros_ticket form-inline container">
+    @<section class="filtros_ticket form-inline container container-fluid container-md">
 
         <div class="form-check-inline">
             @Html.RadioButton("ordem", "decrescente", False, htmlAttributes:=New With {.onchange = "this.form.submit();"}) <span>Decrescente</span>
@@ -28,11 +28,6 @@ End Code
                     htmlAttributes:=New With {.class = "form-control", .onchange = "this.form.submit();"})
         </div>
 
-        <div class="form-check-inline">
-            <label> Filtrar por problema:</label>
-            @Html.DropDownList("ID_problema", DirectCast(ViewBag.problema, SelectList), "",
-                                                                           htmlAttributes:=New With {.class = "form-control", .onchange = "this.form.submit();"})
-        </div>
     </section>
 End Using
 

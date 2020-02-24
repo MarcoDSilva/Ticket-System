@@ -17,113 +17,121 @@ End Code
 
 @Using (Html.BeginForm("EditarTicket", "Tickets"))
     @Html.AntiForgeryToken()
-
     @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
     @Html.HiddenFor(Function(ticket) ticket.ID_ticket)
     'form edição
+
     @<div class="container">
-        <h2>Edição Ticket</h2>
+            <h2>Edição Ticket</h2>
+            <div>
+                <section>
+                    <ul class="nav nav-tabs col-sm-12" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active btn" id="detalhes-tab" data-toggle="tab" href="#detalhes" role="tab" aria-controls="detalhes" aria-selected="true">Detalhes do ticket</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#datas" role="tab" aria-controls="datas" aria-selected="false">Datas e Tempos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">misc.</a>
+                        </li>
+                    </ul>
+                </section>
 
-        <div class="row">
-
-            <ul class="nav nav-tabs col-sm-12" id="myTab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active btn" id="detalhes-tab" data-toggle="tab" href="#detalhes" role="tab" aria-controls="detalhes" aria-selected="true">Detalhes do ticket</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#datas" role="tab" aria-controls="datas" aria-selected="false">Datas e Tempos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">misc.</a>
-                </li>
-            </ul>
-
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="detalhes" role="tabpanel" aria-labelledby="detalhes-tab">
-                    <div class="col-sm-4">
-                        @Html.LabelFor(Function(ticket) ticket.ID_software, New With {.class = "form-check-label"})
-                        @Html.DropDownList("ID_software", DirectCast(ViewBag.software, SelectList), New With {.class = "form-control"})
-                    </div>
-                    <div class="col-sm-4">
-                        @Html.LabelFor(Function(ticket) ticket.ID_cliente, New With {.class = "form-check-label"})
-                        @Html.DropDownList("ID_cliente", DirectCast(ViewBag.cliente, SelectList), New With {.class = "form-control"})
-                    </div>
-                    <div class="col-sm-4">
-                        @Html.LabelFor(Function(ticket) ticket.ID_problema, New With {.class = "form-check-label"})
-                        @Html.DropDownList("ID_problema", DirectCast(ViewBag.problema, SelectList), New With {.class = "form-control"})
-                    </div>
-                    <div class="col-sm-8">
-                        @Html.LabelFor(Function(ticket) ticket.descricao, New With {.class = "form-check-label"})
-                        @Html.TextAreaFor(Function(ticket) ticket.descricao, 10, 100, New With {.class = "form-control descricaoTicket"})
-                    </div>
-                </div>
-
-                <div class="tab-pane fade" id="datas" role="tabpanel" aria-labelledby="datas-tab">
-                    <div>
-                        @Html.LabelFor(Function(ticket) ticket.dataAbertura, New With {.class = "form-check-label"})
-                        <input type="date" name="dataAbertura" value="@dataInicial" id="@Model.dataAbertura" class="form-control" />
-                        @Html.LabelFor(Function(ticket) ticket.dataFecho, New With {.class = "form-check-label"})
-                        <input type="date" name="dataFecho" value="@dataFinal" id="dataFecho" class="form-control" />
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="detalhes" role="tabpanel" aria-labelledby="detalhes-tab">
+                        <div class="col-sm-4">
+                            @Html.LabelFor(Function(ticket) ticket.ID_software, New With {.class = "form-check-label"})
+                            @Html.DropDownList("ID_software", DirectCast(ViewBag.software, SelectList), New With {.class = "form-control"})
+                        </div>
+                        <div class="col-sm-4">
+                            @Html.LabelFor(Function(ticket) ticket.ID_cliente, New With {.class = "form-check-label"})
+                            @Html.DropDownList("ID_cliente", DirectCast(ViewBag.cliente, SelectList), New With {.class = "form-control"})
+                        </div>
+                        <div class="col-sm-4">
+                            @Html.LabelFor(Function(ticket) ticket.ID_problema, New With {.class = "form-check-label"})
+                            @Html.DropDownList("ID_problema", DirectCast(ViewBag.problema, SelectList), New With {.class = "form-control"})
+                        </div>
+                        <div class="col-sm-8">
+                            @Html.LabelFor(Function(ticket) ticket.descricao, New With {.class = "form-check-label"})
+                            @Html.TextAreaFor(Function(ticket) ticket.descricao, 10, 100, New With {.class = "form-control descricaoTicket"})
+                        </div>
                     </div>
 
-                    <div>
-                        @Html.LabelFor(Function(ticket) ticket.tempoPrevisto, New With {.class = "form-check-label"})
-                        @Html.TextBoxFor(Function(ticket) ticket.tempoPrevisto, New With {.class = "form-control"})
-                    </div>
-                    <div>
-                        @Html.LabelFor(Function(ticket) ticket.tempoTotal, New With {.class = "form-check-label"})
-                        @Html.TextBoxFor(Function(ticket) ticket.tempoTotal, New With {.class = "form-control"})
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                    <section class="tab-pane fade" id="datas" role="tabpanel" aria-labelledby="datas-tab">
+                        <div class="col-sm-4">
+                            @Html.LabelFor(Function(ticket) ticket.dataAbertura, New With {.class = "form-check-label"})
+                            <input type="date" name="dataAbertura" value="@dataInicial" id="@Model.dataAbertura" class="form-control" />
+                            @Html.LabelFor(Function(ticket) ticket.dataFecho, New With {.class = "form-check-label"})
+                            <input type="date" name="dataFecho" value="@dataFinal" id="dataFecho" class="form-control" />
+                        </div>
 
-                    <div>
-                        @Html.LabelFor(Function(ticket) ticket.ID_estado, New With {.class = "form-check-label"})
-                        @Html.DropDownList("ID_estado", DirectCast(ViewBag.estado, SelectList), New With {.class = "form-control"})
-                    </div>
-                    <div>
-                        @Html.LabelFor(Function(ticket) ticket.ID_prioridade, New With {.class = "form-check-label"})
-                        @Html.DropDownList("ID_prioridade", DirectCast(ViewBag.prioridade, SelectList), New With {.class = "form-control"})
-                    </div>
+                        <div class="col-sm-4">
+                            @Html.LabelFor(Function(ticket) ticket.tempoPrevisto, New With {.class = "form-check-label"})
+                            @Html.TextBoxFor(Function(ticket) ticket.tempoPrevisto, New With {.class = "form-control"})
+                        </div>
+                        <div class="col-sm-4">
+                            @Html.LabelFor(Function(ticket) ticket.tempoTotal, New With {.class = "form-check-label"})
+                            @Html.TextBoxFor(Function(ticket) ticket.tempoTotal, New With {.class = "form-control"})
+                        </div>
+                    </section>
+                    <section class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
 
-                    @*<div class="col-sm-4">
-                            @Html.LabelFor(Function(ticket) ticket.ID_utilizador, New With {.class = "form-check-label"})
-                            @Html.DropDownList("ID_utilizador", DirectCast(ViewBag.utilizador, SelectList), New With {.class = "form-control"})
-                        </div>*@
-                    <div>
-                        @Html.LabelFor(Function(ticket) ticket.ID_origem, New With {.class = "form-check-label"})
-                        @Html.DropDownList("ID_origem", DirectCast(ViewBag.origem, SelectList), New With {.class = "form-control"})
-                    </div>
+                        <div class="col-sm-4">
+                            @Html.LabelFor(Function(ticket) ticket.ID_estado, New With {.class = "form-check-label"})
+                            @Html.DropDownList("ID_estado", DirectCast(ViewBag.estado, SelectList), New With {.class = "form-control"})
+                        </div>
+                        <div class="col-sm-4">
+                            @Html.LabelFor(Function(ticket) ticket.ID_prioridade, New With {.class = "form-check-label"})
+                            @Html.DropDownList("ID_prioridade", DirectCast(ViewBag.prioridade, SelectList), New With {.class = "form-control"})
+                        </div>
+
+                        <div class="col-sm-4">
+                            @Html.LabelFor(Function(ticket) ticket.ID_origem, New With {.class = "form-check-label"})
+                            @Html.DropDownList("ID_origem", DirectCast(ViewBag.origem, SelectList), New With {.class = "form-control"})
+                        </div>
+                    </section>
                 </div>
             </div>
-        </div>
-        <div id="btnsEditarTickets">
-            <input type="submit" class="btn btn-success" value="Guardar" name="Enviar" />
-            <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#modalApagarRegisto">
-                Apagar
-            </button>
-            <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaTicket", "Tickets")'">
-                Novo Ticket
-            </button>
 
-            @*linktext,actionName, controllerName,routevalue,htmlAttribute*@
-            @*@Html.ActionLink("CriaEvento", "CriaEvento", "Eventos", New With {.ID_ticket = Model.ID_ticket},
-                htmlAttributes:=New With {.class = "btn btn-warning", .type = "button", .data_toggle = "modal", .data_target = "#modalNovoEvento"})*@
+            <div id="btnsEditarTickets">
+                <h3>Edição:</h3>
 
-            <button type="button" class="btn btn-primary btn-warning" data-toggle="modal" data-target="#modalNovoEvento">
-                Eventos
-            </button>
+                <section class="btnEditarTicket">
+                    <input type="submit" class="btn btn-success" value="Guardar" name="Enviar" />
+                </section>
 
-            <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Tickets")'">
-                Voltar
-            </button>
+                <section class="btnEditarTicket">
+                    <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#modalApagarRegisto">
+                        Apagar
+                    </button>
+                </section>
 
-        </div>
-    </div>
+                <section class="btnEditarTicket">
+                    <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaTicket", "Tickets")'">
+                        Novo Ticket
+                    </button>
+                </section>
+
+                <section class="btnEditarTicket">
+                    <button type="button" class="btn btn-primary btn-warning" data-toggle="modal" data-target="#modalNovoEvento">
+                        Eventos
+                    </button>
+
+                </section>
+
+                <section class="btnEditarTicket">
+                    <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Tickets")'">
+                        Voltar
+                    </button>
+                </section>
+            </div>
+  
+</div>
 
 
     'butões com as operações respectivas do formulário de edição
-    @<div id="editaTicket">
+    @<section id="editaTicket">
         <!-- Modal para apagar registo -->
         <div class="modal fade" id="modalApagarRegisto" tabindex="-1" role="dialog" aria-labelledby="modalApagar" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -159,73 +167,14 @@ End Code
 
                     <iframe class="modalbody" src="@Url.Action("CriaEvento", "Eventos", New With {.ID_ticket = ticketID})"
                             style="width:500px;height:500px;"></iframe>
-
-                    @*<div class="modal-body">
-                            <label for="descricao">Descrição:</label>
-                            @Html.TextBoxFor(Function(d) d.descricao, Nothing, htmlAttributes:=New With {.placeHolder = "Inserir Descrição", .class = "form-control", .name = "descricao", .id = "descricao"})
-                            <Label class="form-check-label" for="ID_tecnico">Técnico:</Label>
-                            @Html.DropDownListFor(Function(a) a.ID_tecnico, DirectCast(ViewBag.tecnico, SelectList), "", htmlAttributes:=New With {.class = "form-control", .name = "ID_tecnico"})
-
-                            <Label class="form-check-label" for="dataAbertura">Data Abertura</Label>
-                            <input type="date" name="dataAbertura" id="@eventoNovo.dataAbertura" class="form-control" />
-
-                            <Label class="form-check-label" for="dataFecho">Data Fecho</Label>
-                            <input type="date" name="dataFecho" id="@eventoNovo.dataFecho" class="form-control" />
-
-                            @Html.ActionLink("Enviar", "CriaEvento", "Eventos", New With {.descricao = "descricao",
-                                     .ID_tecnico = Model.ID_tecnico, .dataAbertura = Model.dataAbertura,
-                                          .dataFecho = Model.dataFecho, .ID_ticket = ticketID},
-                                             htmlAttributes:=New With {.class = "btn btn-primary"})
-
-                            @Html.ActionLink("TestaEvento", "TestaEvento", New With {.descricao_evento = "evento",
-                                .ID_tecnicoEvento = "evento", .dataAberturaEvento = Html.Value("dataAberturaEvento"),
-                                .dataFechoEvento = Html.Value("dataFechoEvento"), .ID_ticket = ticketID},
-                                htmlAttributes:=New With {.class = "btn btn-primary", .type = "submit"})
-                        </div>*@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
 End Using
-
-
-@*<script type="text/javascript">
-    var NovoEvento = function() {
-        var descricao = document.getElementById('Evento.descricao').value;
-        var tecnico = document.getElementById('Evento.tecnico').value;
-
-        var dataAbertura = document.getElementById('Evento.dataAbertura').value;
-        var dataFecho =document.getElementById('Evento.dataFecho').value;
-        var ticketID = @ticketID;
-
-        console.log(descricao, "e ", tecnico, "e " , dataAbertura, "e ", dataFecho, " e " , ticketID);
-
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("TestaJSON", "Tickets")',
-            data: {
-                descricao : "descricao",
-                tecnico: "tecnico",
-                dataAbertura: "dataAbertura",
-                dataFecho: "dataFecho",
-                ID_ticket: "ticketID"
-            },
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data) {
-                alert("Foi inserido " + data.descricao + " com sucesso");
-                console.log("sucesso");
-            },
-            error: function (data) {
-                alert("falhou");
-                console.log("erro");
-            }
-        });
-    }
-    </script>*@
 
 

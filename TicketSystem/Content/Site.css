@@ -279,11 +279,6 @@ ul ul a {
     align-self:flex-end;
 }
 
-#btnsEditarTickets {
-    margin-top:20px;
-    padding-top:20px;
-}
-
 .btnOpcoesMenu {
     background-color: rgba(166, 93, 152, 0.53);
     color: #fff;
@@ -297,7 +292,6 @@ ul ul a {
        border:1px solid black;
        margin:4px;
 }
-estatisticasBasicasTickets
 
 .caixaPr {
     width:50px;
@@ -331,4 +325,18 @@ estatisticasBasicasTickets
 
 .dataCaret .dataCaret-up {
   
+}
+
+#editaTicket {   
+    padding: 0;
+    margin: 0;
+}
+
+.navBtns_tickets {
+    width: auto;
+    text-align: center;
+}
+
+#btnsEditarTickets {
+   
 }
