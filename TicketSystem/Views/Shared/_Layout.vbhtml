@@ -88,11 +88,10 @@ End Code
                                 @<li>
                                     @Html.ActionLink("Tecnicos", "Index", "Tecnicos")
                                 </li>
+                                @<li>
+                                    @Html.ActionLink("Utilizadores", "Index", "Utilizadores")
+                                </li>
                             End If
-
-                            <li>
-                                @Html.ActionLink("Utilizadores", "Index", "Utilizadores")
-                            </li>
                         </ul>
                     </li>
                 </ul>

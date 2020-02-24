@@ -323,4 +323,12 @@ estatisticasBasicasTickets
     margin: 10px;
 }
 
-    
+
+.dataCaret {
+    text-decoration:none;
+    color:white;
+}
+
+.dataCaret .dataCaret-up {
+  
+}

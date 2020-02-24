@@ -6,10 +6,37 @@ Namespace Controllers
         Inherits Controller
 
         Private conectaBD As New Manipula_TTicket
+        Private dataAberturaAsc As Boolean = False
 
-        ' GET: Tickets
-        Function Index(ordem As String, ID_prioridade As String, ID_estado As String, ID_problema As String,
-                       ID_software As String, ID_cliente As String, ID_tecnico As String, ID_origem As String) As ActionResult
+        'GET: Tickets
+        Function Index() As ActionResult
+            BloqueiaUtilizadores()
+            Dim query As String = "SELECT t.ID_ticket, tec.nome, sft.nome, cli.nome, prob.descricao, t.descricao, 
+                                      t.dataAbertura, t.dataFecho, t.tempoPrevisto, t.tempoTotal, est.descricao,
+                                      prio.descricao, t.ID_utilizador, ori.descricao,t.dat_hor
+
+                                      FROM Ticket t,Tecnico tec, Software sft, Cliente cli, 
+                                      Problema prob, Estado est, Prioridade prio,Origem ori
+
+                                      WHERE t.ID_tecnico = tec.ID_tecnico
+                                          AND sft.ID_software = t.ID_software
+                                          AND cli.ID_cliente = t.ID_cliente
+                                          AND prob.ID_problema = t.ID_problema
+                                          AND est.ID_estado = t.ID_estado
+                                          AND prio.ID_prioridade = t.ID_prioridade
+                                          AND ori.ID_origem = t.ID_origem"
+
+            CriaViewBags()
+            Return View(LeituraDados(query))
+
+        End Function
+
+
+        '' POST: Tickets
+        <HttpPost()>
+        Function Index(ordem As String, ID_prioridade As String, ID_estado As String, ID_ticket As String,
+                       nome_tecnico As String, nome_software As String, nome_cliente As String,
+                       desc_problema As String, descricao As String, origem As String) As ActionResult
             BloqueiaUtilizadores()
             Dim query As String = "SELECT t.ID_ticket, tec.nome, sft.nome, cli.nome, prob.descricao, t.descricao, 
                                       t.dataAbertura, t.dataFecho, t.tempoPrevisto, t.tempoTotal, est.descricao,
@@ -31,18 +58,21 @@ Namespace Controllers
             Dim ordenaPorData = ""
 
             'adicionar os parametros um a um na lista, caso contrário o if fica gigantesco
-            Dim l As New List(Of String)
-            l.Add(ordem)
-            l.Add(ID_prioridade)
-            l.Add(ID_estado)
-            l.Add(ID_problema)
-            l.Add(ID_software)
-            l.Add(ID_cliente)
-            l.Add(ID_tecnico)
-            l.Add(ID_origem)
+            Dim listaDeFiltros As New List(Of String) From {
+                ordem,
+                ID_prioridade,
+                ID_estado,
+                ID_ticket,
+                nome_tecnico,
+                nome_software,
+                nome_cliente,
+                desc_problema,
+                descricao,
+                origem
+            }
 
             'função que se não encontrar nenhum elemento com valor, retorna true e podemos devolver à view uma query normal
-            If VerificaParams(l) = True Then
+            If VerificaParams(listaDeFiltros) = True Then
                 Return View(LeituraDados(query))
             End If
 
@@ -62,27 +92,34 @@ Namespace Controllers
             query += IIf(String.IsNullOrEmpty(ID_estado),
                                     "", $" AND t.ID_estado = {ID_estado}")
 
-            query += IIf(String.IsNullOrEmpty(ID_problema),
-                                    "", $" AND t.ID_problema = {ID_problema}")
+            'isto força a base de dados a dar o cast em todos os tickets só para este filtro especifico
+            'o que torna-se ineficiente no longo termo quando o número de tickets crescer em vasto número
+            query += IIf(String.IsNullOrEmpty(ID_ticket),
+                                    "", $" AND CAST(ID_ticket as CHAR) like '%{ID_ticket}%'")
 
-            query += IIf(String.IsNullOrEmpty(ID_software),
-                                    "", $" AND t.ID_software = {ID_software}")
+            query += IIf(String.IsNullOrEmpty(nome_tecnico),
+                                    "", $" AND tec.nome like '%{nome_tecnico}%'")
 
-            query += IIf(String.IsNullOrEmpty(ID_cliente),
-                                    "", $" AND t.ID_cliente = {ID_cliente}")
+            query += IIf(String.IsNullOrEmpty(nome_software),
+                                    "", $" AND sft.nome like '%{nome_software}%'")
 
-            query += IIf(String.IsNullOrEmpty(ID_tecnico),
-                                    "", $" AND t.ID_tecnico = {ID_tecnico}")
+            query += IIf(String.IsNullOrEmpty(nome_cliente),
+                                    "", $" AND cli.nome like '%{nome_cliente}%'")
 
-            query += IIf(String.IsNullOrEmpty(ID_origem),
-                                    "", $" AND t.ID_origem = {ID_origem}")
+            query += IIf(String.IsNullOrEmpty(desc_problema),
+                                    "", $" AND prob.descricao like '%{desc_problema}%'")
 
+            query += IIf(String.IsNullOrEmpty(descricao),
+                                    "", $" AND t.descricao like '%{descricao}%'")
+
+            query += IIf(String.IsNullOrEmpty(origem),
+                                    "", $" AND ori.descricao like '%{origem}%'")
 
             query += ordenaPorData
 
             Return View(LeituraDados(query))
-
         End Function
+
 
         'GET: Cria a view para criação de tickets. A mesma contém várias dropdownlists que estão a ser alimentadas por viewbags
         Function CriaTicket() As ActionResult
