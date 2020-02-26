@@ -74,16 +74,36 @@ Namespace Controllers
         'GET: obter campos para edição dos dados do evento
         Function EditarEvento(ID_evento As Integer) As ActionResult
             BloqueiaUtilizadores()
+
+            Dim viewModel As New VM_TicketEventosHomePage
+
+            viewModel.Evento = LeituraDados($"SELECT e.ID_evento, e.descricao,t.nome, 
+                        e.dataAbertura, e.dataFecho, e.ID_ticket, e.dat_hor 
+                        FROM Evento e, Tecnico t
+                        WHERE e.ID_tecnico = t.ID_tecnico 
+                        AND ID_EVENTO = {ID_evento};").ToList()
+
+
+            viewModel.Ticket = LeituraDadosTicket($"SELECT t.ID_ticket, tec.nome, sft.nome, cli.nome, prob.descricao, t.descricao, 
+                                      t.dataAbertura, est.descricao, prio.descricao 
+
+                                      FROM Ticket t,Tecnico tec, Software sft, Cliente cli, 
+                                      Problema prob, Estado est, Prioridade prio
+
+                                      WHERE t.ID_tecnico = tec.ID_tecnico
+                                          AND sft.ID_software = t.ID_software
+                                          AND cli.ID_cliente = t.ID_cliente
+                                          AND prob.ID_problema = t.ID_problema
+                                          AND est.ID_estado = t.ID_estado
+                                          AND prio.ID_prioridade = t.ID_prioridade                                          
+                                          AND t.ID_ticket = {viewModel.Evento.First().ID_ticket}").ToList()
+
             If IsNothing(ID_evento) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadGateway)
             Else
                 ViewBag.tecnico = New SelectList(conectaBD.ListaTecnicos(), "ID_tecnico", "nome")
 
-                Return View(LeituraDados($"SELECT e.ID_evento, e.descricao,t.nome, 
-                        e.dataAbertura, e.dataFecho, e.ID_ticket, e.dat_hor 
-                        FROM Evento e, Tecnico t
-                        WHERE e.ID_tecnico = t.ID_tecnico 
-                        AND ID_EVENTO = {ID_evento};").First())
+                Return View(viewModel)
             End If
         End Function
 
@@ -204,6 +224,38 @@ Namespace Controllers
                 Response.Redirect("~/Logins/Index")
             End If
         End Sub
+
+
+        ''' <summary>
+        ''' Método interno utilizado para ler dados da bd
+        ''' </summary>
+        ''' <param name="query"></param>
+        ''' <returns></returns>
+        Private Function LeituraDadosTicket(query As String) As List(Of VM_Ticket)
+
+            Dim tabelaDados As DataTable = conectaBD.LeituraTabela(query)
+            Dim listagemTickets As New List(Of VM_Ticket)
+
+            'fazemos um ciclo, que vai iterar por cada elemento que recebenos da base de dados
+            'criamos um novo objecto do tipo Ticket, onde atribuimos os dados da iteração actual
+            'e no fim após a atribuição desses dados, inserimos numa List(a) de Tickets, o qual usamos para retornar os dados
+            For Each item In tabelaDados.AsEnumerable
+                Dim tick As New VM_Ticket With {
+                    .ID_ticket = item(0),
+                    .ID_tecnico = item(1),
+                    .ID_software = item(2),
+                    .ID_cliente = item(3),
+                    .ID_problema = item(4),
+                    .descricao = item(5),
+                    .dataAbertura = item(6),
+                    .ID_estado = item(7),
+                    .ID_prioridade = item(8)
+                }
+                listagemTickets.Add(tick)
+            Next
+
+            Return listagemTickets
+        End Function
 
     End Class
 End Namespace
