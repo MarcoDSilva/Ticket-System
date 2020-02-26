@@ -66,16 +66,18 @@ Namespace Controllers
         <HttpPost()>
         <ValidateAntiForgeryToken>
         Function EditarCliente(nome As String, contacto As String, email As String, empresa As String,
-                             ID_cliente As Integer?, ID_utilizador As Integer) As ActionResult
+                             ID_cliente As Integer) As ActionResult
             BloqueiaUtilizadores()
             If IsNothing(ID_cliente) Then
                 Return New HttpStatusCodeResult(HttpStatusCode.BadGateway)
             Else
-                If ID_utilizador.Equals(0) Then
-                    conectaBD.EditarCliente(nome, contacto, email, empresa, "null", ID_cliente)
-                Else
-                    conectaBD.EditarCliente(nome, contacto, email, empresa, ID_utilizador, ID_cliente)
-                End If
+                'com o utilizador está escondido de momento, temos de comentar fora a lógica
+                'If ID_utilizador.Equals(0) Or IsNothing(ID_utilizador) Then
+                '    conectaBD.EditarCliente(nome, contacto, email, empresa, "null", ID_cliente)
+                'Else
+                '    conectaBD.EditarCliente(nome, contacto, email, empresa, ID_utilizador, ID_cliente)
+                'End If
+                conectaBD.EditarCliente(nome, contacto, email, empresa, "null", ID_cliente)
             End If
 
             Return RedirectToAction("Index")
