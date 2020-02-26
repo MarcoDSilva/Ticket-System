@@ -6,30 +6,45 @@ End Code
 @Using (Html.BeginForm())
     'filtros neste form para melhor leitura nos tickets
     @Html.AntiForgeryToken()
-    @<section class="filtros_ticket container container-fluid container-md">
-        <h4>Listagem tickets</h4>
-        <div>
-            @Html.RadioButton("ordem", "decrescente", False, htmlAttributes:=New With {.onchange = "this.form.submit();"}) <label>Data Abertura Decrescente</label>
-            @Html.RadioButton("ordem", "crescente", False, htmlAttributes:=New With {.onchange = "this.form.submit();"}) <label> Data Abertura Crescente</label>
-            @Html.RadioButton("ordem", "", False, htmlAttributes:=New With {.onchange = "this.form.submit();"}) <label>por ID crescente</label>
-        </div>
+    @<div class="filtros_ticket container container-fluid container-md row">
+            <div class="col">
+                <h4 class="font-italic font-weight-bold">Filtros de Data de Abertura</h4>
+                <section>
+                    <label> Decrescente: </label>
+                    @Html.RadioButton("ordem", "decrescente", False, htmlAttributes:=New With {.onchange = "this.form.submit();"})
+                </section>
 
-        <div class="form-check-inline">
-            <label>Filtrar por prioridade: </label>
-            @Html.DropDownList("ID_prioridade", DirectCast(ViewBag.prioridade, SelectList), "",
-                            htmlAttributes:=New With {.class = "form-control", .onchange = "this.form.submit();"})
-        </div>
+                <section>
+                    <label>Crescente: </label>
+                    @Html.RadioButton("ordem", "crescente", False, htmlAttributes:=New With {.onchange = "this.form.submit();"}) 
+                </section>
 
-        <div class="form-check-inline">
-            <label>Filtrar por estado:</label>
-            @Html.DropDownList("ID_estado", DirectCast(ViewBag.estado, SelectList), "",
-                    htmlAttributes:=New With {.class = "form-control", .onchange = "this.form.submit();"})
-        </div>
+                <section>
+                    <label>ID crescente: </label>
+                    @Html.RadioButton("ordem", "", False, htmlAttributes:=New With {.onchange = "this.form.submit();"})
+                </section>
+            </div>
+            <div class="col">
+                <h4 class="font-italic font-weight-bold">Filtros Prioridade/Estado</h4>
 
-    </section>
+                <section class="form-check-inline">
+                    <label>Filtrar por prioridade: </label>
+                    @Html.DropDownList("ID_prioridade", DirectCast(ViewBag.prioridade, SelectList), "",
+                                               htmlAttributes:=New With {.class = "form-control", .onchange = "this.form.submit();"})
+                </section>
+
+                <section class="form-check-inline">
+                    <label>Filtrar por estado:</label>
+                    @Html.DropDownList("ID_estado", DirectCast(ViewBag.estado, SelectList), "",
+                             htmlAttributes:=New With {.class = "form-control", .onchange = "this.form.submit();"})
+                </section>
+            </div>
+        </div>
 End Using
 
 <div class="container container-fluid container-md">
+    <h4 class="font-italic font-weight-bold">Listagem de Tickets</h4>
+
     <table class="table table-hover table-sm table-responsive" id="tabelaTickets">
         <tr class="thead-dark">
             <th scope="col">@Html.DisplayNameFor(Function(ticket) ticket.ID_ticket)</th>

@@ -5,11 +5,7 @@
 End Code
 
 <div class="container">
-    <h4>Listagem eventos</h4>
-    <button type="button" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("CriaEvento", "Eventos")'">
-        Novo Registo
-    </button>
-
+    <h4 class="font-italic font-weight-bold">Listagem eventos</h4>
     <table class="table table-hover table-sm table-responsive" id="tabelaEventos">
         <tr class="thead-dark">
             <th scope="col">@Html.DisplayNameFor(Function(modelEv) modelEv.ID_evento)</th>
@@ -53,8 +49,9 @@ End Code
             </tr>
         Next
     </table>
-
-
+    <button type="button" class="btn btn-primary btn-sm" onclick="location.href='@Url.Action("CriaEvento", "Eventos")'">
+        Novo Registo
+    </button>
 </div>
 
 

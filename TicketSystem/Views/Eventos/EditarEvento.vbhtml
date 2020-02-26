@@ -13,23 +13,29 @@
 
 End Code
 
+@Using (Html.BeginForm())
+    @Html.AntiForgeryToken
+    @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
+    @Html.HiddenFor(Function(modelEv) modelEv.ID_evento)
 
+    @<div class="container container-fluid">
 
-<div class="container">
-    <h2>Evento</h2>
-    @Using (Html.BeginForm())
-        @Html.AntiForgeryToken
+        <div class="row" style="padding:10px;">
+            <div class="col">
+                <h4 class="font-italic font-weight-bold">Evento</h4>
+            </div>
+            <div class="col">
+                <h4 class="text-center font-italic font-weight-bold">Edição</h4>
+            </div>
+        </div>
 
-        @<div class="row">
-            @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
-            @Html.HiddenFor(Function(modelEv) modelEv.ID_evento)
-
-            <!-- form edição -->
+        <!-- form edição -->
+        <div class="row">
             <div class="col">
                 <section>
                     @Html.LabelFor(Function(modelEv) modelEv.descricao, New With {.class = "form-check-label"})
                     @Html.TextAreaFor(Function(modelEv) modelEv.descricao, 10, 100, New With {.class = "form-control descricaoTicket",
-                                  .placeHolder = "Insira a descrição aqui"})
+                                        .placeHolder = "Insira a descrição aqui"})
                     @Html.ValidationMessageFor(Function(modelEv) modelEv.descricao, "", New With {.class = "text-danger"})
                 </section>
 
@@ -50,14 +56,10 @@ End Code
                     <input type="date" name="dataFecho" value="@dataFinal" id="dataFecho" class="form-control" />
                     @Html.ValidationMessageFor(Function(modelEv) modelEv.dataFecho, "", New With {.class = "text-danger"})
                 </section>
-
-
             </div>
-
             <!-- butões com as operações respectivas do formulário de edição -->
             <div id="btnsEditarTickets" class="col">
                 <ul class="listaBtns">
-                    <li><h4>Edição:</h4></li>
                     <li>
                         <input type="submit" class="btn btn-success btn-sm" value="Guardar" name="Enviar" />
                     </li>
@@ -78,27 +80,31 @@ End Code
                     </li>
                 </ul>
             </div>
-            <!-- Opções do Modal para confirmação do apagamento do registo -->
-            <div class="modal fade" id="verificaModal" tabindex="-1" role="dialog" aria-labelledby="modalApagar" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalApagar">Confirmação</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">Pretende mesmo apagar este problema? Esta operação não é reversivel!</div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                    onclick="location.href ='@Url.Action("ApagarEvento", "Eventos", New With {.ID_evento = Model.ID_evento})'">
-                                Apagar
-                            </button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                        </div>
+
+
+        </div>
+
+        <!-- Opções do Modal para confirmação do apagamento do registo -->
+        <div class="modal fade" id="verificaModal" tabindex="-1" role="dialog" aria-labelledby="modalApagar" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalApagar">Confirmação</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">Pretende mesmo apagar este problema? Esta operação não é reversivel!</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                onclick="location.href ='@Url.Action("ApagarEvento", "Eventos", New With {.ID_evento = Model.ID_evento})'">
+                            Apagar
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                     </div>
                 </div>
             </div>
         </div>
-    End Using
-</div>
+    </div>
+End Using
+

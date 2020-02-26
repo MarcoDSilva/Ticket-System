@@ -5,72 +5,91 @@
 End Code
 
 
+@Using (Html.BeginForm())
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
+    @Html.HiddenFor(Function(modelTec) modelTec.ID_tecnico)
 
-<div class="container">
-    <h2>Editar técnico</h2>
-    @Using (Html.BeginForm())
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
-        @Html.HiddenFor(Function(modelTec) modelTec.ID_tecnico)
+    'form
+    @<div class="container container-fluid">
+        <div class="row" style="padding:10px;">
+            <div class="col">
+                <h4 class="font-italic font-weight-bold">Tecnicos</h4>
+            </div>
+            <div class="col">
+                <h4 class="text-center font-italic font-weight-bold">Edição</h4>
+            </div>
+        </div>
 
-        'form
-        @<div class="form-group">
-            <div class="col-md-12">
-                <p>
+        <!--dados -->
+        <div class="row">
+            <div class="col" id="editaTecnico">
+                <section>
                     @Html.LabelFor(Function(modelTec) modelTec.nome)
                     @Html.EditorFor(Function(modelTec) modelTec.nome, New With {.HtmlAttributes = New With {.class = "form-control"}})
                     @Html.ValidationMessageFor(Function(modelTec) modelTec.nome, "", New With {.class = "text-danger"})
-                </p>
-                <p>
+                </section>
+                <section>
                     @Html.LabelFor(Function(modelTec) modelTec.email)
                     @Html.EditorFor(Function(modelTec) modelTec.email, New With {.HtmlAttributes = New With {.class = "form-control"}})
                     @Html.ValidationMessageFor(Function(modelTec) modelTec.email, "", New With {.class = "text-danger"})
-                </p>
-                <p>
+                </section>
+                <section>
                     @Html.LabelFor(Function(modelTec) modelTec.ID_role)
                     @Html.DropDownList("ID_role", DirectCast(ViewBag.roles, SelectList), New With {.class = "form-control"})
-                </p>
+                </section>
                 @If Session("EmailEditarExiste") = 1 Then
                     @<small id="erro" class="form-text text-danger">Email já existente na base de dados!</small>
                 End If
             </div>
 
-            <input type="submit" value="Guardar" class="btn btn-success" />
-        </div>
-    End Using
-
-    <!-- butões com as operações respectivas do formulário de edição -->
-    <div id="editaTecnico" class="form-group">
-        <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#verificaModal">
-            Apagar
-        </button>
-        <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaTecnico", "Tecnicos")'">
-            Novo
-        </button>
-        <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Tecnicos")'">
-            Voltar
-        </button>
-
-        <!-- Opções do Modal para confirmação do apagamento do registo -->
-        <div class="modal fade" id="verificaModal" tabindex="-1" role="dialog" aria-labelledby="modalApagar" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="modalApagar">Confirmação</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">Pretende mesmo apagar este problema? Esta operação não é reversivel!</div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                onclick="location.href ='@Url.Action("ApagarTecnico", "Tecnicos", New With {.ID_tecnico = idParaApagar})'">
+            <!-- butões CRUD -->
+            <div id="btnsEditarTickets" class="col">
+                <ul class="listaBtns">
+                    <li>
+                        <input type="submit" value="Guardar" class="btn btn-success" />
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#verificaModal">
                             Apagar
                         </button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                    </div>
-                </div>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaTecnico", "Tecnicos")'">
+                            Novo
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Tecnicos")'">
+                            Voltar
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+End Using
+
+<!-- butões com as operações respectivas do formulário de edição -->
+<!-- Opções do Modal para confirmação do apagamento do registo -->
+<div class="modal fade" id="verificaModal" tabindex="-1" role="dialog" aria-labelledby="modalApagar" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalApagar">Confirmação</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">Pretende mesmo apagar este problema? Esta operação não é reversivel!</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        onclick="location.href ='@Url.Action("ApagarTecnico", "Tecnicos", New With {.ID_tecnico = idParaApagar})'">
+                    Apagar
+                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
             </div>
         </div>
     </div>
 </div>
+

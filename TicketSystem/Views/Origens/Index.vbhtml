@@ -3,9 +3,9 @@
     ViewData("Title") = "Origem"
 End Code
 
-<div class="container">
+<div class="container container-fluid">
 
-    <h2>Listagem Origem</h2>
+    <h2 class="font-italic font-weight-bold">Listagem Origem</h2>
 
     <table id="tabelaEventos" class="table table-hover table-sm table-responsive table-bordered">
         <tr class="thead-dark">

@@ -4,32 +4,56 @@
 End Code
 
 
-<h4>Criação de Utilizador</h4>
-
 @Using (Html.BeginForm())
     @Html.AntiForgeryToken()
-    @<div class="form-group">
-        <p>
-            @Html.LabelFor(Function(modelUtil) modelUtil.nome, New With {.class = "form-check-label"})
-            @Html.TextBoxFor(Function(modelUtil) modelUtil.nome, New With {.class = "form-control"})
-        </p>
-        <p>
-            @Html.LabelFor(Function(modelUtil) modelUtil.contacto, New With {.class = "form-check-label"})
-            @Html.TextBoxFor(Function(modelUtil) modelUtil.contacto, New With {.class = "form-control"})
-        </p>
-        <p>
-            @Html.LabelFor(Function(modelUtil) modelUtil.email, New With {.class = "form-check-label"})
-            @Html.TextBoxFor(Function(modelUtil) modelUtil.email, New With {.class = "form-control"})
-        </p>
-        <p>
-            @Html.LabelFor(Function(modelUtil) modelUtil.ID_cliente, New With {.Class = "form-check-label"})
-            @Html.DropDownList("ID_cliente", DirectCast(ViewBag.clientes, SelectList), New With {.class = "form-control"})
 
-            <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='#'">Criar utilizador</button>
-        </p>
-        <input type="submit" class="btn btn-primary" value="Enviar" />
-        <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Utilizadores")'">
-            Voltar
-        </button>
+    @<div class="container container-fluid">
+
+    <div class="row" style="padding:10px;">
+        <div class="col">
+            <h4 class="font-italic font-weight-bold">Novo Utilizador</h4>
+        </div>
+        <div class="col">
+            <h4 class="text-center font-italic font-weight-bold">Edição</h4>
+        </div>
     </div>
+
+    <!--form criação-->
+    <div class="row">
+        <div class="col">
+            <section>
+                @Html.LabelFor(Function(modelUtil) modelUtil.nome, New With {.class = "form-check-label"})
+                @Html.TextBoxFor(Function(modelUtil) modelUtil.nome, New With {.class = "form-control"})
+            </section>
+            <section>
+                @Html.LabelFor(Function(modelUtil) modelUtil.contacto, New With {.class = "form-check-label"})
+                @Html.TextBoxFor(Function(modelUtil) modelUtil.contacto, New With {.class = "form-control"})
+            </section>
+            <section>
+                @Html.LabelFor(Function(modelUtil) modelUtil.email, New With {.class = "form-check-label"})
+                @Html.TextBoxFor(Function(modelUtil) modelUtil.email, New With {.class = "form-control"})
+            </section>
+            <section>
+                @Html.LabelFor(Function(modelUtil) modelUtil.ID_cliente, New With {.Class = "form-check-label"})
+                @Html.DropDownList("ID_cliente", DirectCast(ViewBag.clientes, SelectList), New With {.class = "form-control"})
+                <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='#'">Criar Cliente</button>
+
+            </section>
+        </div>
+
+        <!-- butões CRUD -->
+        <div id="btnsEditarTickets" class="col">
+            <ul class="listaBtns">
+                <li>
+                    <input type="submit" Class="btn btn-success" value="Inserir Utilizador" />
+                </li>
+                <li>
+                    <button type="button" Class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Utilizadores")'">
+                        Voltar
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>    
+</div>
 End Using

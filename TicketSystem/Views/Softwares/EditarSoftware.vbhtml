@@ -4,41 +4,57 @@
     Dim idParaApagar = Model.ID_software
 End Code
 
-
 @Using (Html.BeginForm())
     @Html.AntiForgeryToken()
+    @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
+    @Html.HiddenFor(Function(modelSoft) modelSoft.ID_software)
 
     'form da view abaixo desta div
-    @<div class="container">
-        <h2>Modo de edição - software</h2>
+    @<div class="container container-fluid">
+       
+        <div class="row" style="padding:10px;">
+            <div class="col">
+                <h4 class="font-italic font-weight-bold">Software</h4>
+            </div>
+            <div class="col">
+                <h4 class="text-center font-italic font-weight-bold">Edição</h4>
+            </div>
+        </div>
 
-        <h4>Editar software.</h4>
-        @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
-        @Html.HiddenFor(Function(modelSoft) modelSoft.ID_software)
+        <!-- elemento onde a prioridade é editada e submissão da mesmo -->
+        <div class="row" id="editaSoftware">
+            <!-- dados do form -->
+            <div class="col">
+                <section>
+                    @Html.LabelFor(Function(modelSoft) modelSoft.nome)
+                    @Html.EditorFor(Function(modelSoft) modelSoft.nome, New With {.HtmlAttributes = New With {.class = "form-control"}})
+                    @Html.ValidationMessageFor(Function(modelSoft) modelSoft.nome, "", New With {.class = "text-danger"})
+                </section>
+            </div>
 
-        <!-- campos para editar o software-->
-        <div class="form-group">
-            <div class="col-md-12">
-                @Html.LabelFor(Function(modelSoft) modelSoft.nome)
-                @Html.EditorFor(Function(modelSoft) modelSoft.nome, New With {.HtmlAttributes = New With {.class = "form-control"}})
-                @Html.ValidationMessageFor(Function(modelSoft) modelSoft.nome, "", New With {.class = "text-danger"})
-                <input type="submit" value="Guardar" class="btn btn-success" />
+            <!-- butões CRUD -->
+            <div id="btnsEditarTickets" class="col">
+                <ul class="listaBtns">
+                    <li><input type="submit" value="Guardar" class="btn btn-success" /></li>
+                    <li>
+                        <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#verificaModal">
+                            Apagar
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaSoftware", "Softwares")'">
+                            Novo
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Softwares")'">
+                            Voltar
+                        </button>
+                    </li>
+                </ul>
             </div>
 
         </div>
-
-        <!-- butões com as operações respectivas do formulário de edição -->
-        <div id="editaSoftware" class="form-group">
-            <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#verificaModal">
-                Apagar
-            </button>
-            <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaSoftware", "Softwares")'">
-                Novo
-            </button>
-            <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Softwares")'">
-                Voltar
-            </button>
-
             <!-- Opções do Modal para confirmação do apagamento do registo -->
             <div class="modal fade" id="verificaModal" tabindex="-1" role="dialog" aria-labelledby="modalApagar" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -60,8 +76,7 @@ End Code
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div>        
     </div>
 
 End Using

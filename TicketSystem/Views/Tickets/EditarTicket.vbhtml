@@ -21,8 +21,15 @@ End Code
     @Html.HiddenFor(Function(ticket) ticket.Ticket.First.ID_ticket)
     'form edição
 
-    @<div class="container">
-        <h2>Ticket</h2>
+    @<div class="container container-fluid">
+         <div class="row" style="padding:10px;">
+             <div class="col">
+                 <h4 class="font-italic font-weight-bold">Ticket</h4>
+             </div>
+             <div class="col">
+                 <h4 class="text-center font-italic font-weight-bold">Edição</h4>
+             </div>
+         </div>
 
        <!-- div de organização, row para conter os elementos, as que são col é para podermos dividir o ratio na página-->
         <div class="row">
@@ -102,7 +109,6 @@ End Code
             <!-- botões que efetuam as operações crud-->
             <div id="btnsEditarTickets" class="col">
                 <ul class="listaBtns">
-                    <li><h4>Edição:</h4></li>
                     <li>
                         <input type="submit" class="btn btn-success btn-sm" value="Guardar" name="Enviar" />
                     </li>
@@ -133,7 +139,7 @@ End Code
         <!--eventos atribuidos-->
         <div class="row">
             <div id="ticketsIndex" class="col">
-                <h3>Eventos associados. </h3>
+                <h4 class="font-italic font-weight-bold">Eventos associados.</h4>
                 <table class="table table-striped table-hover table-sm table-responsive">
                     <tr class="thead-dark">
                         <th>@Html.LabelFor(Function(model) model.Evento.First.ID_evento)</th>

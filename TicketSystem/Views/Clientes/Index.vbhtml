@@ -3,8 +3,8 @@
     ViewData("Title") = "Clientes"
 End Code
 
-<div class="container">
-    <h2>Listagem Clientes</h2>
+<div class="container container-fluid">
+    <h2 class="font-italic font-weight-bold">Listagem Clientes</h2>
 
     <table id="tabelaEventos" class="table table-hover table-sm table-responsive">
         <tr class="thead-dark">

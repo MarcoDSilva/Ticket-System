@@ -7,7 +7,6 @@
     font-family: 'Raleway',Arial, Helvetica, sans-serif;
 }
 
-
 .background {
     display: block;
     position: relative;    
@@ -88,7 +87,7 @@ a[data-toggle="collapse"] {
     transition: all 0.3s;
     min-width: 225px;
     max-width: 225px;
-    height: 100vh;
+    min-height: 100vh;
     /*box-shadow: inset 0 0 5rem rgba(166, 93, 152, 0.43);*/
 }
 
@@ -254,9 +253,6 @@ ul ul a {
     justify-content:flex-end;
 }
 
-
-
-
 .filtros_ticket {
     margin:0 auto;
 }
@@ -264,7 +260,6 @@ ul ul a {
 #criaTicket {
     padding-top:20px;
     margin:0 auto;
-   
 }
 
 .descricaoTicket {
@@ -349,4 +344,21 @@ ul ul a {
 
 .borderForm {
     border: 1px solid gray;
+}
+
+#myTab {
+    background-color:lightgray;
+}
+
+#contentorEdicao {
+    background-color: lightgray;
+    border: 1px solid gray;
+    border-radius: 4px;
+}
+
+#contentorEdicao .conteudo {
+    padding-left: 30px;
+    display: flex;
+    justify-content: center;
+    align-items:center;
 }

@@ -10,7 +10,7 @@ End Code
     @Html.AntiForgeryToken()
 
     @<div class="container" id="criaTicket">
-        <h4>Criação de ticket</h4>
+        <h4 class="font-italic font-weight-bold">Criação de ticket</h4>
 
         @Html.HiddenFor(Function(ticket) ticket.ID_ticket)
      <div class="row row-no-gutters">

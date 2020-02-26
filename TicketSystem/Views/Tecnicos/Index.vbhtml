@@ -3,8 +3,8 @@
     ViewData("Title") = "Técnicos"
 End Code
 
-<div class="container">
-    <h2>Listagem Tecnicos</h2>
+<div class="container container-fluid">
+    <h2 class="font-italic font-weight-bold">Listagem Tecnicos</h2>
     <table id="tabelaEventos" class="table table-hover table-sm table-responsive">
         <tr class="thead-dark">
             <th>@Html.DisplayNameFor(Function(modelTec) modelTec.ID_tecnico)

@@ -9,45 +9,54 @@ End Code
     @Html.AntiForgeryToken()
 
     'form da view
-    @<div class="container">
+    @<div class="container-fluid">
         @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
         @Html.HiddenFor(Function(modelOrig) modelOrig.ID_origem)
-         <div class="row">
-             <h2>Editar origem</h2>
+         <div class="row" style="padding:10px;">
+             <div class="col">
+                 <h4 class="font-italic font-weight-bold">Origem</h4>
+             </div>
+             <div class="col">
+                 <h4 class="text-center font-italic font-weight-bold">Edição</h4>
+             </div>
          </div>
         <!-- form edição, modelo row e cols para a organização -->
-        <div class="row">
-            <div class="col" style="width:100%;height:100vh;overflow:auto;background-color:lightgray;">
-                @Html.LabelFor(Function(modelOrig) modelOrig.descricao)
-                @Html.EditorFor(Function(modelOrig) modelOrig.descricao, New With {.HtmlAttributes = New With {.class = "form-control"}})
-                @Html.ValidationMessageFor(Function(modelOrig) modelOrig.descricao, "", New With {.class = "text-danger"})
-            </div>
-
-            <div id="btnsEditarTickets" class="col">
-               
-                <ul class="listaBtns">
-                    <li>
-                        <h3>Edição:</h3>
-                    </li>
-                    <li><input type="submit" class="btn btn-success" value="Guardar" /></li>
-                    <li>
-                        <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#verificaModal" id="apagarino">
-                            Apagar
-                        </button>
-                    </li>
-                    <li>
-                        <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaOrigem", "Origens")'">
-                            Novo
-                        </button>
-                    </li>
-                    <li>
-                        <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Origens")'">
-                            Voltar
-                        </button>
-                    </li>
-                </ul>
-            </div>
-        </div>
+         <div class="row" style="padding:10px;">
+             <div class="col" id="contentorEdicao">
+                 <ul class="nav nav-tabs" id="myTab" role="tablist">
+                     <li class="nav-item">
+                         <a class="nav-link active btn" id="detalhes-tab" data-toggle="tab" href="#detalhes" role="tab" aria-controls="detalhes" aria-selected="true">Base</a>
+                     </li>
+                 </ul>
+                 <section class="conteudo">
+                     @Html.LabelFor(Function(modelOrig) modelOrig.descricao, New With {.class = "form-text"})
+                     @Html.EditorFor(Function(modelOrig) modelOrig.descricao, New With {.HtmlAttributes = New With {.class = "form-control", .style = "max-width:200px;"}})
+                     @Html.ValidationMessageFor(Function(modelOrig) modelOrig.descricao, "", New With {.class = "text-danger"})
+                 </section>
+             </div>
+                 <div id="btnsEditarTickets" class="col">
+                     <ul class="listaBtns">
+                         <li>
+                             <input type="submit" class="btn btn-success" value="Guardar" />
+                         </li>
+                         <li>
+                             <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#verificaModal" id="apagarino">
+                                 Apagar
+                             </button>
+                         </li>
+                         <li>
+                             <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaOrigem", "Origens")'">
+                                 Novo
+                             </button>
+                         </li>
+                         <li>
+                             <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Origens")'">
+                                 Voltar
+                             </button>
+                         </li>
+                     </ul>
+                 </div>
+         </div>
 
         <!-- butões com as operações respectivas do formulário de edição -->
         <div id="editaOrigens">

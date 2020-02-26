@@ -4,20 +4,39 @@
 End Code
 
 
-<h4>Criar nova origem</h4>
 @Using (Html.BeginForm())
-    @<div Class="form-horizontal">
+    @Html.AntiForgeryToken()
 
-        @Html.AntiForgeryToken()
-
-        <div class="form-group">
-            <p>
-                @Html.LabelFor(Function(modelOrig) modelOrig.descricao)
-                @Html.TextBoxFor(Function(modelOrig) modelOrig.descricao, New With {.class = "form-control"})
-            </p>
+    @<div class="container container-fluid">
+        <div class="row" style="padding:10px;">
+            <div class="col">
+                <h4 class="font-italic font-weight-bold">Nova Origem</h4>
+            </div>
+            <div class="col">
+                <h4 class="text-center font-italic font-weight-bold">Edição</h4>
+            </div>
         </div>
-        <input type="submit" class="btn btn-primary" value="Inserir Registo" />
-        <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Origens")'">Voltar</button>
+        <!-- form criação-->
+        <div class="row">
+            <div class="col">
+                <section>
+                    @Html.LabelFor(Function(modelOrig) modelOrig.descricao)
+                    @Html.TextBoxFor(Function(modelOrig) modelOrig.descricao, New With {.class = "form-control"})
+                </section>
+            </div>
+            <!-- botões CRUD -->
+            <div id="btnsEditarTickets" class="col">
+                <ul class="listaBtns">
+                    <li>
+                        <input type="submit" class="btn btn-success" value="Inserir Origem" />
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Origens")'">Voltar</button>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
     </div>
 End Using
 

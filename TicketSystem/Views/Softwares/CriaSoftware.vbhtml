@@ -3,21 +3,42 @@
     ViewData("Title") = "Criação de software"
 End Code
 
-
-<h4>Adição novo software</h4>
 @Using (Html.BeginForm())
     @Html.AntiForgeryToken()
-    @<div class="form-horizontal">
-        <div class="form-group">
-            <p>
-                @Html.LabelFor(Function(modelSoft) modelSoft.nome)
-                @Html.TextBoxFor(Function(modelSoft) modelSoft.nome, New With {.class = "form-control"})
-            </p>
+    @<div class="container container-fluid">
+
+        <div class="row" style="padding:10px;">
+            <div class="col">
+                <h4 class="font-italic font-weight-bold">Novo Software</h4>
+            </div>
+            <div class="col">
+                <h4 class="text-center font-italic font-weight-bold">Edição</h4>
+            </div>
         </div>
-        <input type="submit" name="submit" value="Inserir" class="btn btn-primary" />
-        <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Softwares")'">
-            Voltar
-        </button>
+
+        <div class="row">
+            <div class="col">
+                <section>
+                    @Html.LabelFor(Function(modelSoft) modelSoft.nome)
+                    @Html.TextBoxFor(Function(modelSoft) modelSoft.nome, New With {.class = "form-control"})
+                </section>
+            </div>
+            <!-- botões CRUD -->
+            <div id="btnsEditarTickets" class="col">
+                <ul class="listaBtns">
+                    <li>
+                        <input type="submit" name="submit" value="Inserir Software" class="btn btn-success" />
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Softwares")'">
+                            Voltar
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
     </div>
 End Using
 

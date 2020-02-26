@@ -16,7 +16,6 @@ End Code
 
 <div class="container">
     <h2>@DateTime.Now.ToLongDateString()</h2>
-    <p>@mensagem @Session("Nome")</p>
 
     @If Session("Administrador") = 1 Then
         @<p>O seu cargo é administrador!</p>

@@ -7,36 +7,59 @@ End Code
 
 @Using (Html.BeginForm())
     @Html.AntiForgeryToken()
+    @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
+    @Html.HiddenFor(Function(modelEst) modelEst.ID_estado)
 
-
-    @<div class="container">
-        <h2>Editar o tipo do estado</h2>
-
-        <h4>Modo de edição</h4>
-        @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
-        @Html.HiddenFor(Function(modelEst) modelEst.ID_estado)
+    @<div class="container container-fluid">
 
         <!-- form onde o estado será editado-->
-        <div class="form-group">
-            <div class="col-md-12">
-                @Html.LabelFor(Function(modelEst) modelEst.descricao)
-                @Html.EditorFor(Function(modelEst) modelEst.descricao, New With {.HtmlAttributes = New With {.class = "form-control"}})
-                @Html.ValidationMessageFor(Function(modelEst) modelEst.descricao, "", New With {.class = "text-danger"})
-                <input type="submit" value="Guardar" class="btn btn-success" />
+        <div class="row" style="padding:10px;">
+
+            <div class="col">
+                <h4 class="font-italic font-weight-bold">Estado</h4>
+            </div>
+            <div class="col">
+                <h4 class="text-center font-italic font-weight-bold">Edição</h4>
+            </div>
+
+
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <section>
+                    @Html.LabelFor(Function(modelEst) modelEst.descricao)
+                    @Html.EditorFor(Function(modelEst) modelEst.descricao, New With {.HtmlAttributes = New With {.class = "form-control"}})
+                    @Html.ValidationMessageFor(Function(modelEst) modelEst.descricao, "", New With {.class = "text-danger"})
+                </section>
+            </div>
+
+            <div id="btnsEditarTickets" class="col">
+                <ul class="listaBtns">
+                    <li>
+                        <input type="submit" value="Guardar" class="btn btn-success" />
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#verificaModal">
+                            Apagar
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaEstado", "Estados")'">
+                            Novo
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Estados")'">
+                            Voltar
+                        </button>
+                    </li>
+                </ul>
             </div>
         </div>
 
         <!-- butões com as operações respectivas do formulário de edição -->
         <div id="editaEstados" class="form-group">
-            <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#verificaModal">
-                Apagar
-            </button>
-            <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaEstado", "Estados")'">
-                Novo
-            </button>
-            <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Estados")'">
-                Voltar
-            </button>
 
             <!-- Opções do Modal para confirmação do apagamento do registo -->
             <div class="modal fade" id="verificaModal" tabindex="-1" role="dialog" aria-labelledby="modalApagar" aria-hidden="true">

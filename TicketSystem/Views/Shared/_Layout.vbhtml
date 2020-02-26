@@ -19,6 +19,7 @@ End Code
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ticket System - @ViewBag.Title</title>
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,500i,800&display=swap" rel="stylesheet">
+    <link href="~/img/kanban-fill.svg" rel="shortcut icon" type="image/svg"/>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -99,53 +100,46 @@ End Code
         End If
 
         <!-- navbar DA PÁGINA -->
-        <div id="content">
-            @If Not String.IsNullOrEmpty((Session("Nome"))) Then
+    <div id="content">
+        @If Not String.IsNullOrEmpty((Session("Nome"))) Then
 
-                @<nav class="navbar navbar-dark shadow-sm navbar-expand-lg navColor">
-                    <button type="button" id="sidebarCollapse" class="btn btn-sm btnHamburguer">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    @If Session("Login") = 1 And Session("LoginErrado") = 0 Then
-                        @<div class="dropdown">
-                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarBtn" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
-                            <div class="collapse navbar-collapse" id="navbarBtn">
-                                <span class="text-white font-weight-bold">@mensagem, @Session("Nome") | @Session("Email")</span>
-                                <div class="btn-group-sm" role="group">
-                                    <button id="groupLogins" type="button" class="btn btnOpcoesMenu dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Opções
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="groupLogins">
-                                        <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("AlterarPassword", "Logins", New With {.ID_tecnico = Session("ID_tecnico")})'">Alterar Password</a>
-                                        <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("Logout", "Logins")'">Logout</a>
-                                    </div>
+            @<nav class="navbar navbar-dark shadow-sm navbar-expand-lg navColor">
+                <button type="button" id="sidebarCollapse" class="btn btn-sm btnHamburguer">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                @If Session("Login") = 1 And Session("LoginErrado") = 0 Then
+                    @<div class="container-fluid">
+                            <span class="text-white font-weight-bold">@mensagem, @Session("Nome") | @Session("Email")</span>
+                            <div class="btn-group-sm" role="group">
+                                <button id="groupLogins" type="button" class="btn btnOpcoesMenu dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Opções
+                                </button>
+                                <div class="dropdown-menu" style="right:0 !important;" aria-labelledby="groupLogins">
+                                    <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("AlterarPassword", "Logins", New With {.ID_tecnico = Session("ID_tecnico")})'">Alterar Password</a>
+                                    <a class="dropdown-item" href="#" onclick="location.href='@Url.Action("Logout", "Logins")'">Logout</a>
                                 </div>
                             </div>
                         </div>
-
-                    End If
-                </nav>
-            End If
-            <!-- PÁGINA PARA RENDERIZAR DAS VIEWS-->
-            @If String.IsNullOrEmpty((Session("Nome"))) Then
-                @<div class="">
-                    @RenderBody()
-                    @*<footer class="card-footer">
-                            <p>&copy; @DateTime.Now.Year - Ticket System by ms</p>
-                        </footer>*@
-                </div>
-            Else
-                @<div class="background">
-                    @RenderBody()
-                    @*<footer class="card-footer">
-                            <p>&copy; @DateTime.Now.Year - Ticket System by ms</p>
-                        </footer>*@
-                </div>
-            End If
-        </div>
+                End If
+            </nav>
+        End If
+        <!-- PÁGINA PARA RENDERIZAR DAS VIEWS-->
+        @If String.IsNullOrEmpty((Session("Nome"))) Then
+            @<div class="">
+                @RenderBody()
+                @*<footer class="card-footer">
+                    <p>&copy; @DateTime.Now.Year - Ticket System by ms</p>
+                </footer>*@
+            </div>
+        Else
+            @<div class="background">
+                @RenderBody()
+                @*<footer class="card-footer">
+                    <p>&copy; @DateTime.Now.Year - Ticket System by ms</p>
+                </footer>*@
+            </div>
+        End If
+    </div>
 
     </div>
     @Scripts.Render("~/bundles/jquery")

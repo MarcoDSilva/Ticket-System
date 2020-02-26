@@ -4,7 +4,7 @@
 End Code
 
 <div class="container">
-    <h2>Listar Prioridades</h2>
+    <h2 class="font-italic font-weight-bold">Listar Prioridades</h2>
 
     <table id="tabelaEventos" class="table table-hover table-sm table-responsive">
         <tr class="thead-dark">
