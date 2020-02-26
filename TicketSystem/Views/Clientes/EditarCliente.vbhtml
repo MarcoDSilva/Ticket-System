@@ -10,55 +10,55 @@ End Code
     @Using (Html.BeginForm())
         @Html.AntiForgeryToken()
 
-        @<div class="col-form-label">
+        @<div class="row">
             @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
             @Html.HiddenFor(Function(cli) cli.ID_cliente)
 
             <!-- form edição -->
-            <div class="form-group">
-                <div class="col-md-12">
-                    <p>
-                        @Html.LabelFor(Function(cli) cli.nome, New With {.class = "form-check-label"})
-                        @Html.EditorFor(Function(cli) cli.nome, New With {.HtmlAttributes = New With {.class = "form-control"}})
-                        @Html.ValidationMessageFor(Function(cli) cli.nome, "", New With {.class = "text-danger"})
-                    </p>
-                    <p>
-                        @Html.LabelFor(Function(cli) cli.contacto, New With {.class = "form-check-label"})
-                        @Html.EditorFor(Function(cli) cli.contacto, New With {.HtmlAttributes = New With {.class = "form-control"}})
-                        @Html.ValidationMessageFor(Function(cli) cli.contacto, "", New With {.class = "text-danger"})
-                    </p>
-                    <p>
-                        @Html.LabelFor(Function(cli) cli.email, New With {.class = "form-check-label"})
-                        @Html.EditorFor(Function(cli) cli.email, New With {.HtmlAttributes = New With {.class = "form-control"}})
-                        @Html.ValidationMessageFor(Function(cli) cli.email, "", New With {.class = "text-danger"})
-                    </p>
-                    <p>
-                        @Html.LabelFor(Function(cli) cli.empresa, New With {.class = "form-check-label"})
-                        @Html.EditorFor(Function(cli) cli.empresa, New With {.HtmlAttributes = New With {.class = "form-control"}})
-                        @Html.ValidationMessageFor(Function(cli) cli.empresa, "", New With {.class = "text-danger"})
-                    </p>
-                    <p>
+            <div class="col">
+                <section>
+                    @Html.LabelFor(Function(cli) cli.nome, New With {.class = "form-check-label"})
+                    @Html.EditorFor(Function(cli) cli.nome, New With {.HtmlAttributes = New With {.class = "form-control"}})
+                    @Html.ValidationMessageFor(Function(cli) cli.nome, "", New With {.class = "text-danger"})
+                </section>
+                <section>
+                    @Html.LabelFor(Function(cli) cli.contacto, New With {.class = "form-check-label"})
+                    @Html.EditorFor(Function(cli) cli.contacto, New With {.HtmlAttributes = New With {.class = "form-control"}})
+                    @Html.ValidationMessageFor(Function(cli) cli.contacto, "", New With {.class = "text-danger"})
+                </section>
+                <section>
+                    @Html.LabelFor(Function(cli) cli.email, New With {.class = "form-check-label"})
+                    @Html.EditorFor(Function(cli) cli.email, New With {.HtmlAttributes = New With {.class = "form-control"}})
+                    @Html.ValidationMessageFor(Function(cli) cli.email, "", New With {.class = "text-danger"})
+                </section>
+                <section>
+                    @Html.LabelFor(Function(cli) cli.empresa, New With {.class = "form-check-label"})
+                    @Html.EditorFor(Function(cli) cli.empresa, New With {.HtmlAttributes = New With {.class = "form-control"}})
+                    @Html.ValidationMessageFor(Function(cli) cli.empresa, "", New With {.class = "text-danger"})
+                </section>
+                @*<section>
                         @Html.LabelFor(Function(cli) cli.ID_utilizador, New With {.class = "form-check-label"})
-                        @*@Html.EditorFor(Function(cli) cli.ID_utilizador, New With {.HtmlAttributes = New With {.class = "form-control"}})*@
+                        @Html.EditorFor(Function(cli) cli.ID_utilizador, New With {.HtmlAttributes = New With {.class = "form-control"}})
                         @Html.DropDownList("ID_utilizador", DirectCast(ViewBag.utilizador, SelectList), New With {.class = "form-control"})
                         @Html.ValidationMessageFor(Function(cli) cli.ID_utilizador, "", New With {.class = "text-danger"})
 
                         <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='#'">Criar utilizador</button>
-                    </p>
+                    </section>*@
+            </div>
 
-                    <!-- butões de operações -->
-                    <input type="submit" value="Guardar" class="btn btn-success" />
+            <div class="col">
+                <!-- butões de operações -->
+                <input type="submit" value="Guardar" class="btn btn-success" />
 
-                    <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#verificaModal">
-                        Apagar
-                    </button>
-                    <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaCliente", "Clientes")'">
-                        Novo
-                    </button>
-                    <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Clientes")'">
-                        Voltar
-                    </button>
-                </div>
+                <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#verificaModal">
+                    Apagar
+                </button>
+                <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaCliente", "Clientes")'">
+                    Novo
+                </button>
+                <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Clientes")'">
+                    Voltar
+                </button>
             </div>
 
             <!-- butões com as operações respectivas do formulário de edição -->
@@ -89,6 +89,4 @@ End Code
 
         </div>
     End Using
-
 </div>
-

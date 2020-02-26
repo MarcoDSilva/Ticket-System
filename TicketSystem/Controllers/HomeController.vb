@@ -14,7 +14,7 @@
                                       t.dataAbertura, est.descricao, prio.descricao 
 
                                       FROM Ticket t,Tecnico tec, Software sft, Cliente cli, 
-                                      Problema prob, Estado est, Prioridade prio, Evento e
+                                      Problema prob, Estado est, Prioridade prio
 
                                       WHERE t.ID_tecnico = tec.ID_tecnico
                                           AND sft.ID_software = t.ID_software
@@ -22,8 +22,8 @@
                                           AND prob.ID_problema = t.ID_problema
                                           AND est.ID_estado = t.ID_estado
                                           AND prio.ID_prioridade = t.ID_prioridade
-                                          AND e.dataFecho IS NULL
-                                          AND e.ID_tecnico = {Session("ID_tecnico")}
+                                          AND t.dataFecho IS NULL
+                                          AND t.ID_tecnico = {Session("ID_tecnico")}
                                           AND t.ID_estado <> 6;"
 
         Dim queryEvento = $"SELECT e.ID_evento, e.descricao,t.nome, 
@@ -86,17 +86,17 @@
         'criamos um novo objecto do tipo Ticket, onde atribuimos os dados da iteração actual
         'e no fim após a atribuição desses dados, inserimos numa List(a) de Tickets, o qual usamos para retornar os dados
         For Each item In tabelaDados.AsEnumerable
-            Dim tick As New VM_Ticket()
-
-            tick.ID_ticket = item(0)
-            tick.ID_tecnico = item(1)
-            tick.ID_software = item(2)
-            tick.ID_cliente = item(3)
-            tick.ID_problema = item(4)
-            tick.descricao = item(5)
-            tick.dataAbertura = item(6)
-            tick.ID_estado = item(7)
-            tick.ID_prioridade = item(8)
+            Dim tick As New VM_Ticket With {
+                .ID_ticket = item(0),
+                .ID_tecnico = item(1),
+                .ID_software = item(2),
+                .ID_cliente = item(3),
+                .ID_problema = item(4),
+                .descricao = item(5),
+                .dataAbertura = item(6),
+                .ID_estado = item(7),
+                .ID_prioridade = item(8)
+            }
             listagemTickets.Add(tick)
         Next
 

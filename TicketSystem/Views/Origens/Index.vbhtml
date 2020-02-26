@@ -7,7 +7,7 @@ End Code
 
     <h2>Listagem Origem</h2>
 
-    <table class="table table-hover table-sm table-responsive table-bordered">
+    <table id="tabelaEventos" class="table table-hover table-sm table-responsive table-bordered">
         <tr class="thead-dark">
             <th>@Html.DisplayNameFor(Function(modelOrig) modelOrig.ID_origem)</th>
             <th>@Html.DisplayNameFor(Function(modelOrig) modelOrig.descricao)</th>
@@ -15,11 +15,10 @@ End Code
         </tr>
 
         @For Each origem In Model
-            @<tr>
+            @<tr onclick="location.href='@Url.Action("EditarOrigem", "Origens", New With {.ID_origem = origem.ID_origem})'" class = "clickableCell"}>
                 <td>@Html.DisplayFor(Function(modelOrig) origem.ID_origem)</td>
                 <td>@Html.DisplayFor(Function(modelOrig) origem.descricao)</td>
                 <td>@Html.DisplayFor(Function(modelOrig) origem.dat_hor)</td>
-                <td>@Html.ActionLink("Detalhes", "EditarOrigem", New With {.ID_origem = origem.ID_origem})</td>
             </tr>
         Next
     </table>

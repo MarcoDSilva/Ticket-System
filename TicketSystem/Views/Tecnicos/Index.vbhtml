@@ -5,7 +5,7 @@ End Code
 
 <div class="container">
     <h2>Listagem Tecnicos</h2>
-    <table class="table table-hover table-sm table-responsive">
+    <table id="tabelaEventos" class="table table-hover table-sm table-responsive">
         <tr class="thead-dark">
             <th>@Html.DisplayNameFor(Function(modelTec) modelTec.ID_tecnico)
             <th>@Html.DisplayNameFor(Function(modelTec) modelTec.nome)</th>
@@ -15,13 +15,13 @@ End Code
         </tr>
 
         @For Each tecnico In Model
-            @<tr>
+            @<tr onclick="location.href='@Url.Action("EditarTecnico", "Tecnicos", New With {.ID_tecnico = tecnico.ID_tecnico})'" class="clickableCell">
+
                 <td>@Html.DisplayFor(Function(modelTec) tecnico.ID_tecnico)</td>
                 <td>@Html.DisplayFor(Function(modelTec) tecnico.nome)</td>
                 <td>@Html.DisplayFor(Function(modelTec) tecnico.email)</td>
                 <td>@Html.DisplayFor(Function(modelTec) tecnico.ID_role)</td>
-                <td>@Html.DisplayFor(Function(modelTec) tecnico.dat_hor)</td>
-                <td>@Html.ActionLink("Detalhes", "EditarTecnico", New With {.ID_tecnico = tecnico.ID_tecnico})</td>
+                <td>@Html.DisplayFor(Function(modelTec) tecnico.dat_hor)</td>                
             </tr>
         Next
     </table>

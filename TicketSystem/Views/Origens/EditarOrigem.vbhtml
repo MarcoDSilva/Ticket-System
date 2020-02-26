@@ -12,31 +12,45 @@ End Code
     @<div class="container">
         @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
         @Html.HiddenFor(Function(modelOrig) modelOrig.ID_origem)
-
-        <h2>Editar origem</h2>
-
-        <!-- form edição -->
-        <div class="form-group">
-            <div class="col-md-12">
+         <div class="row">
+             <h2>Editar origem</h2>
+         </div>
+        <!-- form edição, modelo row e cols para a organização -->
+        <div class="row">
+            <div class="col" style="width:100%;height:100vh;overflow:auto;background-color:lightgray;">
                 @Html.LabelFor(Function(modelOrig) modelOrig.descricao)
                 @Html.EditorFor(Function(modelOrig) modelOrig.descricao, New With {.HtmlAttributes = New With {.class = "form-control"}})
                 @Html.ValidationMessageFor(Function(modelOrig) modelOrig.descricao, "", New With {.class = "text-danger"})
-                <input type="submit" class="btn btn-success" value="Guardar" />
+            </div>
+
+            <div id="btnsEditarTickets" class="col">
+               
+                <ul class="listaBtns">
+                    <li>
+                        <h3>Edição:</h3>
+                    </li>
+                    <li><input type="submit" class="btn btn-success" value="Guardar" /></li>
+                    <li>
+                        <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#verificaModal" id="apagarino">
+                            Apagar
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaOrigem", "Origens")'">
+                            Novo
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Origens")'">
+                            Voltar
+                        </button>
+                    </li>
+                </ul>
             </div>
         </div>
 
         <!-- butões com as operações respectivas do formulário de edição -->
-        <div id="editaOrigens" class="form-group">
-            <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#verificaModal" id="apagarino">
-                Apagar
-            </button>
-            <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaOrigem", "Origens")'">
-                Novo
-            </button>
-            <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Origens")'">
-                Voltar
-            </button>
-
+        <div id="editaOrigens">
             <!-- Opções do Modal para confirmação do apagamento do registo -->
             <div class="modal fade" id="verificaModal" tabindex="-1" role="dialog" aria-labelledby="modalApagar" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">

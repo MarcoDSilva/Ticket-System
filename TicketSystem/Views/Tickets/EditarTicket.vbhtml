@@ -24,9 +24,11 @@ End Code
     @<div class="container">
         <h2>Ticket</h2>
 
+       <!-- div de organização, row para conter os elementos, as que são col é para podermos dividir o ratio na página-->
         <div class="row">
             <div class="col">
                 <section>
+                    <!--"on click" menu strip, para poder mostrar os restantes campos do formulário  -->
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active btn" id="detalhes-tab" data-toggle="tab" href="#detalhes" role="tab" aria-controls="detalhes" aria-selected="true">Detalhes do ticket</a>
@@ -40,8 +42,9 @@ End Code
                     </ul>
                 </section>
 
+                <!-- os varios campos do formulário -->
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="detalhes" role="tabpanel" aria-labelledby="detalhes-tab">
+                    <section class="tab-pane fade show active" id="detalhes" role="tabpanel" aria-labelledby="detalhes-tab">
                         <div>
                             @Html.LabelFor(Function(ticket) ticket.Ticket.First.ID_software, New With {.class = "form-check-label"})
                             @Html.DropDownList("ID_software", DirectCast(ViewBag.software, SelectList), New With {.class = "form-control"})
@@ -58,7 +61,7 @@ End Code
                             @Html.LabelFor(Function(ticket) ticket.Ticket.First.descricao, New With {.class = "form-check-label"})
                             @Html.TextAreaFor(Function(ticket) ticket.Ticket.First.descricao, 10, 100, New With {.class = "form-control descricaoTicket"})
                         </div>
-                    </div>
+                    </section>
 
                     <section class="tab-pane fade" id="datas" role="tabpanel" aria-labelledby="datas-tab">
                         <div>
@@ -96,6 +99,7 @@ End Code
                 </div>
             </div>
 
+            <!-- botões que efetuam as operações crud-->
             <div id="btnsEditarTickets" class="col">
                 <ul class="listaBtns">
                     <li><h4>Edição:</h4></li>
@@ -124,11 +128,10 @@ End Code
                     </li>
                 </ul>
             </div>
-
         </div>
+
         <!--eventos atribuidos-->
         <div class="row">
-            
             <div id="ticketsIndex" class="col">
                 <h3>Eventos associados. </h3>
                 <table class="table table-striped table-hover table-sm table-responsive">
@@ -140,7 +143,7 @@ End Code
                         <th> @Html.LabelFor(Function(model) model.Evento.First.dataAbertura)</th>
                     </tr>
                     @For Each evento In Model.Evento
-                        @<tr>
+                        @<tr onclick="location.href='@Url.Action("EditarEvento", "Eventos", New With {.ID_evento = evento.ID_evento})'" class="clickableCell">
                             <td>@Html.DisplayFor(Function(model) evento.ID_evento)</td>
                             <td>@Html.DisplayFor(Function(model) evento.ID_tecnico)</td>
                             <td>@Html.DisplayFor(Function(model) evento.descricao)</td>
@@ -153,7 +156,6 @@ End Code
             </div>
         </div>
     </div>
-
 
     'butões com as operações respectivas do formulário de edição
     @<section id="editaTicket">

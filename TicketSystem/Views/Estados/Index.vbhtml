@@ -7,7 +7,7 @@ End Code
 
     <h2>Lista de Estados</h2>
 
-    <table class="table table-hover table-sm table-responsive">
+    <table id="tabelaEventos" class="table table-hover table-sm table-responsive">
         <tr class="thead-dark">
             <th>@Html.DisplayNameFor(Function(modelEst) modelEst.ID_estado)</th>
             <th>@Html.DisplayNameFor(Function(modelEst) modelEst.descricao)</th>
@@ -15,11 +15,10 @@ End Code
         </tr>
 
         @For Each estado In Model
-            @<tr>
+            @<tr onclick="location.href='@Url.Action("EditarEstado", "Estados", New With {.ID_estado = estado.ID_estado})'" class="clickableCell">
                 <td>@Html.DisplayFor(Function(modelestado) estado.ID_estado)</td>
                 <td>@Html.DisplayFor(Function(modelestado) estado.descricao)</td>
                 <td>@Html.DisplayFor(Function(modelestado) estado.dat_hor)</td>
-                <td>@Html.ActionLink("Detalhes", "EditarEstado", New With {.ID_estado = estado.ID_estado})</td>
             </tr>
         Next
     </table>

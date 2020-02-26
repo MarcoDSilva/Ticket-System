@@ -15,7 +15,7 @@ End Code
         </div>
 
         <div class="form-check-inline">
-            <label>Filtrar por prioridad    e </label>
+            <label>Filtrar por prioridade: </label>
             @Html.DropDownList("ID_prioridade", DirectCast(ViewBag.prioridade, SelectList), "",
                             htmlAttributes:=New With {.class = "form-control", .onchange = "this.form.submit();"})
         </div>

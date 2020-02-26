@@ -9,7 +9,7 @@ End Code
     <h2>Listagem de problemas</h2>
 
 
-    <table class="table table-hover table-sm table-responsive">
+    <table id="tabelaEventos" class="table table-hover table-sm table-responsive">
         <tr class="thead-dark">
             <th>@Html.DisplayNameFor(Function(model) model.ID_problema)</th>
             <th>@Html.DisplayNameFor(Function(model) model.descricao)</th>
@@ -17,13 +17,10 @@ End Code
         </tr>
 
         @For Each problem In Model
-            @<tr>
+            @<tr onclick="location.href='@Url.Action("EditarProblema", "Problemas", New With {.ID_problema = problem.ID_problema})'" class="clickableCell">
                 <td>@Html.DisplayFor(Function(modelproblem) problem.ID_problema)</td>
                 <td>@Html.DisplayFor(Function(modelproblem) problem.descricao)</td>
                 <td>@Html.DisplayFor(Function(modelproblem) problem.dat_hor)</td>
-                <td>
-                    @Html.ActionLink("Detalhes", "EditarProblema", New With {.ID_problema = problem.ID_problema})
-                </td>
             </tr>
         Next
     </table>

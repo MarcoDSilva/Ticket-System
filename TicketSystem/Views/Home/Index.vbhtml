@@ -87,7 +87,7 @@ Else
                     <th>@Html.LabelFor(Function(model) model.Ticket.First.ID_prioridade)</th>
                 </tr>
                 @For Each ticket In Model.Ticket
-                    @<tr>
+                    @<tr onclick="location.href='@Url.Action("EditarTicket", "Tickets", New With {.ID_ticket = ticket.ID_ticket})'" class="clickableCell">
                         <td>@Html.DisplayFor(Function(model) ticket.ID_ticket)</td>
                         <td>@Html.DisplayFor(Function(model) ticket.ID_tecnico)</td>
                         <td>@Html.DisplayFor(Function(model) ticket.ID_cliente)</td>
@@ -146,7 +146,7 @@ Else
                     <th> @Html.LabelFor(Function(model) model.Evento.First.dataAbertura)</th>
                 </tr>
                 @For Each evento In Model.Evento
-                    @<tr>
+                    @<tr onclick="location.href='@Url.Action("EditarEvento", "Eventos", New With {.ID_evento = evento.ID_evento})'" class="clickableCell">
                         <td>@Html.DisplayFor(Function(model) evento.ID_evento)</td>
                         <td>@Html.DisplayFor(Function(model) evento.ID_tecnico)</td>
                         <td>@Html.DisplayFor(Function(model) evento.descricao)</td>

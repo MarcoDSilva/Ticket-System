@@ -7,8 +7,7 @@ End Code
 <div class="container">
 
     <h2>Listagem Utilizadores</h2>
-
-    <table class="table table-hover table-sm table-responsive">
+    <table id="tabelaEventos" class="table table-hover table-sm table-responsive">
         <tr class="thead-dark">
             <th>@Html.DisplayNameFor(Function(modelUser) modelUser.ID_utilizador)</th>
             <th>@Html.DisplayNameFor(Function(modelUser) modelUser.nome)</th>
@@ -19,14 +18,14 @@ End Code
         </tr>
 
         @For Each utilizador In Model
-            @<tr>
+            @<tr onclick="location.href='@Url.Action("EditarUtilizador", "Utilizadores", New With {.ID_utilizador = utilizador.ID_utilizador})'" class="clickableCell">
+                
                 <td>@Html.DisplayFor(Function(modelutilizador) utilizador.ID_utilizador)</td>
                 <td>@Html.DisplayFor(Function(modelutilizador) utilizador.nome)</td>
                 <td>@Html.DisplayFor(Function(modelutilizador) utilizador.contacto)</td>
                 <td>@Html.DisplayFor(Function(modelutilizador) utilizador.email)</td>
                 <td>@Html.DisplayFor(Function(modelutilizador) utilizador.ID_cliente)</td>
                 <td>@Html.DisplayFor(Function(modelutilizador) utilizador.dat_hor)</td>
-                <td>@Html.ActionLink("Detalhes", "EditarUtilizador", New With {.ID_utilizador = utilizador.ID_utilizador})</td>
             </tr>
         Next
     </table>
