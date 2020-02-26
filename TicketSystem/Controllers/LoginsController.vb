@@ -48,7 +48,7 @@ Namespace Controllers
                     Session("Email") = tecnicoLogado.email.ToString()
                     Session("Nome") = tecnicoLogado.nome.ToString()
                     Session("ID_tecnico") = tecnicoLogado.ID_tecnico
-                    Session.Timeout = 120
+                    Session.Timeout = 240
                 End If
             End If
 
@@ -137,7 +137,7 @@ Namespace Controllers
             Session("ID_tecnico") = 0
             Session("PasswordErrada") = 0
             Session("PasswordAlterada") = 0
-
+            Session.Abandon()
             Return Redirect("~/Home/Index")
         End Function
 

@@ -12,17 +12,12 @@ End Code
     @<div class="container-fluid">
         @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
         @Html.HiddenFor(Function(modelOrig) modelOrig.ID_origem)
-         <div class="row" style="padding:10px;">
-             <div class="col">
-                 <h4 class="font-italic font-weight-bold">Origem</h4>
-             </div>
-             <div class="col">
-                 <h4 class="text-center font-italic font-weight-bold">Edição</h4>
-             </div>
-         </div>
+        
         <!-- form edição, modelo row e cols para a organização -->
          <div class="row" style="padding:10px;">
              <div class="col" id="contentorEdicao">
+                 <h4 class="font-italic font-weight-bold">Origem</h4>
+
                  <ul class="nav nav-tabs" id="myTab" role="tablist">
                      <li class="nav-item">
                          <a class="nav-link active btn" id="detalhes-tab" data-toggle="tab" href="#detalhes" role="tab" aria-controls="detalhes" aria-selected="true">Base</a>
@@ -34,28 +29,30 @@ End Code
                      @Html.ValidationMessageFor(Function(modelOrig) modelOrig.descricao, "", New With {.class = "text-danger"})
                  </section>
              </div>
-                 <div id="btnsEditarTickets" class="col">
-                     <ul class="listaBtns">
-                         <li>
-                             <input type="submit" class="btn btn-success" value="Guardar" />
-                         </li>
-                         <li>
-                             <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#verificaModal" id="apagarino">
-                                 Apagar
-                             </button>
-                         </li>
-                         <li>
-                             <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaOrigem", "Origens")'">
-                                 Novo
-                             </button>
-                         </li>
-                         <li>
-                             <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Origens")'">
-                                 Voltar
-                             </button>
-                         </li>
-                     </ul>
-                 </div>
+             <div id="btnsEditarTickets" class="col">
+                 <h4 class="text-center font-italic font-weight-bold">Edição</h4>
+
+                 <ul class="listaBtns">
+                     <li>
+                         <input type="submit" class="btn btn-success" value="Guardar" />
+                     </li>
+                     <li>
+                         <button type="button" class="btn btn-primary btn-danger" data-toggle="modal" data-target="#verificaModal" id="apagarino">
+                             Apagar
+                         </button>
+                     </li>
+                     <li>
+                         <button type="button" class="btn btn-info" onclick="location.href='@Url.Action("CriaOrigem", "Origens")'">
+                             Novo
+                         </button>
+                     </li>
+                     <li>
+                         <button type="button" class="btn btn-secondary" onclick="location.href='@Url.Action("Index", "Origens")'">
+                             Voltar
+                         </button>
+                     </li>
+                 </ul>
+             </div>
          </div>
 
         <!-- butões com as operações respectivas do formulário de edição -->

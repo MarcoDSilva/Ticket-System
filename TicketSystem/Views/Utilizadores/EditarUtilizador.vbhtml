@@ -8,22 +8,14 @@ End Code
     @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
     @Html.HiddenFor(Function(Utilizador) Utilizador.ID_utilizador)
 
-    @<div class="container container-fluid">
+    @<div class="container container-fluid" style="padding-top:15px;">
 
-        <div class="row" style="padding:10px;">
-            <div class="col">
-                <h4 class="font-italic font-weight-bold">Utilizadores</h4>
-            </div>
-            <div class="col">
-                <h4 class="text-center font-italic font-weight-bold">Edição</h4>
-            </div>
-        </div>
-
-        <!-- form edição -->
         <!-- elemento onde a prioridade é editada e submissão da mesmo -->
         <div class="row" id="editaSoftware">
             <!-- dados do form -->
             <div class="col">
+                <h4 class="font-italic font-weight-bold">Utilizadores</h4>
+
                 <section>
                     @Html.LabelFor(Function(Utilizador) Utilizador.nome, New With {.class = "form-check-label"})
                     @Html.EditorFor(Function(Utilizador) Utilizador.nome, New With {.HtmlAttributes = New With {.class = "form-control"}})
@@ -49,6 +41,8 @@ End Code
             </div>
             <!-- botões CRUD -->
             <div id="btnsEditarTickets" class="col">
+                <h4 class="text-center font-italic font-weight-bold">Edição</h4>
+
                 <ul class="listaBtns">
                     <li>
                         <input type="submit" value="Guardar" class="btn btn-success" />

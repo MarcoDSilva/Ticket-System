@@ -10,21 +10,14 @@ End Code
     @Html.HiddenFor(Function(modelSoft) modelSoft.ID_software)
 
     'form da view abaixo desta div
-    @<div class="container container-fluid">
+    @<div class="container container-fluid">       
        
-        <div class="row" style="padding:10px;">
-            <div class="col">
-                <h4 class="font-italic font-weight-bold">Software</h4>
-            </div>
-            <div class="col">
-                <h4 class="text-center font-italic font-weight-bold">Edição</h4>
-            </div>
-        </div>
-
         <!-- elemento onde a prioridade é editada e submissão da mesmo -->
         <div class="row" id="editaSoftware">
             <!-- dados do form -->
             <div class="col">
+                <h4 class="font-italic font-weight-bold">Software</h4>
+
                 <section>
                     @Html.LabelFor(Function(modelSoft) modelSoft.nome)
                     @Html.EditorFor(Function(modelSoft) modelSoft.nome, New With {.HtmlAttributes = New With {.class = "form-control"}})
@@ -34,6 +27,8 @@ End Code
 
             <!-- butões CRUD -->
             <div id="btnsEditarTickets" class="col">
+                <h4 class="text-center font-italic font-weight-bold">Edição</h4>
+
                 <ul class="listaBtns">
                     <li><input type="submit" value="Guardar" class="btn btn-success" /></li>
                     <li>

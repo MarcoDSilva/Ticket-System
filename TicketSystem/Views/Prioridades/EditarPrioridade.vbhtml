@@ -10,22 +10,15 @@ End Code
     @Html.HiddenFor(Function(modelPrio) modelPrio.ID_prioridade)
 
     'form da view
-    @<div class="container container-fluid">
-        <!-- elementos de edição-->
-        <div class="row" style="padding:10px;">
-            <div class="col">
-                <h4 class="font-italic font-weight-bold">Prioridade</h4>
-            </div>
-            <div class="col">
-                <h4 class="text-center font-italic font-weight-bold">Edição</h4>
-            </div>
-        </div>
+    @<div class="container container-fluid" style="padding-top:15px;">        
 
         <!-- elemento onde a prioridade é editada e submissão da mesmo -->
         <div class="row" id="editaPrioridade">
 
             <!-- dados do form -->
             <div class="col">
+                <h4 class="font-italic font-weight-bold">Prioridade</h4>
+
                 <section>
                     @Html.LabelFor(Function(modelPrio) modelPrio.descricao)
                     @Html.EditorFor(Function(modelPrio) modelPrio.descricao, New With {.HtmlAttributes = New With {.class = "form-control"}})
@@ -35,6 +28,8 @@ End Code
 
             <!-- botões crud-->
             <div id="btnsEditarTickets" class="col">
+                <h4 class="text-center font-italic font-weight-bold">Edição</h4>
+
                 <ul class="listaBtns">
                     <li><input type="submit" value="Guardar" class="btn btn-success" /></li>
                     <li>

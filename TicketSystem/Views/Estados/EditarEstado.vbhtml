@@ -10,23 +10,13 @@ End Code
     @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
     @Html.HiddenFor(Function(modelEst) modelEst.ID_estado)
 
-    @<div class="container container-fluid">
+    @<div class="container container-fluid" style="margin-top:15px;">
 
-        <!-- form onde o estado será editado-->
-        <div class="row" style="padding:10px;">
-
-            <div class="col">
-                <h4 class="font-italic font-weight-bold">Estado</h4>
-            </div>
-            <div class="col">
-                <h4 class="text-center font-italic font-weight-bold">Edição</h4>
-            </div>
-
-
-        </div>
-
+        <!-- form onde o estado será editado-->    
         <div class="row">
             <div class="col">
+                <h4 class="font-italic font-weight-bold">Estado</h4>
+
                 <section>
                     @Html.LabelFor(Function(modelEst) modelEst.descricao)
                     @Html.EditorFor(Function(modelEst) modelEst.descricao, New With {.HtmlAttributes = New With {.class = "form-control"}})
@@ -35,6 +25,8 @@ End Code
             </div>
 
             <div id="btnsEditarTickets" class="col">
+                <h4 class="text-center font-italic font-weight-bold">Edição</h4>
+
                 <ul class="listaBtns">
                     <li>
                         <input type="submit" value="Guardar" class="btn btn-success" />

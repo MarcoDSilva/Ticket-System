@@ -21,19 +21,12 @@ End Code
     @Html.HiddenFor(Function(ticket) ticket.Ticket.First.ID_ticket)
     'form edição
 
-    @<div class="container container-fluid">
-         <div class="row" style="padding:10px;">
-             <div class="col">
-                 <h4 class="font-italic font-weight-bold">Ticket</h4>
-             </div>
-             <div class="col">
-                 <h4 class="text-center font-italic font-weight-bold">Edição</h4>
-             </div>
-         </div>
-
-       <!-- div de organização, row para conter os elementos, as que são col é para podermos dividir o ratio na página-->
+    @<div class="container container-fluid" style="padding-top:15px;">
+        <!-- div de organização, row para conter os elementos, as que são col é para podermos dividir o ratio na página-->
         <div class="row">
             <div class="col">
+                <h4 class="font-italic font-weight-bold">Ticket</h4>
+
                 <section>
                     <!--"on click" menu strip, para poder mostrar os restantes campos do formulário  -->
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -108,6 +101,8 @@ End Code
 
             <!-- botões que efetuam as operações crud-->
             <div id="btnsEditarTickets" class="col">
+                <h4 class="text-center font-italic font-weight-bold">Edição</h4>
+
                 <ul class="listaBtns">
                     <li>
                         <input type="submit" class="btn btn-success btn-sm" value="Guardar" name="Enviar" />

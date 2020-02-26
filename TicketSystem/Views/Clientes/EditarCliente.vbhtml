@@ -9,20 +9,15 @@ End Code
     @Html.HiddenFor(Function(cli) cli.ID_cliente)
 
     @<div class="container container-fluid">
-        <div class="row" style="padding:10px;">
-            <div class="col">
-                <h4 class="font-italic font-weight-bold">Clientes</h4>
-            </div>
-            <div class="col">
-                <h4 class="text-center font-italic font-weight-bold">Edição</h4>
-            </div>
-        </div>
 
         <!-- form edição -->
         <!-- elemento onde a prioridade é editada e submissão da mesmo -->
         <div class="row" id="editaPrioridade">
+
             <!-- dados do form -->
             <div class="col">
+                <h4 class="font-italic font-weight-bold">Clientes</h4>
+
                 <section>
                     @Html.LabelFor(Function(cli) cli.nome, New With {.class = "form-check-label"})
                     @Html.EditorFor(Function(cli) cli.nome, New With {.HtmlAttributes = New With {.class = "form-control"}})
@@ -44,17 +39,19 @@ End Code
                     @Html.ValidationMessageFor(Function(cli) cli.empresa, "", New With {.class = "text-danger"})
                 </section>
                 @*<section>
-                        @Html.LabelFor(Function(cli) cli.ID_utilizador, New With {.class = "form-check-label"})
-                        @Html.EditorFor(Function(cli) cli.ID_utilizador, New With {.HtmlAttributes = New With {.class = "form-control"}})
-                        @Html.DropDownList("ID_utilizador", DirectCast(ViewBag.utilizador, SelectList), New With {.class = "form-control"})
-                        @Html.ValidationMessageFor(Function(cli) cli.ID_utilizador, "", New With {.class = "text-danger"})
+            @Html.LabelFor(Function(cli) cli.ID_utilizador, New With {.class = "form-check-label"})
+            @Html.EditorFor(Function(cli) cli.ID_utilizador, New With {.HtmlAttributes = New With {.class = "form-control"}})
+            @Html.DropDownList("ID_utilizador", DirectCast(ViewBag.utilizador, SelectList), New With {.class = "form-control"})
+            @Html.ValidationMessageFor(Function(cli) cli.ID_utilizador, "", New With {.class = "text-danger"})
 
-                        <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='#'">Criar utilizador</button>
-                    </section>*@
+            <button type="button" class="btn btn-secondary btn-sm" onclick="location.href='#'">Criar utilizador</button>
+        </section>*@
             </div>
 
             <!-- butões CRUD -->
             <div id="btnsEditarTickets" class="col">
+                <h4 class="text-center font-italic font-weight-bold">Edição</h4>
+
                 <ul class="listaBtns">
                     <li> <input type="submit" value="Guardar" class="btn btn-success" /></li>
                     <li>

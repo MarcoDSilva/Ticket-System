@@ -7,20 +7,13 @@ End Code
 @Using (Html.BeginForm())
     @Html.AntiForgeryToken()
 
-    @<div class="container container-fluid">
-
-    <div class="row" style="padding:10px;">
-        <div class="col">
-            <h4 class="font-italic font-weight-bold">Novo Utilizador</h4>
-        </div>
-        <div class="col">
-            <h4 class="text-center font-italic font-weight-bold">Edição</h4>
-        </div>
-    </div>
+    @<div class="container container-fluid" style="padding:15px;">  
 
     <!--form criação-->
     <div class="row">
         <div class="col">
+            <h4 class="font-italic font-weight-bold">Novo Utilizador</h4>
+
             <section>
                 @Html.LabelFor(Function(modelUtil) modelUtil.nome, New With {.class = "form-check-label"})
                 @Html.TextBoxFor(Function(modelUtil) modelUtil.nome, New With {.class = "form-control"})
@@ -43,6 +36,8 @@ End Code
 
         <!-- butões CRUD -->
         <div id="btnsEditarTickets" class="col">
+            <h4 class="text-center font-italic font-weight-bold">Edição</h4>
+
             <ul class="listaBtns">
                 <li>
                     <input type="submit" Class="btn btn-success" value="Inserir Utilizador" />

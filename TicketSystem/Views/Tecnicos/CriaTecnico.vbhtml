@@ -9,19 +9,12 @@ End Code
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
 
-    @<div class="container container-fluid">
-        <div class="row" style="padding:10px;">
-            <div class="col">
-                <h4 class="font-italic font-weight-bold">Novo Tecnico</h4>
-            </div>
-            <div class="col">
-                <h4 class="text-center font-italic font-weight-bold">Edição</h4>
-            </div>
-        </div>
+    @<div class="container container-fluid" style="padding-top:15px;">       
 
         <!-- valores para criar -->
         <div class="row">
             <div class="col">
+                <h4 class="font-italic font-weight-bold">Novo Tecnico</h4>
                 <section>
                     @Html.LabelFor(Function(modelTec) modelTec.nome)
                     @Html.TextBoxFor(Function(modelTec) modelTec.nome, New With {.class = "form-control"})
@@ -43,6 +36,8 @@ End Code
 
             <!-- botões CRUD -->
             <div id="btnsEditarTickets" class="col">
+                <h4 class="text-center font-italic font-weight-bold">Edição</h4>
+
                 <ul class="listaBtns">
                     <li>
                         <input type="submit" class="btn btn-success" value="Inserir Tecnico" />

@@ -43,7 +43,7 @@ End Code
 End Using
 
 <div class="container container-fluid container-md">
-    <h4 class="font-italic font-weight-bold">Listagem de Tickets</h4>
+    <h2 class="font-italic font-weight-bold">Listagem de Tickets</h2>
 
     <table class="table table-hover table-sm table-responsive" id="tabelaTickets">
         <tr class="thead-dark">

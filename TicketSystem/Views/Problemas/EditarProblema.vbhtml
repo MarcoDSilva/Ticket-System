@@ -8,21 +8,16 @@ End Code
     @Html.AntiForgeryToken()
 
     'form da view fica abaixo desta div
-    @<div class="container-fluid">
+    @<div class="container container-fluid" style="padding-top:15px;">
 
         @Html.ValidationSummary(True, "", New With {.class = "text-danger"})
         @Html.HiddenFor(Function(Modelprob) Modelprob.ID_problema)
-        <div class="row" style="padding:10px;">
-            <div class="col">
-                <h4 class="font-italic font-weight-bold">Problema</h4>
-            </div>
-            <div class="col">
-                <h4 class="text-center font-italic font-weight-bold">Edição</h4>
-            </div>
-        </div>
+        
         <!-- elemento onde o problema é editado e submissão do mesmo -->
         <div class="row">
             <div class="col">
+                <h4 class="font-italic font-weight-bold">Problema</h4>
+
                 <section>
                     @Html.LabelFor(Function(Modelprob) Modelprob.descricao)
                     @Html.EditorFor(Function(Modelprob) Modelprob.descricao, New With {.HtmlAttributes = New With {.class = "form-control"}})
@@ -31,6 +26,8 @@ End Code
             </div>
 
             <div id="btnsEditarTickets" class="col">
+                <h4 class="text-center font-italic font-weight-bold">Edição</h4>
+
                 <ul class="listaBtns">
                     <li>
                         <input type="submit" value="Guardar" class="btn btn-success" />
